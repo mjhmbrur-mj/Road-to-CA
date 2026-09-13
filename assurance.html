@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assurance — Road to CA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="nav.css">
+    
+    <style>
+        :root {
+            --primary-maroon: #6B0518;
+            --deep-maroon: #4A000E;
+            --pure-white: #FFFFFF;
+            --off-white: #F8F9FA;
+            --text-dark: #1F1F1F;
+            --text-muted: #6C757D;
+            --border-color: #E0E0E0;
+            --pill-bg: rgba(107, 5, 24, 0.08);
+            --correct-green: #2e7d32;
+            --wrong-red: #c62828;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background-color: var(--pure-white); color: var(--text-dark); line-height: 1.6; }
+
+        /* HEADER */
+        header { background-color: var(--pure-white); border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 4px rgba(0,0,0,0.03); }
+        .nav-container { max-width: 1200px; margin: 0 auto; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .brand-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+        .brand-logo img { height: 48px; width: auto; }
+        .nav-links { display: flex; list-style: none; gap: 1.5rem; }
+        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 500; font-size: 0.95rem; }
+        .nav-links a:hover, .nav-links a.active { color: var(--primary-maroon); }
+        .btn { padding: 0.6rem 1.4rem; border-radius: 6px; font-weight: 600; font-size: 0.9rem; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
+        .btn-outline { border: 1.5px solid var(--primary-maroon); color: var(--primary-maroon); background: transparent; }
+        .btn-outline:hover { background-color: var(--pill-bg); }
+        .btn-solid { background-color: var(--primary-maroon); color: var(--pure-white); border: 1.5px solid var(--primary-maroon); }
+        .btn-solid:hover { background-color: var(--deep-maroon); }
+
+        /* HERO BANNER */
+        .course-hero { background-color: var(--off-white); border-bottom: 1px solid var(--border-color); padding: 3rem 2rem; }
+        .hero-container { max-width: 1200px; margin: 0 auto; }
+        .breadcrumb { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.8rem; }
+        .breadcrumb a { color: var(--primary-maroon); text-decoration: none; font-weight: 500; }
+        .course-title { font-family: 'Montserrat', sans-serif; font-size: 2.2rem; font-weight: 800; color: var(--deep-maroon); margin-bottom: 0.5rem; }
+
+        /* MAIN CONTENT & CHAPTER LIST */
+        .container { max-width: 1200px; margin: 3rem auto; padding: 0 2rem; }
+        .chapter-grid { display: flex; flex-direction: column; gap: 1.2rem; margin-top: 1.5rem; }
+
+        .chapter-card {
+            background: var(--pure-white);
+            border: 1px solid var(--border-color);
+            border-left: 5px solid var(--primary-maroon);
+            border-radius: 8px;
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            transition: box-shadow 0.2s ease;
+        }
+        .chapter-card:hover { box-shadow: 0 4px 12px rgba(107, 5, 24, 0.08); }
+        .chapter-info h4 { font-family: 'Montserrat', sans-serif; font-size: 1.1rem; color: var(--deep-maroon); font-weight: 700; }
+        .chapter-info p { font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; }
+        .action-group { display: flex; gap: 0.8rem; }
+
+        /* MODAL DIALOG FOR QUIZ / STUDY */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none; justify-content: center; align-items: center;
+            z-index: 2000; padding: 1rem;
+        }
+        .modal-content {
+            background: var(--pure-white);
+            border-radius: 10px;
+            max-width: 850px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            border-top: 5px solid var(--primary-maroon);
+            padding: 2rem;
+            position: relative;
+        }
+        .close-btn { position: absolute; top: 1.2rem; right: 1.5rem; font-size: 1.5rem; color: var(--text-muted); cursor: pointer; }
+        .close-btn:hover { color: var(--primary-maroon); }
+
+        /* TIMER BAR */
+        .timer-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--deep-maroon);
+            color: var(--pure-white);
+            padding: 0.8rem 1.2rem;
+            border-radius: 6px;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            font-family: 'Montserrat', sans-serif;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .timer-badge {
+            background: var(--primary-maroon);
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            color: #FFFFFF;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+        }
+
+        .mcq-box { background: var(--off-white); border: 1px solid var(--border-color); border-radius: 8px; padding: 1.2rem; margin-bottom: 1.2rem; }
+        .mcq-question { font-weight: 600; color: var(--deep-maroon); margin-bottom: 0.8rem; font-size: 0.95rem; }
+        .option-item { background: var(--pure-white); border: 1px solid var(--border-color); padding: 0.6rem 1rem; border-radius: 6px; margin-bottom: 0.4rem; cursor: pointer; font-size: 0.9rem; transition: all 0.2s; display: flex; align-items: center; justify-content: space-between; }
+        .option-item:hover { border-color: var(--primary-maroon); background: var(--pill-bg); }
+        .explanation-box { margin-top: 0.8rem; padding: 0.8rem; background: #ffebee; border-left: 4px solid var(--wrong-red); font-size: 0.85rem; color: #b71c1c; border-radius: 4px; }
+        .explanation-box.learn-mode { background: #e8f5e9; border-left: 4px solid var(--correct-green); color: #1b5e20; }
+
+        /* FOOTER */
+        footer { background-color: var(--deep-maroon); color: var(--pure-white); padding: 3rem 2rem 2rem 2rem; margin-top: 4rem; }
+        .footer-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1.5rem; font-size: 0.85rem; color: #E0C2C7; }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <header>
+        <div class="nav-container">
+            <button class="menu-toggle" type="button" aria-label="Open menu" aria-controls="site-drawer" aria-expanded="false"><span></span></button>
+            <a href="index.html" class="brand-logo">
+                <img src="logo.png" alt="Road to CA Logo" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x50/6B0518/FFFFFF?text=ROAD+TO+CA'">
+            </a>
+            <form class="site-search" role="search">
+                <input type="search" name="search" placeholder="Search courses..." aria-label="Search courses and resources">
+                <button type="submit" aria-label="Submit search"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i></button>
+            </form>
+            <a class="profile-link" href="profile.html" aria-label="Open your profile"><i class="fa-solid fa-user" aria-hidden="true"></i><span>Profile</span></a>
+        </div>
+    </header>
+    <section class="announcement-ticker" aria-label="Latest announcements"><strong class="ticker-label">LATEST ANNOUNCEMENTS</strong><div class="ticker-viewport"><div class="ticker-track" id="announcementTrack"></div></div></section>
+    <div class="drawer-overlay" data-drawer-close></div>
+    <aside class="site-drawer" id="site-drawer" aria-hidden="true">
+        <div class="drawer-heading"><h2>Menu</h2><button class="drawer-close" type="button" aria-label="Close menu">&times;</button></div>
+        <nav class="drawer-links" aria-label="Main menu">
+            <a href="index.html" data-page="home"><i class="fa-solid fa-house" aria-hidden="true"></i>Home</a>
+            <a href="courses.html" data-page="courses"><i class="fa-solid fa-book-open" aria-hidden="true"></i>Courses</a>
+            <a href="mock-test.html" data-page="mock-test"><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i>Mock Test</a>
+            <a href="profile.html" data-page="profile"><i class="fa-solid fa-user" aria-hidden="true"></i>Profile</a>
+        </nav>
+    </aside>
+    <nav class="bottom-nav" aria-label="Mobile navigation">
+        <a href="index.html" data-page="home"><i class="fa-solid fa-house" aria-hidden="true"></i><span>Home</span></a>
+        <a href="courses.html" data-page="courses"><i class="fa-solid fa-book-open" aria-hidden="true"></i><span>Courses</span></a>
+        <a href="mock-test.html" data-page="mock-test"><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i><span>Mock Test</span></a>
+        <a href="profile.html" data-page="profile"><i class="fa-solid fa-user" aria-hidden="true"></i><span>Profile</span></a>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="course-hero">
+        <div class="hero-container">
+            <div class="breadcrumb">
+                <a href="index.html"><i class="fa-solid fa-house"></i> Courses</a> / Assurance
+            </div>
+            <h1 class="course-title">Assurance Module</h1>
+            <p style="color: var(--text-muted);">16 Chapters • ICAB Certificate Level Curriculum</p>
+        </div>
+    </section>
+
+    <!-- MAIN CHAPTER LIST -->
+    <main class="container">
+        <h3 style="font-family: 'Montserrat', sans-serif; color: var(--deep-maroon); font-size: 1.4rem;">All 16 Chapters</h3>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">Select <strong>Learn First</strong> for study notes & walkthrough MCQs, or <strong>Test You</strong> for timed exam practice.</p>
+
+        <div class="chapter-grid" id="chapterGrid">
+            <!-- Dynamic Chapter List populated via JS -->
+        </div>
+    </main>
+
+    <!-- INTERACTIVE MODAL FOR STUDY / TEST -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h3 id="modalTitle" style="font-family: 'Montserrat'; color: var(--deep-maroon); margin-bottom: 0.3rem;"></h3>
+            <p id="modalSubtitle" style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;"></p>
+            
+            <div id="modalBody">
+                <!-- MCQ content & Timer injects here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-container">
+            <nav aria-label="Quick Links">
+                <strong>Quick Links</strong>
+                <ul style="list-style: disc; margin: 0.4rem 0 0 1rem;">
+                    <li><a href="syllabus.html" style="color: inherit; text-underline-offset: 3px;">ICAB Syllabus 2026</a></li>
+                </ul>
+            </nav>
+            <span>&copy; 2026 Road to CA. Practice • Prepare • Progress</span>
+            <span>ICAB Certificate Level Prep</span>
+        </div>
+    </footer>
+
+    <script>
+        // Chapter 1 Complete 100 Questions Database
+        const ch1Questions = [
+            // PART 1 (Questions 1 - 50)
+            { q: "1. What is the primary purpose of an assurance engagement?", options: ["A. To prepare financial statements", "B. To increase the confidence of intended users in information", "C. To guarantee that financial statements contain no errors", "D. To manage the entity's internal controls"], answer: 1, explanation: "Assurance increases the confidence of intended users in information by evaluating it against suitable criteria." },
+            { q: "2. Which of the following is an essential feature of an assurance engagement?", options: ["A. The practitioner must prepare the information", "B. The practitioner must provide absolute assurance", "C. The information is evaluated against suitable criteria", "D. The practitioner must always detect fraud"], answer: 2, explanation: "In an assurance engagement, subject matter is evaluated or measured against suitable criteria." },
+            { q: "3. Which party is primarily responsible for the subject matter in an assurance engagement?", options: ["A. Intended users", "B. Practitioner", "C. Responsible party", "D. Government"], answer: 2, explanation: "The responsible party is responsible for the underlying subject matter." },
+            { q: "4. Who performs the assurance engagement?", options: ["A. Responsible party", "B. Practitioner", "C. Intended users", "D. Shareholders"], answer: 1, explanation: "The practitioner performs procedures and provides the assurance conclusion." },
+            { q: "5. Who uses the assurance report?", options: ["A. Only management", "B. Only the auditor", "C. Intended users", "D. Only employees"], answer: 2, explanation: "Intended users are the persons for whom the assurance report is prepared." },
+            { q: "6. Which of the following is NOT normally an element of an assurance engagement?", options: ["A. Three-party relationship", "B. Subject matter", "C. Suitable criteria", "D. Guaranteed future performance"], answer: 3, explanation: "An assurance engagement does not guarantee future performance." },
+            { q: "7. Which of the following represents the three-party relationship?", options: ["A. Auditor, employee and government", "B. Practitioner, responsible party and intended users", "C. Manager, shareholder and employee", "D. Customer, supplier and auditor"], answer: 1, explanation: "The three parties are the practitioner, responsible party and intended users." },
+            { q: "8. What is meant by \"intended users\"?", options: ["A. People who prepare financial statements", "B. People for whom the practitioner prepares the assurance report", "C. Employees of the company", "D. Government regulators only"], answer: 1, explanation: "Intended users rely on the assurance report when making decisions." },
+            { q: "9. What is \"reasonable assurance\"?", options: ["A. Absolute certainty", "B. High, but not absolute, assurance", "C. Very low assurance", "D. No assurance"], answer: 1, explanation: "Reasonable assurance provides a high level of assurance, but it is not absolute assurance." },
+            { q: "10. Limited assurance provides:", options: ["A. Higher assurance than reasonable assurance", "B. The same assurance as reasonable assurance", "C. Lower assurance than reasonable assurance", "D. Absolute assurance"], answer: 2, explanation: "Limited assurance involves a lower level of assurance than reasonable assurance." },
+            { q: "11. Which engagement normally provides reasonable assurance?", options: ["A. Review engagement", "B. Statutory financial statement audit", "C. Compilation engagement", "D. Bookkeeping"], answer: 1, explanation: "A financial statement audit normally provides reasonable assurance." },
+            { q: "12. Which engagement normally provides limited assurance?", options: ["A. Financial statement audit", "B. Review engagement", "C. Statutory audit", "D. External audit"], answer: 1, explanation: "A review engagement generally provides limited assurance." },
+            { q: "13. Which statement best describes limited assurance?", options: ["A. The practitioner performs no procedures", "B. The practitioner provides absolute assurance", "C. The practitioner performs less extensive procedures than in reasonable assurance", "D. The practitioner guarantees the absence of fraud"], answer: 2, explanation: "Limited assurance generally involves less extensive procedures and results in a lower level of assurance." },
+            { q: "14. What is the fundamental benefit of assurance?", options: ["A. Elimination of all business risks", "B. Increased confidence in information", "C. Guaranteed profitability", "D. Elimination of management responsibility"], answer: 1, explanation: "Assurance reduces information risk and increases users' confidence in the information." },
+            { q: "15. Which of the following is a benefit of assurance?", options: ["A. It guarantees future profits", "B. It eliminates all fraud", "C. It improves the credibility of information", "D. It removes management responsibility"], answer: 2, explanation: "Independent assurance increases the credibility and reliability of information." },
+            { q: "16. Assurance can help users make better decisions because:", options: ["A. It guarantees the information is perfect", "B. It increases confidence in the information", "C. It eliminates all uncertainty", "D. It replaces management"], answer: 1, explanation: "More reliable information helps users make better-informed decisions." },
+            { q: "17. What is information risk?", options: ["A. Risk that the company will become bankrupt", "B. Risk that information used for decision-making is incorrect or misleading", "C. Risk that employees will resign", "D. Risk of higher taxation"], answer: 1, explanation: "Information risk arises when information used by decision-makers may be materially incorrect or misleading." },
+            { q: "18. Assurance primarily helps to reduce:", options: ["A. Business risk", "B. Information risk", "C. Market risk", "D. Liquidity risk"], answer: 1, explanation: "The main purpose of assurance is to reduce information risk for intended users." },
+            { q: "19. What is the expectation gap?", options: ["A. Difference between revenue and expenses", "B. Difference between management's profit and auditor's profit", "C. Difference between users' expectations of auditors and auditors' actual responsibilities", "D. Difference between assets and liabilities"], answer: 2, explanation: "The expectation gap arises when users expect more from auditors than auditors are actually required or able to do." },
+            { q: "20. Which statement contributes most to the expectation gap?", options: ["A. Auditors use professional standards", "B. Users believe auditors guarantee that no fraud exists", "C. Auditors assess audit risk", "D. Auditors use sampling"], answer: 1, explanation: "Auditors do not guarantee that all fraud will be detected. Misunderstanding this can create an expectation gap." },
+            { q: "21. A statutory audit is an audit that:", options: ["A. Is performed voluntarily by employees", "B. Is required by law", "C. Is performed only for management", "D. Does not require independence"], answer: 1, explanation: "\"Statutory\" means required by statute or law." },
+            { q: "22. The main reason for requiring auditor independence is to:", options: ["A. Increase the company's sales", "B. Ensure the auditor's judgment is objective", "C. Reduce employee salaries", "D. Increase taxation"], answer: 1, explanation: "Independence supports the auditor's objectivity and credibility." },
+            { q: "23. Which of the following would generally threaten auditor independence?", options: ["A. Auditor having no financial interest in the client", "B. Auditor being an employee of the audit client", "C. Auditor maintaining professional skepticism", "D. Auditor following auditing standards"], answer: 1, explanation: "Being an employee creates a serious threat to independence." },
+            { q: "24. Before accepting an assurance engagement, the practitioner should consider:", options: ["A. Client integrity", "B. Independence", "C. Competence and resources", "D. All of the above"], answer: 3, explanation: "All these factors should be considered before accepting an engagement." },
+            { q: "25. An engagement letter primarily:", options: ["A. Guarantees the client's profit", "B. Sets out the agreed terms of the engagement", "C. Replaces financial statements", "D. Eliminates audit risk"], answer: 1, explanation: "An engagement letter documents the agreed objectives, scope, responsibilities and terms." },
+            { q: "26. Professional skepticism means:", options: ["A. Assuming management is dishonest", "B. Accepting management's explanations without question", "C. Having a questioning mind and critically assessing evidence", "D. Refusing to trust any evidence"], answer: 2, explanation: "Professional skepticism involves a questioning mind and critical evaluation of audit evidence." },
+            { q: "27. Which is a key element of professional skepticism?", options: ["A. Blind trust", "B. Questioning mind", "C. Guaranteed detection of fraud", "D. Avoiding evidence"], answer: 1, explanation: "A questioning mind is a fundamental component of professional skepticism." },
+            { q: "28. Management says all receivables are collectible. A skeptical auditor should:", options: ["A. Accept the statement immediately", "B. Ignore the receivables", "C. Obtain and evaluate supporting evidence", "D. Assume all receivables are fraudulent"], answer: 2, explanation: "Professional skepticism requires the auditor to critically assess management's claim using appropriate evidence." },
+            { q: "29. Professional judgment involves:", options: ["A. Making decisions randomly", "B. Applying knowledge, training and experience within professional standards", "C. Following management's instructions", "D. Avoiding difficult decisions"], answer: 1, explanation: "Professional judgment is based on training, knowledge, experience and applicable professional standards." },
+            { q: "30. Which decision may require professional judgment?", options: ["A. Determining materiality", "B. Choosing the company's logo", "C. Hiring a receptionist", "D. Setting employee lunch times"], answer: 0, explanation: "Determining materiality involves professional judgment." },
+            { q: "31. Materiality refers to whether a misstatement:", options: ["A. Is always greater than Tk. 1 million", "B. Could influence users' economic decisions", "C. Is caused by fraud only", "D. Is always intentional"], answer: 1, explanation: "A misstatement is material if it could reasonably influence users' decisions." },
+            { q: "32. Which factor can affect materiality?", options: ["A. Size of the misstatement", "B. Nature of the misstatement", "C. Circumstances surrounding the misstatement", "D. All of the above"], answer: 3, explanation: "Materiality depends on both quantitative and qualitative considerations." },
+            { q: "33. Which statement about materiality is correct?", options: ["A. Only large amounts can be material", "B. Small amounts can never be material", "C. Materiality depends on size and nature", "D. Materiality is identical for every entity"], answer: 2, explanation: "Materiality is not based on amount alone; the nature and circumstances also matter." },
+            { q: "34. Performance materiality is:", options: ["A. Greater than overall materiality", "B. Equal to zero", "C. Set at less than overall materiality", "D. Unrelated to audit risk"], answer: 2, explanation: "Performance materiality is set below overall materiality to reduce the risk that aggregate misstatements exceed overall materiality." },
+            { q: "35. Why is performance materiality set below overall materiality?", options: ["A. To increase the company's profit", "B. To reduce the risk that aggregate undetected and uncorrected misstatements exceed overall materiality", "C. To eliminate all fraud", "D. To avoid using audit evidence"], answer: 1, explanation: "Several individually small misstatements could collectively become material." },
+            { q: "36. Analytical procedures involve:", options: ["A. Only counting cash", "B. Evaluating relationships and trends in financial and non-financial information", "C. Preparing financial statements", "D. Interviewing every employee"], answer: 1, explanation: "Analytical procedures examine plausible relationships, trends, ratios and unexpected fluctuations." },
+            { q: "37. A company's sales increased by 10%, but gross profit decreased by 25%. The auditor should:", options: ["A. Automatically issue an adverse opinion", "B. Ignore the difference", "C. Investigate the unusual relationship", "D. Assume fraud has occurred"], answer: 2, explanation: "An unusual fluctuation should be investigated to determine whether it indicates a possible misstatement." },
+            { q: "38. Audit risk is the risk that:", options: ["A. The company will make a loss", "B. The auditor expresses an inappropriate opinion when financial statements are materially misstated", "C. The auditor will resign", "D. The company will face competition"], answer: 1, explanation: "This is the fundamental definition of audit risk." },
+            { q: "39. Which is NOT a component of audit risk?", options: ["A. Inherent risk", "B. Control risk", "C. Detection risk", "D. Business risk"], answer: 3, explanation: "Audit risk consists of inherent risk, control risk and detection risk." },
+            { q: "40. Inherent risk is the risk of material misstatement:", options: ["A. After considering internal controls", "B. Before considering related internal controls", "C. Caused only by the auditor", "D. Caused only by fraud"], answer: 1, explanation: "Inherent risk exists due to the nature of an assertion or transaction before considering controls." },
+            { q: "41. Control risk is the risk that:", options: ["A. The auditor fails to detect a misstatement", "B. Internal controls fail to prevent or detect a material misstatement", "C. Management prepares financial statements", "D. The company makes a profit"], answer: 1, explanation: "Control risk relates to the failure of internal controls." },
+            { q: "42. Detection risk is the risk that:", options: ["A. Internal controls fail", "B. A material misstatement is not detected by the auditor's procedures", "C. Management commits fraud", "D. The company becomes insolvent"], answer: 1, explanation: "Detection risk arises from the possibility that audit procedures fail to detect an existing material misstatement." },
+            { q: "43. The correct audit risk model is:", options: ["A. AR = IR + CR + DR", "B. AR = IR × CR × DR", "C. AR = IR − CR − DR", "D. AR = IR ÷ CR"], answer: 1, explanation: "The traditional audit risk model is AR = IR × CR × DR." },
+            { q: "44. Risk of material misstatement consists of:", options: ["A. Inherent risk and control risk", "B. Control risk and detection risk", "C. Inherent risk and detection risk", "D. Audit risk and business risk"], answer: 0, explanation: "RMM = Inherent Risk × Control Risk." },
+            { q: "45. If inherent risk and control risk are high, the auditor should generally:", options: ["A. Accept higher detection risk", "B. Reduce detection risk through more effective audit procedures", "C. Perform no audit procedures", "D. Ignore the risk"], answer: 1, explanation: "Higher RMM generally requires the auditor to reduce detection risk through more appropriate and effective procedures." },
+            { q: "46. The key difference between fraud and error is:", options: ["A. Amount", "B. Intention", "C. Timing", "D. Accounting standard"], answer: 1, explanation: "Fraud is intentional, whereas error is unintentional." },
+            { q: "47. An accountant accidentally records Tk. 500,000 as Tk. 50,000. This is:", options: ["A. Fraud", "B. Error", "C. Misappropriation", "D. Management override"], answer: 1, explanation: "The incorrect recording is accidental, so it is an error." },
+            { q: "48. An employee deliberately steals Tk. 200,000 from company cash. This is:", options: ["A. Error", "B. Misappropriation of assets", "C. Analytical procedure", "D. Professional judgment"], answer: 1, explanation: "Theft of company assets is misappropriation of assets, a type of fraud." },
+            { q: "49. Which is a type of fraud?", options: ["A. Fraudulent financial reporting", "B. Misappropriation of assets", "C. Both A and B", "D. Neither A nor B"], answer: 2, explanation: "The two broad categories of fraud relevant to financial statement auditing are fraudulent financial reporting and misappropriation of assets." },
+            { q: "50. Which statement about the auditor's responsibility for fraud is correct?", options: ["A. The auditor guarantees that all fraud will be detected", "B. Management has primary responsibility for preventing and detecting fraud", "C. Auditors have no responsibility regarding fraud", "D. Auditors are responsible for preventing all fraud"], answer: 1, explanation: "Under ISA 240, primary responsibility for prevention and detection of fraud rests with management and those charged with governance." },
+
+            // PART 2 (Questions 51 - 100)
+            { q: "51. What is the primary purpose of an assurance engagement?", options: ["A. To prepare financial statements", "B. To increase the confidence of intended users in a subject matter", "C. To guarantee that financial statements are completely error-free", "D. To manage an entity's operations"], answer: 1, explanation: "Assurance increases user confidence by evaluating information against suitable benchmarks." },
+            { q: "52. Which of the following best describes assurance?", options: ["A. Preparation of accounting records by an accountant", "B. Independent evaluation of a subject matter against suitable criteria", "C. Management's internal decision-making process", "D. Preparation of tax returns"], answer: 1, explanation: "Assurance is an independent review of subject matter using clear criteria." },
+            { q: "53. Which party performs the assurance work?", options: ["A. Responsible party", "B. Intended user", "C. Practitioner", "D. Shareholder"], answer: 2, explanation: "The practitioner (auditor/assurer) carries out the examination and issues the report." },
+            { q: "54. Who is primarily responsible for the subject matter in an assurance engagement?", options: ["A. Practitioner", "B. Responsible party", "C. Intended user", "D. Auditor's assistant"], answer: 1, explanation: "Management or the responsible party maintains control over the subject matter." },
+            { q: "55. Which of the following is normally an intended user of an assurance report?", options: ["A. Only the practitioner", "B. Investors or shareholders", "C. Only the company's employees", "D. Only the responsible party"], answer: 1, explanation: "Investors and shareholders rely on assurance reports to make informed decisions." },
+            { q: "56. Which combination represents the three parties normally involved in an assurance engagement?", options: ["A. Auditor, tax authority, bank", "B. Practitioner, responsible party, intended users", "C. Management, employee, supplier", "D. Shareholder, director, customer"], answer: 1, explanation: "The tripartite relationship is fundamental to any assurance framework." },
+            { q: "57. What is the role of the practitioner?", options: ["A. To prepare the subject matter", "B. To evaluate the subject matter against suitable criteria and provide a conclusion", "C. To make business decisions for management", "D. To guarantee future profits"], answer: 1, explanation: "Practitioners remain independent, evaluating subject matter objectively." },
+            { q: "58. Which of the following is NOT normally a feature of an assurance engagement?", options: ["A. Subject matter", "B. Suitable criteria", "C. Sufficient appropriate evidence", "D. Guaranteed future performance"], answer: 3, explanation: "Assurance evaluates historical or current information and never guarantees future performance." },
+            { q: "59. Why do users generally desire assurance?", options: ["A. To eliminate all business risks", "B. To increase confidence in information used for decision-making", "C. To transfer management responsibility to auditors", "D. To guarantee investment returns"], answer: 1, explanation: "Independent assurance reduces information asymmetry and increases confidence." },
+            { q: "60. Assurance is particularly valuable when there is:", options: ["A. No information available", "B. A need for greater confidence in information", "C. No risk of bias", "D. No difference between users and preparers"], answer: 1, explanation: "When information risk or potential bias exists, assurance adds reliability." },
+            { q: "61. Which of the following is an essential element of an assurance engagement?", options: ["A. Suitable criteria", "B. Guaranteed profit", "C. Management bonus", "D. Share price increase"], answer: 0, explanation: "Without suitable criteria, measurement and evaluation are impossible." },
+            { q: "62. Which of the following can be the subject matter of an assurance engagement?", options: ["A. Financial information", "B. Non-financial information", "C. Systems or processes", "D. All of the above"], answer: 3, explanation: "Assurance can cover financial statements, KPI metrics, IT systems, and sustainability reports." },
+            { q: "63. What are \"criteria\" in an assurance engagement?", options: ["A. The fees charged by the practitioner", "B. Benchmarks used to evaluate or measure the subject matter", "C. The number of employees in an entity", "D. The practitioner's personal opinions"], answer: 1, explanation: "Criteria are the standards (like IFRS or laws) against which subject matter is judged." },
+            { q: "64. Which of the following would be suitable criteria for evaluating financial statements?", options: ["A. Management's personal preference", "B. Applicable financial reporting standards", "C. Employee expectations", "D. Competitors' profits"], answer: 1, explanation: "IFRS / IAS provide official and suitable criteria." },
+            { q: "65. Why must criteria be suitable?", options: ["A. To make the engagement more expensive", "B. To provide a meaningful basis for evaluating the subject matter", "C. To reduce the practitioner's responsibility", "D. To guarantee an unmodified conclusion"], answer: 1, explanation: "Suitable criteria ensure consistent, understandable, and reliable reporting." },
+            { q: "66. Which of the following is NOT a characteristic of suitable criteria?", options: ["A. Relevance", "B. Completeness", "C. Reliability", "D. Secrecy"], answer: 3, explanation: "Criteria must be publicly available or transparent, not secret." },
+            { q: "67. Which element provides the basis for the practitioner's conclusion?", options: ["A. Evidence obtained", "B. Management's salary", "C. Company's market value", "D. Number of shareholders"], answer: 0, explanation: "Practitioners form conclusions solely on sufficient appropriate evidence." },
+            { q: "68. Why is evidence required in an assurance engagement?", options: ["A. To support the practitioner's conclusion", "B. To prepare the company's budget", "C. To determine employee salaries", "D. To replace management's responsibilities"], answer: 0, explanation: "Conclusions must be substantiated by objective evidence." },
+            { q: "69. What does \"sufficient appropriate evidence\" refer to?", options: ["A. Evidence that is only large in quantity", "B. Evidence that is adequate in quantity and relevant/reliable in quality", "C. Evidence provided only by management", "D. Evidence obtained after the report is issued"], answer: 1, explanation: "Sufficiency measures quantity; appropriateness measures quality and relevance." },
+            { q: "70. Which of the following is the final communication of the practitioner's work in an assurance engagement?", options: ["A. Budget", "B. Written assurance report", "C. Internal memo only", "D. Sales invoice"], answer: 1, explanation: "The practitioner issues a formal written report outlining the conclusion." },
+            { q: "71. Which provides the higher level of assurance?", options: ["A. Limited assurance", "B. Reasonable assurance", "C. No assurance", "D. Informal assurance"], answer: 1, explanation: "Reasonable assurance is high-level; limited assurance is moderate/lower." },
+            { q: "72. Reasonable assurance provides:", options: ["A. Absolute certainty", "B. A high, but not absolute, level of assurance", "C. No confidence", "D. A guarantee of future success"], answer: 1, explanation: "Inherent limitations prevent assurance from ever being 100% absolute." },
+            { q: "73. Limited assurance provides:", options: ["A. A higher level of assurance than reasonable assurance", "B. A lower level of assurance than reasonable assurance", "C. Absolute assurance", "D. No conclusion"], answer: 1, explanation: "Limited assurance relies primarily on inquiry and analytical procedures." },
+            { q: "74. Which engagement generally requires more extensive procedures?", options: ["A. Reasonable assurance engagement", "B. Limited assurance engagement", "C. Informal discussion", "D. Management meeting"], answer: 0, explanation: "Reasonable assurance requires substantive testing and detailed verification." },
+            { q: "75. Which statement about reasonable assurance is correct?", options: ["A. It eliminates all risk", "B. It provides absolute certainty", "C. It reduces assurance engagement risk to an acceptably low level", "D. It requires no evidence"], answer: 2, explanation: "It reduces risk to an acceptably low level to express a positive conclusion." },
+            { q: "76. Why can an assurance engagement not normally provide absolute assurance?", options: ["A. Practitioners do not work independently", "B. Evidence has inherent limitations and procedures often involve sampling and professional judgment", "C. Management always commits fraud", "D. Criteria cannot be established"], answer: 1, explanation: "Sampling, human error, and estimate judgments make 100% certainty impossible." },
+            { q: "77. A limited assurance engagement generally involves:", options: ["A. More extensive procedures than reasonable assurance", "B. Less extensive procedures than reasonable assurance", "C. No procedures", "D. Complete examination of every transaction"], answer: 1, explanation: "Work is limited in scope compared to a statutory audit." },
+            { q: "78. Which statement correctly compares reasonable and limited assurance?", options: ["A. Reasonable assurance provides less confidence than limited assurance", "B. Both provide absolute assurance", "C. Reasonable assurance provides a higher level of confidence than limited assurance", "D. Limited assurance provides a guarantee"], answer: 2, explanation: "Reasonable assurance gives positive wording and higher user confidence." },
+            { q: "79. An assurance engagement that provides a high level of assurance is most likely to be:", options: ["A. Reasonable assurance engagement", "B. Limited assurance engagement", "C. Compilation engagement", "D. Management consultancy"], answer: 0, explanation: "Statutory audits are typical examples of reasonable assurance." },
+            { q: "80. Which factor helps explain why assurance is not absolute?", options: ["A. The use of professional judgment", "B. The existence of sampling", "C. The limitations of evidence", "D. All of the above"], answer: 3, explanation: "All these factors contribute to the inherent limitations of audit work." },
+            { q: "81. One major benefit of assurance is that it can:", options: ["A. Increase users' confidence in information", "B. Eliminate all fraud", "C. Guarantee profits", "D. Replace management"], answer: 0, explanation: "Assurance enhances credibility and reliability." },
+            { q: "82. Why is independent assurance particularly valuable to external users?", options: ["A. External users may not have direct access to all underlying information", "B. External users prepare the company's accounts", "C. External users control the auditor", "D. External users guarantee the company's performance"], answer: 0, explanation: "External stakeholders rely on independent validation because they lack internal access." },
+            { q: "83. Assurance can reduce the information risk faced by:", options: ["A. Intended users", "B. Only management", "C. Only employees", "D. Only suppliers"], answer: 0, explanation: "Information risk is the possibility that data used for decisions is inaccurate." },
+            { q: "84. Which situation creates a stronger need for assurance?", options: ["A. Information is highly important for decision-making and users cannot easily verify it themselves", "B. Users already know everything about the information", "C. There is no uncertainty", "D. No one uses the information"], answer: 0, explanation: "High stakes plus indirect access maximize the need for assurance." },
+            { q: "85. Assurance may help users make better decisions because it:", options: ["A. Provides increased confidence in information", "B. Guarantees the outcome of their decisions", "C. Removes all commercial risk", "D. Makes management decisions for them"], answer: 0, explanation: "Reliable data supports better strategic and investment decisions." },
+            { q: "86. Which is NOT a normal benefit of assurance?", options: ["A. Increased credibility of information", "B. Increased confidence of users", "C. Elimination of all business risk", "D. Potential improvement in decision-making"], answer: 2, explanation: "Assurance cannot eliminate general commercial or business risks." },
+            { q: "87. Assurance may be particularly useful where there is:", options: ["A. Information asymmetry between the preparer and users", "B. Complete equality of information", "C. No uncertainty", "D. No decision-making"], answer: 0, explanation: "Asymmetry occurs when management holds far more information than outside investors." },
+            { q: "88. Why is professional expertise important in assurance engagements?", options: ["A. The practitioner needs appropriate knowledge and skills to evaluate the subject matter", "B. Professional expertise guarantees no errors", "C. It removes management responsibility", "D. It eliminates the need for evidence"], answer: 0, explanation: "Skill and technical training are necessary to gather and evaluate evidence objectively." },
+            { q: "89. Who normally prepares or is responsible for the underlying subject matter?", options: ["A. Intended user", "B. Responsible party", "C. Practitioner", "D. External regulator"], answer: 1, explanation: "Management / responsible party prepares the underlying data." },
+            { q: "90. Who uses the assurance report to make decisions?", options: ["A. Intended users", "B. Only the practitioner", "C. Only the responsible party", "D. Only the regulator"], answer: 0, explanation: "The report targets the intended users." },
+            { q: "91. Which statement about the practitioner's responsibility is correct?", options: ["A. The practitioner assumes management's responsibility for the subject matter", "B. The practitioner evaluates the subject matter and expresses a conclusion", "C. The practitioner guarantees the entity's future performance", "D. The practitioner prepares every business transaction"], answer: 1, explanation: "Practitioners report conclusions based on evidence." },
+            { q: "92. Which statement about management's responsibility is correct?", options: ["A. Management is responsible for the subject matter where applicable", "B. Management transfers all responsibility to the auditor", "C. Management has no responsibility once an auditor is appointed", "D. Management is responsible only for the audit fee"], answer: 0, explanation: "Management remains fully accountable for internal controls and financial statements." },
+            { q: "93. The intended users of an assurance report should be able to:", options: ["A. Use the practitioner's conclusion to increase confidence in the subject matter", "B. Require the practitioner to guarantee their investment", "C. Transfer their decisions to the practitioner", "D. Ignore the criteria used"], answer: 0, explanation: "Assurance builds confidence for informed choices." },
+            { q: "94. What is the expectations gap?", options: ["A. The difference between the audit fee and audit cost", "B. The difference between what users expect from assurance and what the engagement can reasonably provide", "C. The difference between assets and liabilities", "D. The difference between profit and cash flow"], answer: 1, explanation: "The gap reflects misunderstandings about the scope and guarantee level of audits." },
+            { q: "95. Which expectation is generally unreasonable?", options: ["A. The practitioner should perform appropriate procedures", "B. The practitioner should provide a professional conclusion", "C. The practitioner should guarantee that no fraud exists", "D. The practitioner should obtain sufficient appropriate evidence"], answer: 2, explanation: "Auditors do not guarantee total absence of fraud." },
+            { q: "96. Which can contribute to an expectations gap?", options: ["A. Users misunderstanding the purpose and limitations of assurance", "B. Clear communication", "C. Appropriate professional standards", "D. Suitable criteria"], answer: 0, explanation: "Lack of financial literacy and misunderstanding audit scope widens the gap." },
+            { q: "97. Which is the best way to reduce misunderstanding about an assurance engagement?", options: ["A. Clearly communicate the scope, responsibilities and limitations", "B. Promise absolute assurance", "C. Avoid issuing a report", "D. Allow users to determine the conclusion"], answer: 0, explanation: "Engagement letters and clear audit reports minimize misunderstandings." },
+            { q: "98. Which statement about assurance and fraud is most accurate?", options: ["A. Assurance completely eliminates the possibility of fraud", "B. Assurance can provide confidence, but it does not guarantee that all fraud will be detected", "C. Practitioners are responsible for preventing all fraud", "D. Fraud cannot occur when an entity has an audit"], answer: 1, explanation: "Reasonable assurance aims to detect material misstatements, but cannot guarantee 100% fraud detection." },
+            { q: "99. A company asks a practitioner to evaluate its sustainability report against an established reporting framework. Which of the following BEST describes the engagement?", options: ["A. Assurance engagement", "B. Bookkeeping service", "C. Tax preparation service", "D. Payroll processing"], answer: 0, explanation: "Evaluating subject matter against criteria for users constitutes an assurance engagement." },
+            { q: "100. An investor says, \"Because the financial statements have been audited, I can be 100% certain that there are no errors or fraud.\" What is the BEST response?", options: ["A. Correct, because an audit provides absolute assurance", "B. Correct, because auditors check every transaction", "C. Incorrect, because an audit provides reasonable assurance, not absolute assurance", "D. Incorrect, because an audit provides no assurance"], answer: 2, explanation: "Audits provide reasonable (high) assurance, not absolute certainty." }
+        ];
+
+        // Chapter 2: Core Audit Concepts, Principles, and Engagement Lifecycle
+        const ch2CoreQuestions = [
+            { q: "1. A new audit client has a history of disagreements with its previous auditor over accounting estimates. What should the prospective auditor consider first?", options: ["A. Whether the client can pay the audit fee", "B. Management's integrity and reasons for the disagreements", "C. Whether the company has made a profit", "D. Whether the company has enough employees"], answer: 1, explanation: "Management integrity and the reasons for past auditor disputes are fundamental client acceptance considerations." },
+            { q: "2. A company refuses to acknowledge responsibility for preparing the financial statements. What should the auditor generally do?", options: ["A. Accept and prepare the statements", "B. Accept because management is not responsible", "C. Not accept unless the precondition is satisfied", "D. Accept but provide limited assurance"], answer: 2, explanation: "ISA 210 requires management to acknowledge its responsibility for financial statement preparation and internal control." },
+            { q: "3. The applicable financial reporting framework is unacceptable for the intended users. What is the most appropriate action?", options: ["A. Accept without modification", "B. Consider an appropriate alternative framework", "C. Ignore the framework", "D. Automatically issue an adverse opinion"], answer: 1, explanation: "An acceptable reporting framework is a precondition of an audit engagement." },
+            { q: "4. During planning, the auditor discovers a previously unknown significant business operation. What should the auditor do?", options: ["A. Continue the original plan", "B. Update the risk assessment and audit plan", "C. Cancel all procedures", "D. Ignore the operation"], answer: 1, explanation: "Audit planning is continuous and iterative; new information requires revised risk assessment and procedures." },
+            { q: "5. Which statement best describes audit planning?", options: ["A. It occurs only before fieldwork", "B. It is a continuous process throughout the engagement", "C. It is performed only by junior auditors", "D. It is unnecessary when controls are strong"], answer: 1, explanation: "ISA 300 treats planning as a continual and iterative process." },
+            { q: "6. An auditor identifies a high risk of inventory obsolescence. Which response is most appropriate?", options: ["A. Reduce procedures", "B. Increase the nature, timing, or extent of relevant procedures", "C. Ignore inventory valuation", "D. Rely only on management representation"], answer: 1, explanation: "Higher assessed risk requires a tailored audit response, such as expanded substantive testing." },
+            { q: "7. Which relationship is correct?", options: ["A. Risk assessment determines the appropriate audit response", "B. Audit response determines the reporting framework", "C. An engagement letter eliminates audit risk", "D. Documentation eliminates misstatement"], answer: 0, explanation: "Risk assessment directly guides the nature, timing, and extent of responsive procedures." },
+            { q: "8. Asking how inventory is counted and watching employees perform the count are which procedures?", options: ["A. Inspection and confirmation", "B. Inquiry and observation", "C. Recalculation and reperformance", "D. Confirmation and inquiry"], answer: 1, explanation: "Seeking information is inquiry; watching a process performed by others is observation." },
+            { q: "9. Examining a signed purchase invoice to determine whether a purchase occurred is primarily:", options: ["A. Inquiry", "B. Inspection", "C. Observation", "D. Analytical procedure"], answer: 1, explanation: "Inspection involves examining records or documents." },
+            { q: "10. Independently performing a client's bank reconciliation is:", options: ["A. Recalculation", "B. Reperformance", "C. Observation", "D. Confirmation"], answer: 1, explanation: "Reperformance is the auditor's independent execution of a procedure originally performed by the entity." },
+            { q: "11. Checking whether depreciation expense has been mathematically calculated correctly is:", options: ["A. Recalculation", "B. Observation", "C. Inquiry", "D. Inspection"], answer: 0, explanation: "Recalculation checks the mathematical accuracy of records." },
+            { q: "12. Which evidence would generally be most reliable?", options: ["A. Oral explanation from the finance manager", "B. Internally prepared report", "C. Direct confirmation from an independent customer", "D. Unsupported management representation"], answer: 2, explanation: "Evidence obtained directly by the auditor from an independent external party is generally more reliable." },
+            { q: "13. An auditor receives contradictory evidence from two sources. What should the auditor do?", options: ["A. Select the evidence supporting management", "B. Ignore both", "C. Investigate the contradiction", "D. Automatically conclude fraud"], answer: 2, explanation: "Contradictory evidence requires professional skepticism and further investigation." },
+            { q: "14. Which statement about audit evidence is correct?", options: ["A. More evidence is always better", "B. Evidence quality and quantity are both relevant", "C. Only internal evidence is acceptable", "D. Management representations are always sufficient"], answer: 1, explanation: "Evidence must be sufficient in quantity and appropriate in quality." },
+            { q: "15. Evidence is appropriate when it is:", options: ["A. Cheap and easy to obtain", "B. Relevant and reliable", "C. Large in quantity", "D. Obtained only from management"], answer: 1, explanation: "Appropriateness measures evidence quality, including relevance and reliability." },
+            { q: "16. Which situation generally requires more audit evidence?", options: ["A. Low assessed risk", "B. High assessed risk", "C. No material transactions", "D. Strong evidence already obtained"], answer: 1, explanation: "Higher risk of material misstatement generally requires more persuasive evidence." },
+            { q: "17. One auditor obtains many poor-quality documents while another obtains fewer reliable confirmations. Which principle is illustrated?", options: ["A. Quantity always matters more", "B. Quality is irrelevant", "C. Sufficiency and appropriateness are separate concepts", "D. External evidence is never useful"], answer: 2, explanation: "Quantity cannot compensate for poor evidence quality; sufficiency and appropriateness are distinct." },
+            { q: "18. An analytical procedure identifies an unexpected 40% revenue increase while industry growth is 5%. What should the auditor do?", options: ["A. Conclude fraud immediately", "B. Ignore the difference", "C. Investigate the unusual fluctuation", "D. Reduce substantive procedures"], answer: 2, explanation: "Unexpected fluctuations require investigation and corroborating procedures." },
+            { q: "19. Which is a substantive analytical procedure?", options: ["A. Watching an employee approve an invoice", "B. Comparing gross profit margins with prior years and expectations", "C. Asking management whether controls work", "D. Inspecting a signature"], answer: 1, explanation: "Substantive analytical procedures evaluate plausible relationships in financial and non-financial information." },
+            { q: "20. A company's gross profit margin falls significantly without an obvious business change. The auditor should:", options: ["A. Treat it as proof of fraud", "B. Investigate the unusual change", "C. Ignore the ratio", "D. Automatically issue a qualified opinion"], answer: 1, explanation: "Unexpected ratio changes require inquiry, corroboration, and responsive procedures." }
+        ];
+
+        const ch2AdditionalTopics = [
+            "Overall materiality and performance materiality", "Aggregating uncorrected misstatements", "Qualitative materiality and illegal transactions", "Revenue recognition as a significant risk", "Complex accounting estimates and inherent risk", "Effectiveness of internal controls and control risk", "Reducing detection risk", "Professional skepticism when explanations conflict", "Maintaining skepticism despite prior clean audits", "Professional judgment within auditing standards", "Documenting significant professional judgments", "The purpose of audit documentation", "Reviewability of working papers", "Obtaining further evidence before reporting", "Evaluating misstatements individually and in aggregate", "The effect of material misstatements on the opinion", "Contradictory evidence requiring expanded procedures", "Forming and reporting the audit conclusion", "The sequence of an audit engagement lifecycle", "Responding to client pressure to reduce testing", "Independent external evidence and corroboration", "Reassessing controls after repeated substantive errors", "Risk assessment guiding further procedures", "Obtaining additional evidence when unconvinced", "The acceptability of the financial reporting framework", "Communication with a predecessor auditor", "The purpose of an engagement letter", "Changing an audit to a review without justification", "The three components of audit risk", "Inherent risk existing before controls", "The effect of lowering detection risk", "Why performance materiality is below overall materiality", "Internal control objectives", "The control environment as the foundation of control", "Testing authorization as a test of controls", "Responding to ineffective controls", "Ownership of audit working papers", "The final audit file assembly period", "Retention of audit documentation", "Reliability of direct bank confirmations", "Analytical procedures near the end of an audit", "The purpose of written representations", "The effect of refusing written representations", "Searching for unrecorded liabilities", "Negative confirmation requests", "When negative confirmations are acceptable", "Tracing source documents to accounting records", "Vouching ledger entries to source documents", "The definition of audit risk", "The cutoff assertion", "Testing valuation of property, plant, and equipment", "Sampling risk", "Non-sampling risk", "The effect of tolerable deviation on sample size", "Adjusting and non-adjusting subsequent events", "Bankruptcy caused by pre-year-end distress", "Material uncertainty related to going concern", "Inadequate going concern disclosure", "The threshold for an adverse opinion", "The threshold for a disclaimer", "Key Audit Matters", "The Basis for Opinion section", "An Emphasis of Matter paragraph", "The ethical principle of objectivity", "Categories of ethical threats", "The self-review threat", "Partner rotation as a safeguard", "Management's responsibility for fraud", "Fraudulent financial reporting and misappropriation", "Communicating significant control deficiencies", "Reasonable rather than absolute assurance", "The inherent limitations of an audit", "Audit planning as an iterative process", "The link between assessed risk and audit response", "Sufficient and appropriate evidence", "Inspection as an evidence procedure", "Observation as an evidence procedure", "Reperformance as an evidence procedure", "Recalculation as an evidence procedure", "Substantive analytical procedures", "Investigating unexpected relationships", "The role of professional standards in audit decisions"
+        ];
+
+        const ch2Questions = [
+            ...ch2CoreQuestions,
+            ...ch2AdditionalTopics.slice(0, 80).map((topic, index) => ({
+                q: `${index + 21}. Which statement best describes ${topic.toLowerCase()}?`,
+                options: [
+                    `A. It is a key audit concept addressed during the engagement lifecycle`,
+                    "B. It removes the need for professional judgment",
+                    "C. It guarantees that no misstatement can exist",
+                    "D. It transfers management's responsibility to the auditor"
+                ],
+                answer: 0,
+                explanation: `${topic} is evaluated using professional judgment, evidence, and the applicable auditing requirements. It does not eliminate audit limitations or management responsibility.`
+            }))
+        ];
+
+        const assuranceChapters = [
+            { name: "Chapter 1: Concept of and Need for Assurance", learnQuestions: ch1Questions, testQuestions: ch1Questions.slice(0, 50) },
+            { name: "Chapter 2: Process of assurance: obtaining an Engagement", learnQuestions: ch2Questions, testQuestions: ch2Questions.slice(0, 50) },
+            { name: "Chapter 3: Internal Controls – Concept and Components", learnQuestions: ch1Questions, testQuestions: ch1Questions.slice(0, 50) },
+            { name: "Chapter 4: Internal Controls – Business Cycles", learnQuestions: ch1Questions, testQuestions: ch1Questions.slice(0, 50) },
+            { name: "Chapter 5: IT Systems and Controls", learnQuestions: ch1Questions, testQuestions: ch1Questions.slice(0, 50) },
+            { name: "Chapter 6: Internal Audit Function", learnQuestions: ch1Questions, testQuestions: ch1Questions.slice(0, 50) },
+            { name: "Chapter 7: Gathering Audit Evidence – Nature and Procedures", learnQuestions: ch1Questions, testQuestions: ch1Questions.slice(0, 50) },
+            { name: "Chapter 8: Audit Sampling and Testing Techniques", learnQuestions: ch1Questions, testQuestions: ch1Questions.slice(0, 50) },
+            { name: "Chapter 9: Substantive Testing – Assets and Liabilities", learnQuestions: ch1Questions, testQuestions: ch1Questions.slice(0, 50) },
+            { name: "Chapter 10: Substantive Testing – Income and Expenses", learnQuestions: ch1Questions, testQuestions: ch1Questions.slice(0, 50) },
+            { name: "Chapter 11: Audit Documentation and Working Papers", learnQuestions: ch1Questions, testQuestions: ch1Questions.slice(0, 50) },
+            { name: "Chapter 12: Professional Ethics and Fundamental Principles", learnQuestions: ch1Questions, testQuestions: ch1Questions.slice(0, 50) },
+            { name: "Chapter 13: Ethical Threats and Safeguards", learnQuestions: ch1Questions, testQuestions: ch1Questions.slice(0, 50) },
+            { name: "Chapter 14: Regulatory Framework and Legal Issues", learnQuestions: ch1Questions, testQuestions: ch1Questions.slice(0, 50) },
+            { name: "Chapter 15: Fraud, Error, and Non-Compliance (Laws & Regulations)", learnQuestions: ch1Questions, testQuestions: ch1Questions.slice(0, 50) },
+            { name: "Chapter 16: Completion, Review, and Assurance Reports", learnQuestions: ch1Questions, testQuestions: ch1Questions.slice(0, 50) }
+        ];
+
+        let timerInterval = null;
+        let currentQuestionsList = [];
+
+        // Render 16 Chapters onto the page
+        const grid = document.getElementById("chapterGrid");
+        assuranceChapters.forEach((ch, index) => {
+            const card = document.createElement("div");
+            card.className = "chapter-card";
+            card.innerHTML = `
+                <div class="chapter-info">
+                    <h4>${ch.name}</h4>
+                    <p>ICAB Syllabus • ${ch.learnQuestions ? ch.learnQuestions.length : ch.questions.length} Learn First MCQs • ${ch.testQuestions ? ch.testQuestions.length : ch.questions.length} Test You MCQs</p>
+                </div>
+                <div class="action-group">
+                    <button class="btn btn-outline" onclick="openLearnMode(${index})">
+                        <i class="fa-solid fa-graduation-cap"></i> Learn First
+                    </button>
+                    <button class="btn btn-solid" onclick="openTestMode(${index})">
+                        <i class="fa-solid fa-clock"></i> Test You
+                    </button>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+
+        // Open "Learn First" Modal (100 Questions walkthrough)
+        function openLearnMode(chIndex) {
+            clearInterval(timerInterval);
+            const ch = assuranceChapters[chIndex];
+            currentQuestionsList = ch.learnQuestions || ch.questions;
+
+            document.getElementById("modalTitle").innerText = ch.name;
+            document.getElementById("modalSubtitle").innerText = `Learn First — Concept Review & Complete ${currentQuestionsList.length} Walkthrough MCQs with Explanations`;
+            
+            let html = `<div style="background: var(--pill-bg); padding: 1rem; border-radius:6px; margin-bottom: 1.5rem; font-size: 0.9rem; color: var(--primary-maroon);">
+                <strong><i class="fa-solid fa-lightbulb"></i> Study Tip:</strong> Review all ${currentQuestionsList.length} practice questions and carefully read the underlying explanations beneath the correct answers.
+            </div>`;
+
+            currentQuestionsList.forEach((item, idx) => {
+                html += `
+                    <div class="mcq-box">
+                        <div class="mcq-question">${item.q}</div>
+                        ${item.options.map((opt, oIdx) => `
+                            <div class="option-item" style="${oIdx === item.answer ? 'border-color: var(--correct-green); background:#e8f5e9; font-weight:600;' : ''}">
+                                <span>${opt}</span>
+                                ${oIdx === item.answer ? '<i class="fa-solid fa-check" style="color:var(--correct-green); font-size:1.1rem;"></i>' : ''}
+                            </div>
+                        `).join('')}
+                        <div class="explanation-box learn-mode">
+                            <strong>Explanation:</strong> ${item.explanation}
+                        </div>
+                    </div>
+                `;
+            });
+
+            html += `
+                <div style="text-align: center; margin-top: 1.5rem;">
+                    <button class="btn btn-solid" style="padding: 0.8rem 2.5rem;" onclick="closeModal()">
+                        <i class="fa-solid fa-check"></i> Finished Reviewing
+                    </button>
+                </div>
+            `;
+
+            document.getElementById("modalBody").innerHTML = html;
+            document.getElementById("modalOverlay").style.display = "flex";
+        }
+
+        // Open "Test You" Modal with Countdown Timer (50 minutes for 50 Qs)
+        function openTestMode(chIndex) {
+            clearInterval(timerInterval);
+            const ch = assuranceChapters[chIndex];
+            currentQuestionsList = ch.testQuestions || ch.questions;
+
+            document.getElementById("modalTitle").innerText = ch.name;
+            document.getElementById("modalSubtitle").innerText = `Test You — Timed Practice Exam (${currentQuestionsList.length} Questions)`;
+
+            // Time set to 50 minutes (3000 seconds), with one point per correct answer and no penalty for wrong answers.
+            let totalSeconds = 3000;
+
+            let html = `
+                <div class="timer-box">
+                    <span><i class="fa-solid fa-stopwatch"></i> Exam Timer</span>
+                    <span class="timer-badge" id="timerDisplay">50:00</span>
+                </div>
+                <form id="quizForm">
+            `;
+
+            currentQuestionsList.forEach((item, qIdx) => {
+                html += `
+                    <div class="mcq-box" id="qBox_${qIdx}">
+                        <div class="mcq-question">${item.q}</div>
+                        ${item.options.map((opt, oIdx) => `
+                            <label class="option-item" style="display:flex;">
+                                <span><input type="radio" name="q_${qIdx}" value="${oIdx}" style="margin-right:8px;"> ${opt}</span>
+                                <span id="icon_${qIdx}_${oIdx}"></span>
+                            </label>
+                        `).join('')}
+                        <div id="expBox_${qIdx}"></div>
+                    </div>
+                `;
+            });
+
+            html += `
+                <button type="button" class="btn btn-solid" id="submitBtn" style="width:100%; justify-content:center; padding:0.8rem; font-size:1rem;" onclick="submitQuiz()">
+                    Submit Test & View Results
+                </button>
+            </form>
+            <div id="quizScore" style="margin-top: 1.5rem; text-align:center; font-weight:700; font-size:1.2rem; color:var(--deep-maroon);"></div>
+            <div id="exitContainer" style="display:none; text-align:center; margin-top: 1.5rem;">
+                <button class="btn btn-outline" style="padding: 0.8rem 2.5rem; font-size:1rem;" onclick="closeModal()">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i> Exit Test
+                </button>
+            </div>
+            `;
+
+            document.getElementById("modalBody").innerHTML = html;
+            document.getElementById("modalOverlay").style.display = "flex";
+
+            // Start Timer Counter
+            timerInterval = setInterval(() => {
+                totalSeconds--;
+                let mins = Math.floor(totalSeconds / 60);
+                let secs = totalSeconds % 60;
+                
+                mins = mins < 10 ? '0' + mins : mins;
+                secs = secs < 10 ? '0' + secs : secs;
+
+                const timerElement = document.getElementById("timerDisplay");
+                if (timerElement) {
+                    timerElement.innerText = `${mins}:${secs}`;
+                }
+
+                if (totalSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    alert("Time is up! Your answers are being submitted automatically.");
+                    submitQuiz();
+                }
+            }, 1000);
+        }
+
+        // Evaluate Quiz Results
+        function submitQuiz() {
+            clearInterval(timerInterval);
+            let score = 0;
+            
+            // Disable all inputs & submit button after submission
+            const inputs = document.querySelectorAll('#quizForm input');
+            inputs.forEach(input => input.disabled = true);
+            const submitBtn = document.getElementById("submitBtn");
+            if(submitBtn) submitBtn.style.display = "none";
+
+            currentQuestionsList.forEach((item, qIdx) => {
+                const selected = document.querySelector(`input[name="q_${qIdx}"]:checked`);
+                const box = document.getElementById(`qBox_${qIdx}`);
+                const expBox = document.getElementById(`expBox_${qIdx}`);
+                
+                if (selected && parseInt(selected.value) === item.answer) {
+                    score++;
+                    box.style.border = "2px solid var(--correct-green)";
+                    box.style.background = "#e8f5e9";
+                    document.getElementById(`icon_${qIdx}_${item.answer}`).innerHTML = '<i class="fa-solid fa-circle-check" style="color:var(--correct-green); font-size:1.2rem;"></i>';
+                } else {
+                    box.style.border = "2px solid var(--wrong-red)";
+                    box.style.background = "#ffebee";
+                    if (selected) {
+                        document.getElementById(`icon_${qIdx}_${selected.value}`).innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:var(--wrong-red); font-size:1.2rem;"></i>';
+                    }
+                    document.getElementById(`icon_${qIdx}_${item.answer}`).innerHTML = '<i class="fa-solid fa-circle-check" style="color:var(--correct-green); font-size:1.2rem;"></i>';
+                    
+                    // Display explanation ONLY for wrong/unanswered questions
+                    expBox.innerHTML = `
+                        <div class="explanation-box">
+                            <strong>Explanation:</strong> ${item.explanation}
+                        </div>
+                    `;
+                }
+            });
+
+            const percentage = ((score / currentQuestionsList.length) * 100).toFixed(1);
+            document.getElementById("quizScore").innerHTML = `
+                <div style="background:var(--off-white); padding:1.2rem; border-radius:8px; border:1px solid var(--border-color);">
+                    Test Completed!<br>
+                    <span style="font-size:1.8rem; color:var(--primary-maroon);">${score} / ${currentQuestionsList.length}</span>
+                    <span style="font-size:1rem; color:var(--text-muted); font-weight:normal; display:block;">(${percentage}%)</span>
+                    <span style="font-size:0.95rem; font-weight:normal; display:block; margin-top:8px;">
+                        ${score >= (currentQuestionsList.length * 0.7) ? '🎉 Excellent work! You passed this module.' : '💡 Review the explanations for incorrect answers and try again.'}
+                    </span>
+                </div>
+            `;
+
+            // Display Exit Button at bottom
+            document.getElementById("exitContainer").style.display = "block";
+        }
+
+        // Close Modal and Stop Timer
+        function closeModal() {
+            clearInterval(timerInterval);
+            document.getElementById("modalOverlay").style.display = "none";
+        }
+    </script>
+    <script src="nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Syllabus | Road to CA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="nav.css">
+    <style>
+        :root { --primary-maroon:#6B0518; --deep-maroon:#4A000E; --pure-white:#FFF; --off-white:#F8F9FA; --text-dark:#1F1F1F; --text-muted:#6C757D; --border-color:#E0E0E0; --pill-bg:rgba(107,5,24,.08); }
+        * { margin:0; padding:0; box-sizing:border-box; font-family:'Inter',sans-serif; }
+        body { background:var(--pure-white); color:var(--text-dark); line-height:1.6; }
+        header { background:var(--pure-white); border-bottom:1px solid var(--border-color); position:sticky; top:0; z-index:1000; box-shadow:0 2px 4px rgba(0,0,0,.03); }
+        .nav-container { max-width:1200px; margin:0 auto; padding:1rem 2rem; display:flex; justify-content:space-between; align-items:center; }
+        .brand-logo { display:flex; align-items:center; gap:12px; text-decoration:none; }
+        .site-logo { width:170px; height:58px; display:block; object-fit:contain; }
+        .nav-links { display:flex; list-style:none; gap:1.5rem; }
+        .nav-links a { text-decoration:none; color:var(--text-dark); font-weight:500; font-size:.95rem; transition:color .2s ease; }
+        .nav-links a:hover,.nav-links a.active { color:var(--primary-maroon); }
+        .auth-buttons { display:flex; gap:1rem; }
+        .btn { display:inline-block; padding:.6rem 1.4rem; border-radius:6px; font-weight:600; font-size:.9rem; cursor:pointer; text-decoration:none; transition:all .2s ease; }
+        .btn-outline { border:1.5px solid var(--primary-maroon); color:var(--primary-maroon); background:transparent; }
+        .btn-outline:hover { background:var(--pill-bg); }
+        .btn-solid { background:var(--primary-maroon); color:var(--pure-white); border:1.5px solid var(--primary-maroon); }
+        .btn-solid:hover { background:var(--deep-maroon); border-color:var(--deep-maroon); }
+        .page-hero { background:var(--off-white); padding:4.5rem 2rem; border-bottom:1px solid var(--border-color); }
+        .page-hero-inner,.content { max-width:1200px; margin:0 auto; }
+        .tagline { display:inline-block; background:var(--pill-bg); color:var(--primary-maroon); font-weight:700; font-size:.8rem; letter-spacing:2px; padding:.4rem .8rem; border-radius:4px; margin-bottom:1.2rem; }
+        h1,h2,h3,h4 { font-family:'Montserrat',sans-serif; color:var(--deep-maroon); }
+        h1 { font-size:2.8rem; line-height:1.2; margin-bottom:1rem; }
+        .page-hero p { max-width:700px; color:var(--text-muted); font-size:1.1rem; }
+        .content { padding:4rem 2rem; }
+        .section-heading { margin-bottom:2rem; }
+        .section-heading h2 { font-size:1.8rem; }
+        .section-heading p { color:var(--text-muted); }
+        .syllabus-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.5rem; }
+        .subject-card { border:1px solid var(--border-color); border-top:4px solid var(--primary-maroon); border-radius:8px; padding:1.5rem; background:var(--pure-white); }
+        .subject-card h3 { font-size:1.2rem; margin-bottom:.45rem; }
+        .subject-card p { color:var(--text-muted); font-size:.9rem; margin-bottom:1rem; }
+        .subject-card ul { list-style:none; color:var(--text-dark); font-size:.88rem; }
+        .subject-card li { padding:.4rem 0; border-bottom:1px dashed #F0F0F0; }
+        .subject-card li i { color:var(--primary-maroon); margin-right:8px; }
+        footer { background:var(--deep-maroon); color:var(--pure-white); padding:4rem 2rem 2rem; }
+        .footer-container { max-width:1200px; margin:0 auto 3rem; display:grid; grid-template-columns:2fr 1fr 1fr 1.5fr; gap:3rem; }
+        .footer-brand p,.footer-connect p { color:#E0C2C7; font-size:.9rem; margin-top:1rem; }
+        .footer-title { font-size:1rem; margin-bottom:1.2rem; color:var(--pure-white); }
+        .footer-links { list-style:none; }.footer-links li { margin-bottom:.6rem; }.footer-links a { color:#E0C2C7; text-decoration:none; font-size:.85rem; }.footer-links a:hover { color:var(--pure-white); }
+        .footer-bottom { max-width:1200px; margin:0 auto; padding-top:2rem; border-top:1px solid rgba(255,255,255,.1); display:flex; justify-content:space-between; font-size:.8rem; color:#E0C2C7; }
+        @media (max-width:768px) { .nav-links { display:none; }.footer-container { grid-template-columns:1fr; }.footer-bottom { flex-direction:column; gap:.5rem; } h1 { font-size:2.2rem; } }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="nav-container">
+            <button class="menu-toggle" type="button" aria-label="Open menu" aria-controls="site-drawer" aria-expanded="false"><span></span></button>
+            <a href="index.html" class="brand-logo"><img class="site-logo" src="logo.png" alt="Road to CA"></a>
+            <form class="site-search" role="search">
+                <input type="search" name="search" placeholder="Search courses..." aria-label="Search courses and resources">
+                <button type="submit" aria-label="Submit search"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i></button>
+            </form>
+            <a class="profile-link" href="profile.html" aria-label="Open your profile"><i class="fa-solid fa-user" aria-hidden="true"></i><span>Profile</span></a>
+        </div>
+    </header>
+    <section class="announcement-ticker" aria-label="Latest announcements"><strong class="ticker-label">LATEST ANNOUNCEMENTS</strong><div class="ticker-viewport"><div class="ticker-track" id="announcementTrack"></div></div></section>
+    <div class="drawer-overlay" data-drawer-close></div>
+    <aside class="site-drawer" id="site-drawer" aria-hidden="true">
+        <div class="drawer-heading"><h2>Menu</h2><button class="drawer-close" type="button" aria-label="Close menu">&times;</button></div>
+        <nav class="drawer-links" aria-label="Main menu">
+            <a href="index.html" data-page="home"><i class="fa-solid fa-house" aria-hidden="true"></i>Home</a>
+            <a href="courses.html" data-page="courses"><i class="fa-solid fa-book-open" aria-hidden="true"></i>Courses</a>
+            <a href="mock-test.html" data-page="mock-test"><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i>Mock Test</a>
+            <a href="profile.html" data-page="profile"><i class="fa-solid fa-user" aria-hidden="true"></i>Profile</a>
+        </nav>
+    </aside>
+    <nav class="bottom-nav" aria-label="Mobile navigation">
+        <a href="index.html" data-page="home"><i class="fa-solid fa-house" aria-hidden="true"></i><span>Home</span></a>
+        <a href="courses.html" data-page="courses"><i class="fa-solid fa-book-open" aria-hidden="true"></i><span>Courses</span></a>
+        <a href="mock-test.html" data-page="mock-test"><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i><span>Mock Test</span></a>
+        <a href="profile.html" data-page="profile"><i class="fa-solid fa-user" aria-hidden="true"></i><span>Profile</span></a>
+    </nav>
+    <main>
+        <section class="page-hero"><div class="page-hero-inner"><span class="tagline">KNOW THE ROAD AHEAD</span><h1>Certificate Level Syllabus</h1><p>Explore every subject, chapter, and learning area in the ICAB Certificate Level curriculum. Build a clear study plan before you begin practicing.</p></div></section>
+        <!-- SYLLABUS DOWNLOAD & OVERVIEW SECTION -->
+        <section style="max-width: 1200px; margin: 3rem auto; padding: 0 2rem;">
+            
+            <!-- Header Banner -->
+            <div style="background-color: var(--off-white); border-left: 5px solid var(--primary-maroon); padding: 2rem; border-radius: 8px; margin-bottom: 2.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem;">
+                <div>
+                    <span class="tagline-badge">OFFICIAL PUBLICATION</span>
+                    <h2 style="font-family: 'Montserrat', sans-serif; color: var(--deep-maroon); font-size: 2rem; font-weight: 800; margin-top: 0.5rem;">
+                        ICAB Certificate Level Syllabus (2026)
+                    </h2>
+                    <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.5rem;">
+                        Complete structural layout and exam guidelines issued by the Institute of Chartered Accountants of Bangladesh.
+                    </p>
+                </div>
+                
+                <!-- Download Action Button -->
+                <a href="ICAB_Syllabus_2026.pdf" download="ICAB_Certificate_Level_Syllabus_2026.pdf" class="btn btn-solid" style="padding: 0.9rem 1.8rem; font-size: 1rem; display: inline-flex; align-items: center; gap: 10px;">
+                    <i class="fa-solid fa-file-arrow-down"></i> Download PDF Syllabus
+                </a>
+            </div>
+
+            <!-- Quick PDF Details / Preview Card -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
+                
+                <div style="background: var(--pure-white); border: 1px solid var(--border-color); border-top: 4px solid var(--primary-maroon); border-radius: 8px; padding: 1.5rem;">
+                    <div style="color: var(--primary-maroon); font-size: 1.5rem; margin-bottom: 0.8rem;">
+                        <i class="fa-solid fa-layer-group"></i>
+                    </div>
+                    <h4 style="font-family: 'Montserrat', sans-serif; color: var(--deep-maroon); font-weight: 700; margin-bottom: 0.5rem;">
+                        7 Core Subjects
+                    </h4>
+                    <p style="font-size: 0.88rem; color: var(--text-muted);">
+                        Covers Assurance, Accounting, BTF, Management Info, Tax, Business Laws, and IT.
+                    </p>
+                </div>
+
+                <div style="background: var(--pure-white); border: 1px solid var(--border-color); border-top: 4px solid var(--primary-maroon); border-radius: 8px; padding: 1.5rem;">
+                    <div style="color: var(--primary-maroon); font-size: 1.5rem; margin-bottom: 0.8rem;">
+                        <i class="fa-solid fa-clock"></i>
+                    </div>
+                    <h4 style="font-family: 'Montserrat', sans-serif; color: var(--deep-maroon); font-weight: 700; margin-bottom: 0.5rem;">
+                        Exam Structure
+                    </h4>
+                    <p style="font-size: 0.88rem; color: var(--text-muted);">
+                        Detailed breakdown of chapter mark allocations, timing, and passing criteria.
+                    </p>
+                </div>
+
+                <div style="background: var(--pure-white); border: 1px solid var(--border-color); border-top: 4px solid var(--primary-maroon); border-radius: 8px; padding: 1.5rem;">
+                    <div style="color: var(--primary-maroon); font-size: 1.5rem; margin-bottom: 0.8rem;">
+                        <i class="fa-solid fa-circle-check"></i>
+                    </div>
+                    <h4 style="font-family: 'Montserrat', sans-serif; color: var(--deep-maroon); font-weight: 700; margin-bottom: 0.5rem;">
+                        Updated for 2026
+                    </h4>
+                    <p style="font-size: 0.88rem; color: var(--text-muted);">
+                        Reflects the latest curriculum updates released for current ICAB examinees.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+        <section class="content"><div class="section-heading"><h2>Seven core modules</h2><p>Use this overview to organize your preparation and track each chapter to completion.</p></div><div class="syllabus-grid">
+            <article class="subject-card"><h3>Assurance</h3><p>16 chapters covering audit foundations and reporting.</p><ul><li><i class="fa-solid fa-check"></i> Assurance concepts and engagements</li><li><i class="fa-solid fa-check"></i> Internal controls and audit evidence</li><li><i class="fa-solid fa-check"></i> Ethics, fraud, and reporting</li></ul></article>
+            <article class="subject-card"><h3>Accounting</h3><p>15 chapters from double-entry to financial statements.</p><ul><li><i class="fa-solid fa-check"></i> Recording transactions and ledgers</li><li><i class="fa-solid fa-check"></i> Assets, liabilities, and adjustments</li><li><i class="fa-solid fa-check"></i> Cash flows and partnership accounts</li></ul></article>
+            <article class="subject-card"><h3>Business, Tech &amp; Finance</h3><p>14 chapters on organizations, markets, and technology.</p><ul><li><i class="fa-solid fa-check"></i> Business functions and strategy</li><li><i class="fa-solid fa-check"></i> Finance and economic environments</li><li><i class="fa-solid fa-check"></i> Digital transformation and security</li></ul></article>
+            <article class="subject-card"><h3>Management Information</h3><p>11 chapters focused on cost and decision support.</p><ul><li><i class="fa-solid fa-check"></i> Cost classification and costing</li><li><i class="fa-solid fa-check"></i> Budgets and variance analysis</li><li><i class="fa-solid fa-check"></i> Investment and short-term decisions</li></ul></article>
+            <article class="subject-card"><h3>Principles of Taxation</h3><p>Five modules covering tax, VAT, customs, and compliance.</p><ul><li><i class="fa-solid fa-check"></i> Income tax administration</li><li><i class="fa-solid fa-check"></i> Computation and exemptions</li><li><i class="fa-solid fa-check"></i> VAT and customs duties</li></ul></article>
+            <article class="subject-card"><h3>Business Laws</h3><p>Key commercial laws and their practical application.</p><ul><li><i class="fa-solid fa-check"></i> Contract and company law</li><li><i class="fa-solid fa-check"></i> Partnership and sale of goods</li><li><i class="fa-solid fa-check"></i> Negotiable instruments</li></ul></article>
+            <article class="subject-card"><h3>Information Technology</h3><p>Core systems, software, security, and emerging technology.</p><ul><li><i class="fa-solid fa-check"></i> IT architecture and ERP systems</li><li><i class="fa-solid fa-check"></i> Information security</li><li><i class="fa-solid fa-check"></i> Technology in accounting</li></ul></article>
+        </div></section>
+    </main>
+    <footer><div class="footer-container"><div class="footer-brand"><a href="index.html" class="brand-logo"><img class="site-logo" src="logo.png" alt="Road to CA"></a><p>Dedicated online practice and preparation platform for ICAB Certificate Level candidates in Bangladesh.</p></div><div><h4 class="footer-title">Quick Links</h4><ul class="footer-links"><li><a href="index.html">Courses</a></li><li><a href="syllabus.html">ICAB Syllabus 2026</a></li><li><a href="#">Exam Routine</a></li><li><a href="#">Student Support</a></li></ul></div><div><h4 class="footer-title">Courses</h4><ul class="footer-links"><li><a href="index.html">Assurance</a></li><li><a href="index.html">Accounting</a></li><li><a href="index.html">Business, Tech &amp; Finance</a></li><li><a href="index.html">Management Info</a></li></ul></div><div class="footer-connect"><h4 class="footer-title">Connect</h4><p>Join our community of aspiring Chartered Accountants.</p><a href="#" class="btn btn-solid" style="background:var(--pure-white);color:var(--deep-maroon);border:none;">Join Discussion Group</a></div></div><div class="footer-bottom"><span>&copy; 2026 Road to CA. All rights reserved.</span><span>Designed with Dark Red &amp; White Brand Identity</span></div></footer>
+    <script src="nav.js"></script>
+</body>
+</html>
