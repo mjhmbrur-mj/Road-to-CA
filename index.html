@@ -1,0 +1,1439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Road to CA — Practice, Prepare, Progress</title>
+    <!-- Google Fonts & FontAwesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="nav.css">
+    
+    <style>
+        :root {
+            --primary-maroon: #6B0518;
+            --deep-maroon: #4A000E;
+            --pure-white: #FFFFFF;
+            --off-white: #F8F9FA;
+            --text-dark: #1F1F1F;
+            --text-muted: #6C757D;
+            --border-color: #E0E0E0;
+            --pill-bg: rgba(107, 5, 24, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--pure-white);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* --- NAVIGATION HEADER --- */
+        header {
+            background-color: var(--pure-white);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .site-logo {
+            width: 170px;
+            height: 58px;
+            display: block;
+            object-fit: contain;
+        }
+
+        .footer-brand .site-logo {
+            filter: brightness(0) invert(1);
+        }
+
+        .brand-text h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--primary-maroon);
+            line-height: 1;
+            letter-spacing: 0.5px;
+        }
+
+        .brand-text p {
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            letter-spacing: 1.5px;
+            margin-top: 3px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--primary-maroon);
+        }
+
+        .nav-links { display: none; }
+        .nav-container { justify-content: flex-start; gap: 1rem; }
+        .menu-toggle, .drawer-close {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 0;
+            background: transparent;
+            color: var(--deep-maroon);
+            cursor: pointer;
+        }
+        .menu-toggle { width: 44px; height: 44px; font-size: 1.35rem; }
+        .menu-toggle span, .menu-toggle span::before, .menu-toggle span::after {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: currentColor;
+            content: "";
+        }
+        .menu-toggle span { position: relative; }
+        .menu-toggle span::before { position: absolute; top: -7px; }
+        .menu-toggle span::after { position: absolute; top: 7px; }
+        .site-drawer {
+            position: fixed;
+            inset: 0 auto 0 0;
+            z-index: 1200;
+            width: min(320px, 86vw);
+            padding: 1.25rem;
+            background: var(--pure-white);
+            box-shadow: 10px 0 30px rgba(74, 0, 14, .18);
+            transform: translateX(-105%);
+            transition: transform .28s ease;
+        }
+        .site-drawer.is-open { transform: translateX(0); }
+        .drawer-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 1150;
+            background: rgba(31, 31, 31, .45);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .28s ease;
+        }
+        .drawer-overlay.is-visible { opacity: 1; pointer-events: auto; }
+        .drawer-heading { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem; }
+        .drawer-heading h2 { font-size: 1.25rem; }
+        .drawer-close { width: 40px; height: 40px; font-size: 1.6rem; }
+        .drawer-links { display: grid; gap: .45rem; }
+        .drawer-links a, .bottom-nav a {
+            color: var(--deep-maroon);
+            text-decoration: none;
+        }
+        .drawer-links a {
+            display: flex;
+            align-items: center;
+            gap: .85rem;
+            padding: .85rem .75rem;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+        .drawer-links a:hover, .drawer-links a.active { background: var(--pill-bg); color: var(--primary-maroon); }
+        .bottom-nav {
+            display: none;
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 1050;
+            justify-content: space-around;
+            padding: .45rem .35rem calc(.45rem + env(safe-area-inset-bottom));
+            background: var(--pure-white);
+            border-top: 1px solid var(--border-color);
+            box-shadow: 0 -5px 18px rgba(74, 0, 14, .12);
+            transform: translateY(0);
+            transition: transform .28s ease;
+        }
+        .bottom-nav.is-hidden { transform: translateY(110%); }
+        .bottom-nav a { display: grid; justify-items: center; gap: .18rem; min-width: 64px; padding: .35rem .5rem; font-size: .7rem; }
+        .bottom-nav i { font-size: 1.05rem; }
+        .bottom-nav a.active { color: var(--primary-maroon); font-weight: 700; }
+        @media (max-width: 768px) { .bottom-nav { display: flex; } body { padding-bottom: 4.6rem; } }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.6rem 1.4rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .btn-outline {
+            border: 1.5px solid var(--primary-maroon);
+            color: var(--primary-maroon);
+            background: transparent;
+        }
+
+        .btn-outline:hover {
+            background-color: var(--pill-bg);
+        }
+
+        .btn-solid {
+            background-color: var(--primary-maroon);
+            color: var(--pure-white);
+            border: 1.5px solid var(--primary-maroon);
+        }
+
+        .btn-solid:hover {
+            background-color: var(--deep-maroon);
+            border-color: var(--deep-maroon);
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            background-color: var(--off-white);
+            padding: 5rem 2rem;
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            border: 80px solid rgba(107, 5, 24, 0.03);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .tagline-badge {
+            display: inline-block;
+            background-color: var(--pill-bg);
+            color: var(--primary-maroon);
+            font-weight: 700;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            margin-bottom: 1.2rem;
+        }
+
+        .hero-content h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: var(--deep-maroon);
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        .hero-content p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        .hero-video {
+            width: min(260px, 100%);
+            margin: 0 0 0 auto;
+        }
+
+        .hero-video-frame {
+            position: relative;
+        }
+
+        .hero-video video {
+            display: block;
+            width: 100%;
+            aspect-ratio: 9 / 16;
+            height: auto;
+            background: #171717;
+            border-radius: 12px;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+            object-fit: cover;
+        }
+
+        .video-fallback {
+            display: none;
+            padding: 1.5rem;
+            background: var(--deep-maroon);
+            color: var(--pure-white);
+            border-radius: 12px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .video-fallback.is-visible { display: block; }
+
+        .video-sound-toggle {
+            position: absolute;
+            right: 0.75rem;
+            bottom: 0.75rem;
+            background: rgba(74, 0, 14, 0.9);
+            color: var(--pure-white);
+            border: 1px solid rgba(255, 255, 255, 0.45);
+            border-radius: 6px;
+            padding: 0.5rem 0.7rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .video-sound-toggle:hover {
+            background: var(--primary-maroon);
+        }
+
+        .hero-video figcaption {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            margin-top: 0.6rem;
+            text-align: center;
+        }
+
+        /* --- LATEST NEWS --- */
+        .latest-news-section {
+            padding: 3rem 2rem;
+            background: var(--pure-white);
+        }
+
+        .latest-news-card {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--pure-white);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            box-shadow: 0 8px 24px rgba(74, 0, 14, 0.07);
+            overflow: hidden;
+        }
+
+        .latest-news-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 1.25rem 1.5rem;
+            background: var(--deep-maroon);
+            color: var(--pure-white);
+        }
+
+        .latest-news-title {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.2rem;
+        }
+
+        .latest-news-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 34px;
+            height: 34px;
+            background: var(--pure-white);
+            color: var(--primary-maroon);
+            border-radius: 50%;
+            font-size: 1.1rem;
+        }
+
+        .latest-news-label {
+            color: #E0C2C7;
+            font-size: 0.75rem;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+        }
+
+        .news-list {
+            list-style: none;
+        }
+
+        .news-item {
+            display: grid;
+            grid-template-columns: 120px 1fr auto;
+            gap: 1rem;
+            align-items: center;
+            padding: 1.1rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .news-item:last-child {
+            border-bottom: 0;
+        }
+
+        .news-item[hidden] {
+            display: none;
+        }
+
+        .news-date {
+            width: max-content;
+            background: var(--pill-bg);
+            color: var(--primary-maroon);
+            border-radius: 4px;
+            padding: 0.35rem 0.55rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .news-link {
+            color: var(--deep-maroon);
+            font-size: 0.92rem;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .news-link:hover {
+            color: var(--primary-maroon);
+            text-decoration: underline;
+        }
+
+        .news-type {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            white-space: nowrap;
+        }
+
+        .news-footer {
+            display: flex;
+            justify-content: flex-end;
+            padding: 1rem 1.5rem;
+            background: var(--off-white);
+        }
+
+        .news-view-all[aria-expanded="true"] i {
+            transform: rotate(180deg);
+        }
+
+        .news-view-all i {
+            transition: transform 0.2s ease;
+        }
+
+        .hero-card-preview {
+            background: var(--pure-white);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border-top: 5px solid var(--primary-maroon);
+        }
+
+        /* --- MAIN COURSES SECTION --- */
+        .courses-section {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .section-header {
+            margin-bottom: 2.5rem;
+        }
+
+        .section-header h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8rem;
+            color: var(--deep-maroon);
+            font-weight: 700;
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .course-card {
+            background-color: var(--pure-white);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            border-top: 4px solid var(--primary-maroon);
+            padding: 1.8rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .course-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 20px rgba(107, 5, 24, 0.08);
+        }
+
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .course-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--deep-maroon);
+        }
+
+        .chapter-badge {
+            background-color: var(--pill-bg);
+            color: var(--primary-maroon);
+            font-weight: 700;
+            font-size: 0.75rem;
+            padding: 0.3rem 0.6rem;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+
+        .chapter-list-preview {
+            list-style: none;
+            margin: 1rem 0;
+            max-height: 180px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        .chapter-list-preview::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .chapter-list-preview::-webkit-scrollbar-thumb {
+            background: #D6C2C5;
+            border-radius: 4px;
+        }
+
+        .chapter-item {
+            font-size: 0.85rem;
+            color: var(--text-dark);
+            padding: 0.4rem 0;
+            border-bottom: 1px dashed #F0F0F0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .chapter-item i {
+            color: var(--primary-maroon);
+            font-size: 0.7rem;
+        }
+
+        /* --- EXAM ROUTINE CARD --- */
+        .exam-routine-section {
+            background: var(--off-white);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 4rem 2rem;
+        }
+
+        .exam-routine-card {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--pure-white);
+            border: 1px solid var(--border-color);
+            border-top: 5px solid var(--primary-maroon);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 8px 24px rgba(74, 0, 14, 0.06);
+        }
+
+        .exam-routine-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .exam-routine-eyebrow {
+            color: var(--primary-maroon);
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .exam-routine-header h3 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--deep-maroon);
+            font-size: 1.8rem;
+            margin: 0.35rem 0 0.5rem;
+        }
+
+        .exam-routine-header p {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+        }
+
+        .countdown {
+            display: flex;
+            gap: 0.6rem;
+            flex-shrink: 0;
+        }
+
+        .countdown-unit {
+            min-width: 76px;
+            padding: 0.8rem 0.65rem;
+            background: var(--deep-maroon);
+            color: var(--pure-white);
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .countdown-value {
+            display: block;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            line-height: 1.1;
+        }
+
+        .countdown-label {
+            display: block;
+            color: #E0C2C7;
+            font-size: 0.68rem;
+            letter-spacing: 0.8px;
+            margin-top: 0.25rem;
+            text-transform: uppercase;
+        }
+
+        .routine-actions {
+            border-top: 1px solid var(--border-color);
+            padding-top: 1.5rem;
+        }
+
+        .routine-toggle {
+            align-items: center;
+            display: inline-flex;
+            gap: 0.6rem;
+        }
+
+        .routine-toggle i {
+            transition: transform 0.2s ease;
+        }
+
+        .routine-toggle[aria-expanded="true"] i {
+            transform: rotate(180deg);
+        }
+
+        .routine-table-wrap {
+            margin-top: 1.5rem;
+            overflow-x: auto;
+        }
+
+        .routine-table {
+            border-collapse: collapse;
+            min-width: 620px;
+            width: 100%;
+        }
+
+        .routine-table th,
+        .routine-table td {
+            border-bottom: 1px solid var(--border-color);
+            padding: 0.9rem 1rem;
+            text-align: left;
+        }
+
+        .routine-table th {
+            background: var(--off-white);
+            color: var(--deep-maroon);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 0.3px;
+        }
+
+        .routine-table td {
+            color: var(--text-dark);
+            font-size: 0.88rem;
+        }
+
+        .routine-table tbody tr:last-child td {
+            border-bottom: 0;
+        }
+
+        .routine-table tbody tr:hover {
+            background: rgba(107, 5, 24, 0.03);
+        }
+
+        /* --- CA FIRM LIST DOWNLOADS --- */
+        .firm-list-section {
+            background: var(--pure-white);
+            border-bottom: 1px solid var(--border-color);
+            padding: 4rem 2rem;
+        }
+
+        .firm-list-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .firm-list-heading {
+            margin-bottom: 1.75rem;
+        }
+
+        .firm-list-heading h3 {
+            color: var(--deep-maroon);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8rem;
+            margin: 0.35rem 0 0.5rem;
+        }
+
+        .firm-list-heading p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .firm-list-downloads {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1rem;
+        }
+
+        .firm-list-download {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.25rem;
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--primary-maroon);
+            border-radius: 8px;
+            background: var(--off-white);
+        }
+
+        .firm-list-download-icon {
+            display: grid;
+            flex: 0 0 2.75rem;
+            place-items: center;
+            width: 2.75rem;
+            height: 2.75rem;
+            border-radius: 50%;
+            background: var(--primary-maroon);
+            color: var(--pure-white);
+            font-size: 1.1rem;
+        }
+
+        .firm-list-download-copy {
+            flex: 1;
+        }
+
+        .firm-list-download-copy h4 {
+            color: var(--deep-maroon);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .firm-list-download-copy p {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        .firm-list-download .btn {
+            flex-shrink: 0;
+            white-space: nowrap;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* --- DASHBOARD VIEW INTERFACE --- */
+        .workspace-demo {
+            background-color: var(--off-white);
+            border-top: 1px solid var(--border-color);
+            padding: 4rem 2rem;
+        }
+
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--pure-white);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            min-height: 400px;
+            overflow: hidden;
+        }
+
+        .dashboard-sidebar {
+            background-color: var(--deep-maroon);
+            color: var(--pure-white);
+            padding: 1.5rem 0;
+        }
+
+        .sidebar-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            color: #E0C2C7;
+            padding: 0 1.5rem 1rem 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 1rem;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-item {
+            padding: 0.8rem 1.5rem;
+            font-size: 0.85rem;
+            color: #E0C2C7;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .sidebar-item.active {
+            background-color: var(--primary-maroon);
+            color: var(--pure-white);
+            font-weight: 600;
+            border-left: 4px solid var(--pure-white);
+        }
+
+        .dashboard-content {
+            padding: 2rem;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: var(--deep-maroon);
+            color: var(--pure-white);
+            padding: 4rem 2rem 2rem 2rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand p {
+            color: #E0C2C7;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+
+        .footer-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 1.2rem;
+            color: var(--pure-white);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.6rem;
+        }
+
+        .footer-links a {
+            color: #E0C2C7;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--pure-white);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: #E0C2C7;
+        }
+
+        @media (max-width: 768px) {
+            .hero-container, .dashboard-container, .footer-container {
+                grid-template-columns: 1fr;
+            }
+            .nav-links {
+                display: none;
+            }
+            .exam-routine-header {
+                flex-direction: column;
+            }
+            .countdown {
+                width: 100%;
+            }
+            .countdown-unit {
+                flex: 1;
+            }
+            .latest-news-header {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+            .news-item {
+                grid-template-columns: 1fr;
+                gap: 0.45rem;
+            }
+            .news-type {
+                display: none;
+            }
+            .news-footer {
+                justify-content: stretch;
+            }
+            .news-view-all {
+                width: 100%;
+            }
+            .firm-list-downloads {
+                grid-template-columns: 1fr;
+            }
+            .firm-list-download {
+                align-items: flex-start;
+                flex-wrap: wrap;
+            }
+            .firm-list-download .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVIGATION HEADER -->
+    <header>
+        <div class="nav-container">
+            <button class="menu-toggle" type="button" aria-label="Open menu" aria-controls="site-drawer" aria-expanded="false"><span></span></button>
+            <a href="#" class="brand-logo">
+                <img class="site-logo" src="logo.png" alt="Road to CA">
+            </a>
+            <form class="site-search" role="search">
+                <input type="search" name="search" placeholder="Search courses..." aria-label="Search courses and resources">
+                <button type="submit" aria-label="Submit search"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i></button>
+            </form>
+            <a class="profile-link" href="profile.html" aria-label="Open your profile"><i class="fa-solid fa-user" aria-hidden="true"></i><span>Profile</span></a>
+        </div>
+    </header>
+
+    <section class="announcement-ticker" aria-label="Latest announcements">
+        <strong class="ticker-label">LATEST ANNOUNCEMENTS</strong>
+        <div class="ticker-viewport"><div class="ticker-track" id="announcementTrack"></div></div>
+    </section>
+
+    <div class="drawer-overlay" data-drawer-close></div>
+    <aside class="site-drawer" id="site-drawer" aria-hidden="true">
+        <div class="drawer-heading"><h2>Menu</h2><button class="drawer-close" type="button" aria-label="Close menu">&times;</button></div>
+        <nav class="drawer-links" aria-label="Main menu">
+            <a href="index.html" data-page="home"><i class="fa-solid fa-house" aria-hidden="true"></i>Home</a>
+            <a href="courses.html" data-page="courses"><i class="fa-solid fa-book-open" aria-hidden="true"></i>Courses</a>
+            <a href="mock-test.html" data-page="mock-test"><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i>Mock Test</a>
+            <a href="profile.html" data-page="profile"><i class="fa-solid fa-user" aria-hidden="true"></i>Profile</a>
+        </nav>
+    </aside>
+
+    <nav class="bottom-nav" aria-label="Mobile navigation">
+        <a href="index.html" data-page="home"><i class="fa-solid fa-house" aria-hidden="true"></i><span>Home</span></a>
+        <a href="courses.html" data-page="courses"><i class="fa-solid fa-book-open" aria-hidden="true"></i><span>Courses</span></a>
+        <a href="mock-test.html" data-page="mock-test"><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i><span>Mock Test</span></a>
+        <a href="profile.html" data-page="profile"><i class="fa-solid fa-user" aria-hidden="true"></i><span>Profile</span></a>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <span class="tagline-badge">PRACTICE • PREPARE • PROGRESS</span>
+                <h2>Master Your CA Certificate Level Exam</h2>
+                <p>Structured chapter-wise practice, complete syllabus coverage, and real exam simulations for ICAB aspirants.</p>
+                <a href="#courses" class="btn btn-solid" style="padding: 0.8rem 1.8rem; font-size: 1rem;">Start Practicing Now <i class="fa-solid font-arrow-right" style="margin-left:8px;"></i></a>
+            </div>
+            <figure class="hero-video">
+                <div class="hero-video-frame">
+                    <video id="documentary-video" autoplay muted loop playsinline preload="auto">
+                        <source src="documentary.mp4" type="video/mp4">
+                    </video>
+                    <p class="video-fallback" id="video-fallback">The documentary video could not be loaded in this browser.</p>
+                    <button class="video-sound-toggle" id="video-sound-toggle" type="button" aria-pressed="false">&#128263; Enable sound</button>
+                </div>
+                <figcaption>&#128249; Documentary</figcaption>
+            </figure>
+        </div>
+    </section>
+
+    <!-- LATEST NEWS -->
+    <section class="latest-news-section" aria-labelledby="latest-news-title">
+        <div class="latest-news-card">
+            <div class="latest-news-header">
+                <h3 class="latest-news-title" id="latest-news-title"><span class="latest-news-badge" aria-hidden="true">&#128226;</span> Latest News</h3>
+                <span class="latest-news-label">Announcements &amp; Updates</span>
+            </div>
+            <ul class="news-list" id="news-extra-items">
+                <li class="news-item">
+                    <time class="news-date" datetime="2026-09-12">12 Sep 2026</time>
+                    <a class="news-link" href="allexamtime2026.pdf">Certificate Level examination routine is now available for download</a>
+                    <span class="news-type">Exam Notice</span>
+                </li>
+                <li class="news-item">
+                    <time class="news-date" datetime="2026-09-10">10 Sep 2026</time>
+                    <a class="news-link" href="syllabus.html">Review the updated ICAB Certificate Level syllabus for 2026</a>
+                    <span class="news-type">Syllabus</span>
+                </li>
+                <li class="news-item">
+                    <time class="news-date" datetime="2026-09-08">08 Sep 2026</time>
+                    <a class="news-link" href="mock-exams.html">New Certificate Level mock exam simulations are ready</a>
+                    <span class="news-type">Platform Update</span>
+                </li>
+                <li class="news-item news-item-extra" hidden>
+                    <time class="news-date" datetime="2026-09-05">05 Sep 2026</time>
+                    <a class="news-link" href="assurance.html">Assurance chapter notes and practice coverage have been refreshed</a>
+                    <span class="news-type">Course Update</span>
+                </li>
+                <li class="news-item news-item-extra" hidden>
+                    <time class="news-date" datetime="2026-09-01">01 Sep 2026</time>
+                    <a class="news-link" href="syllabus.html#courses">Plan your preparation with the complete seven-subject overview</a>
+                    <span class="news-type">Guidance</span>
+                </li>
+            </ul>
+            <div class="news-footer">
+                <button class="btn btn-outline news-view-all" id="news-view-all" type="button" aria-expanded="false" aria-controls="news-extra-items">
+                    View All News <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- COURSES & SYLLABUS SECTION -->
+    <section class="courses-section" id="courses">
+        <div class="section-header">
+            <h3>Certificate Level Modules</h3>
+            <p style="color: var(--text-muted);">Select a course module to access chapter-wise study notes and practice sets.</p>
+        </div>
+
+        <div class="courses-grid">
+
+            <!-- 1. Assurance -->
+            <div class="course-card">
+                <div>
+                    <div class="card-top">
+                        <h4 class="course-title">Assurance</h4>
+                        <span class="chapter-badge">16 Chapters</span>
+                    </div>
+                    <ul class="chapter-list-preview">
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 1: Concept of & Need for Assurance</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 2: Process of Assurance Engagements</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 3: Internal Controls – Concept & Components</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 4: Internal Controls – Business Cycles</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 5: IT Systems and Controls</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 6: Internal Audit Function</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 7: Gathering Audit Evidence</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 8: Audit Sampling & Testing</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 9: Substantive Testing – Assets/Liabilities</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 10: Substantive Testing – Income/Expenses</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 11: Audit Documentation & Working Papers</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 12: Professional Ethics & Principles</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 13: Ethical Threats and Safeguards</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 14: Regulatory Framework & Legal Issues</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 15: Fraud, Error & Non-Compliance</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 16: Completion, Review & Reports</li>
+                    </ul>
+                </div>
+                <a href="assurance.html" class="btn btn-solid" style="text-align: center; margin-top: 1rem;">View All</a>
+                <a href="assurance.html" class="btn btn-outline" style="text-align: center; margin-top: 0.75rem;">Learn First</a>
+                <a href="mock-test.html" class="btn btn-outline" style="text-align: center; margin-top: 0.75rem;">Test You</a>
+            </div>
+
+            <!-- 2. Accounting -->
+            <div class="course-card">
+                <div>
+                    <div class="card-top">
+                        <h4 class="course-title">Accounting</h4>
+                        <span class="chapter-badge">15 Chapters</span>
+                    </div>
+                    <ul class="chapter-list-preview">
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 1: Introduction & Conceptual Framework</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 2: Double-Entry & Accounting Equation</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 3: Recording Transactions & Journals</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 4: Ledger Accounts and Trial Balance</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 5: Inventory Accounting & Valuation</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 6: Tangible & Intangible Assets</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 7: Accruals, Prepayments & Receivables</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 8: Irrecoverable Debts & Allowances</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 9: Bank Reconciliation Statements</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 10: Errors & Suspense Accounts</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 11: Statement of Profit or Loss</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 12: Statement of Financial Position</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 13: Statement of Cash Flows</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 14: Partnership Accounts</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 15: Public Financial Management (PFM)</li>
+                    </ul>
+                </div>
+                <a href="course-chapters.html?course=accounting" class="btn btn-solid" style="text-align: center; margin-top: 1rem;">View All</a>
+                <a href="course-chapters.html?course=accounting" class="btn btn-outline" style="text-align: center; margin-top: 0.75rem;">Learn First</a>
+                <a href="mock-test.html" class="btn btn-outline" style="text-align: center; margin-top: 0.75rem;">Test You</a>
+            </div>
+
+            <!-- 3. BTF -->
+            <div class="course-card">
+                <div>
+                    <div class="card-top">
+                        <h4 class="course-title">Business, Tech & Finance</h4>
+                        <span class="chapter-badge">14 Chapters</span>
+                    </div>
+                    <ul class="chapter-list-preview">
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 1: Introduction to Business</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 2: Managing a Business</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 3: Organisational and Business Structures</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 4: Introduction to Business Strategy</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 5: Introduction to Risk Management</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 6: The Finance Function and Financial Information</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 7: Business Finance</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 8: The Accountancy Profession</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 9: Governance and Ethics</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 10: Corporate Governance</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 11: The Economic Environment of Business and Finance</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 12: External Regulation of Business</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 13: Data Analysis</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 14: Developments in Technology</li>
+                    </ul>
+                </div>
+                <a href="course-chapters.html?course=btf" class="btn btn-solid" style="text-align: center; margin-top: 1rem;">View All</a>
+                <a href="course-chapters.html?course=btf&amp;mode=learn" class="btn btn-outline" style="text-align: center; margin-top: 0.75rem;">Learn First</a>
+                <a href="course-chapters.html?course=btf&amp;mode=test" class="btn btn-outline" style="text-align: center; margin-top: 0.75rem;">Test You</a>
+            </div>
+
+            <!-- 4. Management Information -->
+            <div class="course-card">
+                <div>
+                    <div class="card-top">
+                        <h4 class="course-title">Management Information</h4>
+                        <span class="chapter-badge">11 Chapters</span>
+                    </div>
+                    <ul class="chapter-list-preview">
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 1: Cost Classification & Concepts</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 2: Material, Labor & Overhead Costs</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 3: Marginal vs. Absorption Costing</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 4: Job, Batch & Process Costing</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 5: Cost-Volume-Profit (CVP) Analysis</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 6: Budgeting Techniques & Preparation</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 7: Cash Budgeting & Working Capital</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 8: Standard Costing & Variance Analysis</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 9: Investment Appraisal Techniques</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 10: Short-term Decision Making</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 11: Management Reporting, Data & Ethics</li>
+                    </ul>
+                </div>
+                <a href="course-chapters.html?course=mi" class="btn btn-solid" style="text-align: center; margin-top: 1rem;">View All</a>
+                <a href="course-chapters.html?course=mi" class="btn btn-outline" style="text-align: center; margin-top: 0.75rem;">Learn First</a>
+                <a href="mock-test.html" class="btn btn-outline" style="text-align: center; margin-top: 0.75rem;">Test You</a>
+            </div>
+
+            <!-- 5. Principles of Taxation -->
+            <div class="course-card">
+                <div>
+                    <div class="card-top">
+                        <h4 class="course-title">Principles of Taxation</h4>
+                        <span class="chapter-badge">5 Modules</span>
+                    </div>
+                    <ul class="chapter-list-preview">
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 1: Income Tax Admin, Returns & Ethics</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 2: Income Tax Computation (Heads of Income)</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 3: Depreciation, Exemptions & TDS</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 4: VAT System & Compliance</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 5: Customs Act & Excise Duties</li>
+                    </ul>
+                </div>
+                <a href="course-chapters.html?course=pot" class="btn btn-solid" style="text-align: center; margin-top: 1rem;">View All</a>
+                <a href="course-chapters.html?course=pot" class="btn btn-outline" style="text-align: center; margin-top: 0.75rem;">Learn First</a>
+                <a href="mock-test.html" class="btn btn-outline" style="text-align: center; margin-top: 0.75rem;">Test You</a>
+            </div>
+
+            <!-- 6. Business Laws -->
+            <div class="course-card">
+                <div>
+                    <div class="card-top">
+                        <h4 class="course-title">Business Laws</h4>
+                        <span class="chapter-badge">50 Marks</span>
+                    </div>
+                    <ul class="chapter-list-preview">
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 1: The Contract Act, 1872</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 2: The Companies Act, 1994</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 3: The Partnership Act, 1932</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 4: Negotiable Instruments Act, 1881</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 5: Sale of Goods Act, 1930</li>
+                    </ul>
+                </div>
+                <a href="course-chapters.html?course=law" class="btn btn-solid" style="text-align: center; margin-top: 1rem;">View All</a>
+                <a href="course-chapters.html?course=law" class="btn btn-outline" style="text-align: center; margin-top: 0.75rem;">Learn First</a>
+                <a href="mock-test.html" class="btn btn-outline" style="text-align: center; margin-top: 0.75rem;">Test You</a>
+            </div>
+
+            <!-- 7. Information Technology -->
+            <div class="course-card">
+                <div>
+                    <div class="card-top">
+                        <h4 class="course-title">Information Technology</h4>
+                        <span class="chapter-badge">50 Marks</span>
+                    </div>
+                    <ul class="chapter-list-preview">
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 1: Information Systems & IT Architecture</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 2: Business Software & ERP Systems</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 3: Info Security & Cyber Governance</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 4: Emerging Technologies in Accounting</li>
+                    </ul>
+                </div>
+                <a href="course-chapters.html?course=it" class="btn btn-solid" style="text-align: center; margin-top: 1rem;">View All</a>
+                <a href="course-chapters.html?course=it" class="btn btn-outline" style="text-align: center; margin-top: 0.75rem;">Learn First</a>
+                <a href="mock-test.html" class="btn btn-outline" style="text-align: center; margin-top: 0.75rem;">Test You</a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- EXAM ROUTINE -->
+    <section class="exam-routine-section" aria-labelledby="exam-routine-title">
+        <div class="exam-routine-card">
+            <div class="exam-routine-header">
+                <div>
+                    <span class="exam-routine-eyebrow">Certificate Level Examination</span>
+                    <h3 id="exam-routine-title">&#128197; Exam Routine</h3>
+                    <p>Next examination begins November 17, 2026.</p>
+                </div>
+                <div class="countdown" aria-label="Time remaining until the next Certificate Level Exam">
+                    <div class="countdown-unit"><span class="countdown-value" id="countdown-days">--</span><span class="countdown-label">Days</span></div>
+                    <div class="countdown-unit"><span class="countdown-value" id="countdown-hours">--</span><span class="countdown-label">Hours</span></div>
+                    <div class="countdown-unit"><span class="countdown-value" id="countdown-minutes">--</span><span class="countdown-label">Minutes</span></div>
+                </div>
+            </div>
+            <div class="routine-actions">
+                <a href="allexamtime2026.pdf" download="allexamtime2026.pdf" class="btn btn-solid" style="margin-right: 0.75rem;">
+                    <i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i> Download Exam Routine
+                </a>
+                <button class="btn btn-outline routine-toggle" id="routine-toggle" type="button" aria-expanded="false" aria-controls="routine-details">
+                    View Full Exam Routine Details &#128071; <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+                </button>
+                <div class="routine-table-wrap" id="routine-details" hidden>
+                    <table class="routine-table">
+                        <caption class="sr-only">Certificate Level examination routine</caption>
+                        <thead>
+                            <tr>
+                                <th scope="col">Subject</th>
+                                <th scope="col">Exam Date</th>
+                                <th scope="col">Start Time</th>
+                                <th scope="col">Duration</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Assurance</td><td>November 17, 2026</td><td>10:00 AM</td><td>3 hours</td></tr>
+                            <tr><td>Accounting</td><td>November 19, 2026</td><td>10:00 AM</td><td>3 hours</td></tr>
+                            <tr><td>Business Finance</td><td>November 21, 2026</td><td>10:00 AM</td><td>3 hours</td></tr>
+                            <tr><td>Law</td><td>November 23, 2026</td><td>10:00 AM</td><td>3 hours</td></tr>
+                            <tr><td>Principles of Taxation</td><td>November 25, 2026</td><td>10:00 AM</td><td>3 hours</td></tr>
+                            <tr><td>IT</td><td>November 27, 2026</td><td>10:00 AM</td><td>3 hours</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ALL CA FIRM LIST -->
+    <section class="firm-list-section" aria-labelledby="firm-list-title">
+        <div class="firm-list-container">
+            <div class="firm-list-heading">
+                <span class="exam-routine-eyebrow">Reference Documents</span>
+                <h3 id="firm-list-title">All CA Firm List</h3>
+                <p>Here all 258 CA Firm list Under ICAB.</p>
+            </div>
+            <div class="firm-list-downloads">
+                <article class="firm-list-download">
+                    <span class="firm-list-download-icon"><i class="fa-solid fa-file-pdf" aria-hidden="true"></i></span>
+                    <div class="firm-list-download-copy">
+                        <h4>CA Firm List PDF</h4>
+                        <p>Printable list of all 258 CA firms.</p>
+                    </div>
+                    <a class="btn btn-solid" href="All_CA_firm_list_in_bangladesh-.pdf" download="All_CA_firm_list_in_bangladesh.pdf"><i class="fa-solid fa-download" aria-hidden="true"></i> Download PDF</a>
+                </article>
+                <article class="firm-list-download">
+                    <span class="firm-list-download-icon"><i class="fa-solid fa-file-excel" aria-hidden="true"></i></span>
+                    <div class="firm-list-download-copy">
+                        <h4>CA Firm List Excel</h4>
+                        <p>Editable spreadsheet of all 258 CA firms.</p>
+                    </div>
+                    <a class="btn btn-solid" href="All_CA_firm_list_in_bangladesh- execl file.xlsx" download="All_CA_firm_list_in_bangladesh.xlsx"><i class="fa-solid fa-download" aria-hidden="true"></i> Download Excel</a>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-brand">
+                <a href="#" class="brand-logo">
+                    <img class="site-logo" src="logo.png" alt="Road to CA">
+                </a>
+                <p>Dedicated online practice and preparation platform for ICAB Certificate Level candidates in Bangladesh.</p>
+            </div>
+            <div>
+                <h4 class="footer-title">Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="index.html">About Road to CA</a></li>
+                    <li><a href="syllabus.html">ICAB Syllabus 2026</a></li>
+                    <li><a href="allexamtime2026.pdf">Exam Routine</a></li>
+                    <li><a href="#">Student Support</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-title">Courses</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Assurance</a></li>
+                    <li><a href="#">Accounting</a></li>
+                    <li><a href="#">Business, Tech & Finance</a></li>
+                    <li><a href="#">Management Info</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-title">Connect</h4>
+                <p style="font-size: 0.85rem; color: #E0C2C7; margin-bottom: 1rem;">Join our community of aspiring Chartered Accountants.</p>
+                <a href="#" class="btn btn-solid" style="background:var(--pure-white); color:var(--deep-maroon); border:none;">Join Discussion Group</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2026 Road to CA. All rights reserved.</span>
+            <span>Designed with Dark Red & White Brand Identity</span>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const examDate = new Date(2026, 10, 17, 10, 0, 0).getTime();
+            const countdownDays = document.getElementById('countdown-days');
+            const countdownHours = document.getElementById('countdown-hours');
+            const countdownMinutes = document.getElementById('countdown-minutes');
+            const routineToggle = document.getElementById('routine-toggle');
+            const routineDetails = document.getElementById('routine-details');
+            const documentaryVideo = document.getElementById('documentary-video');
+            const videoSoundToggle = document.getElementById('video-sound-toggle');
+            const videoFallback = document.getElementById('video-fallback');
+            const newsViewAll = document.getElementById('news-view-all');
+            const extraNewsItems = document.querySelectorAll('.news-item-extra');
+
+            documentaryVideo.muted = true;
+            documentaryVideo.volume = 0;
+            documentaryVideo.addEventListener('error', () => {
+                videoFallback.classList.add('is-visible');
+                videoSoundToggle.hidden = true;
+            });
+            documentaryVideo.load();
+            documentaryVideo.play().catch(() => {
+                videoFallback.classList.add('is-visible');
+                videoSoundToggle.hidden = true;
+            });
+
+            function updateCountdown() {
+                const remaining = Math.max(0, examDate - Date.now());
+                const totalMinutes = Math.floor(remaining / (1000 * 60));
+                const days = Math.floor(totalMinutes / (60 * 24));
+                const hours = Math.floor((totalMinutes % (60 * 24)) / 60);
+                const minutes = totalMinutes % 60;
+
+                countdownDays.textContent = String(days).padStart(2, '0');
+                countdownHours.textContent = String(hours).padStart(2, '0');
+                countdownMinutes.textContent = String(minutes).padStart(2, '0');
+            }
+
+            routineToggle.addEventListener('click', () => {
+                const isExpanded = routineToggle.getAttribute('aria-expanded') === 'true';
+                routineToggle.setAttribute('aria-expanded', String(!isExpanded));
+                routineDetails.hidden = isExpanded;
+            });
+
+            videoSoundToggle.addEventListener('click', () => {
+                const soundEnabled = videoSoundToggle.getAttribute('aria-pressed') === 'true';
+                documentaryVideo.muted = soundEnabled;
+                documentaryVideo.volume = documentaryVideo.muted ? 0 : 1;
+                videoSoundToggle.setAttribute('aria-pressed', String(!soundEnabled));
+                videoSoundToggle.innerHTML = documentaryVideo.muted
+                    ? '&#128263; Enable sound'
+                    : '&#128266; Mute sound';
+                documentaryVideo.play();
+            });
+
+            newsViewAll.addEventListener('click', () => {
+                const isExpanded = newsViewAll.getAttribute('aria-expanded') === 'true';
+                newsViewAll.setAttribute('aria-expanded', String(!isExpanded));
+                extraNewsItems.forEach((item) => {
+                    item.hidden = isExpanded;
+                });
+                newsViewAll.innerHTML = isExpanded
+                    ? 'View All News <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>'
+                    : 'Show Less News <i class="fa-solid fa-chevron-up" aria-hidden="true"></i>';
+            });
+
+            updateCountdown();
+            window.setInterval(updateCountdown, 30000);
+        });
+    </script>
+
+    <script src="nav.js"></script>
+</body>
+</html>

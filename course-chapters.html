@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Chapters | Road to CA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="nav.css">
+    <style>
+        :root { --primary-maroon:#6B0518; --deep-maroon:#4A000E; --pure-white:#FFF; --off-white:#F8F9FA; --text-dark:#1F1F1F; --text-muted:#6C757D; --border-color:#E0E0E0; --pill-bg:rgba(107,5,24,.08); }
+        * { box-sizing:border-box; margin:0; font-family:'Inter',sans-serif; }
+        body { background:var(--pure-white); color:var(--text-dark); line-height:1.6; }
+        header { position:sticky; top:0; z-index:1000; background:var(--pure-white); border-bottom:1px solid var(--border-color); }
+        .nav-container { max-width:1200px; margin:auto; padding:1rem 2rem; display:flex; align-items:center; }
+        .brand-logo img { width:170px; height:58px; object-fit:contain; }.auth-buttons { display:flex; gap:1rem; margin-left:auto; }.btn { display:inline-block; padding:.6rem 1.2rem; border:1.5px solid var(--primary-maroon); border-radius:6px; text-decoration:none; font-weight:600; cursor:pointer; }.btn-outline { color:var(--primary-maroon); background:transparent; }.btn-solid { color:var(--pure-white); background:var(--primary-maroon); }
+        .hero { background:var(--off-white); border-bottom:1px solid var(--border-color); padding:3rem 2rem; }.hero-inner,.chapter-container { max-width:1200px; margin:auto; }.eyebrow { color:var(--primary-maroon); font-size:.8rem; font-weight:700; letter-spacing:2px; }.hero h1 { color:var(--deep-maroon); font:800 2.4rem/1.2 'Montserrat',sans-serif; margin:.6rem 0 .8rem; }.hero p { color:var(--text-muted); max-width:720px; }
+        .chapter-container { padding:3rem 2rem 6rem; }.chapter-heading { margin-bottom:1.5rem; }.chapter-heading h2 { color:var(--deep-maroon); font:700 1.7rem 'Montserrat',sans-serif; }.chapter-heading p { color:var(--text-muted); font-size:.9rem; }.chapter-grid { display:grid; gap:1rem; }.chapter-card { display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; border:1px solid var(--border-color); border-left:5px solid var(--primary-maroon); border-radius:8px; padding:1.2rem 1.4rem; background:var(--pure-white); }.chapter-card h3 { color:var(--deep-maroon); font:700 1.05rem 'Montserrat',sans-serif; }.chapter-card p { color:var(--text-muted); font-size:.82rem; margin-top:.2rem; }.chapter-actions { display:flex; gap:.7rem; }.chapter-actions .btn { white-space:nowrap; }
+        .quiz-view { display:grid; gap:1rem; }.quiz-card { padding:1.4rem; border:1px solid var(--border-color); border-left:5px solid var(--primary-maroon); border-radius:8px; background:var(--pure-white); }.quiz-card h3 { color:var(--deep-maroon); font:700 1rem/1.4 'Montserrat',sans-serif; }.quiz-options { display:grid; gap:.5rem; margin-top:1rem; }.quiz-option { display:flex; gap:.6rem; align-items:flex-start; padding:.7rem; border:1px solid var(--border-color); border-radius:6px; }.quiz-option strong { color:var(--primary-maroon); }.quiz-answer { margin-top:.8rem; padding:.7rem; background:var(--pill-bg); color:var(--deep-maroon); font-size:.85rem; }.learn-check { margin-top:.8rem; }.test-feedback { margin-top:.8rem; padding:.7rem; border-left:4px solid var(--primary-maroon); background:var(--pill-bg); color:var(--deep-maroon); font-size:.85rem; }.timer-box { display:flex; align-items:center; justify-content:space-between; padding:1rem 1.2rem; border:1px solid var(--primary-maroon); border-radius:8px; background:var(--pill-bg); color:var(--deep-maroon); font-weight:700; position:sticky; top:90px; z-index:5; }.timer-badge { padding:.35rem .7rem; border-radius:5px; background:var(--primary-maroon); color:var(--pure-white); font-variant-numeric:tabular-nums; }.quiz-submit { position:sticky; bottom:1rem; justify-self:start; }.quiz-result { padding:1rem; border:1px solid var(--primary-maroon); border-radius:8px; background:var(--pill-bg); color:var(--deep-maroon); font-weight:700; }
+        @media (max-width:768px) { .auth-buttons { display:none; }.hero h1 { font-size:2rem; }.chapter-actions { width:100%; }.chapter-actions .btn { flex:1; text-align:center; } }
+    </style>
+</head>
+<body>
+    <header><div class="nav-container"><button class="menu-toggle" type="button" aria-label="Open menu" aria-controls="site-drawer" aria-expanded="false"><span></span></button><a href="index.html" class="brand-logo"><img src="logo.png" alt="Road to CA"></a><form class="site-search" role="search"><input type="search" name="search" placeholder="Search courses..." aria-label="Search courses and resources"><button type="submit" aria-label="Submit search"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i></button></form><a class="profile-link" href="profile.html" aria-label="Open your profile"><i class="fa-solid fa-user" aria-hidden="true"></i><span>Profile</span></a></div></header>
+    <section class="announcement-ticker" aria-label="Latest announcements"><strong class="ticker-label">LATEST ANNOUNCEMENTS</strong><div class="ticker-viewport"><div class="ticker-track" id="announcementTrack"></div></div></section>
+    <div class="drawer-overlay" data-drawer-close></div><aside class="site-drawer" id="site-drawer" aria-hidden="true"><div class="drawer-heading"><h2>Menu</h2><button class="drawer-close" type="button" aria-label="Close menu">&times;</button></div><nav class="drawer-links" aria-label="Main menu"><a href="index.html" data-page="home"><i class="fa-solid fa-house" aria-hidden="true"></i>Home</a><a href="courses.html" data-page="courses"><i class="fa-solid fa-book-open" aria-hidden="true"></i>Courses</a><a href="mock-test.html" data-page="mock-test"><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i>Mock Test</a><a href="profile.html" data-page="profile"><i class="fa-solid fa-user" aria-hidden="true"></i>Profile</a></nav></aside><nav class="bottom-nav" aria-label="Mobile navigation"><a href="index.html" data-page="home"><i class="fa-solid fa-house" aria-hidden="true"></i><span>Home</span></a><a href="courses.html" data-page="courses"><i class="fa-solid fa-book-open" aria-hidden="true"></i><span>Courses</span></a><a href="mock-test.html" data-page="mock-test"><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i><span>Mock Test</span></a><a href="profile.html" data-page="profile"><i class="fa-solid fa-user" aria-hidden="true"></i><span>Profile</span></a></nav>
+    <section class="hero"><div class="hero-inner"><span class="eyebrow">CERTIFICATE LEVEL</span><h1 id="courseTitle">Course Chapters</h1><p>Review every chapter, then choose Learn First for guided study or Test You for timed practice.</p></div></section>
+    <main class="chapter-container"><div class="chapter-heading"><h2>All Chapters</h2><p id="chapterIntro">Select a mode for any chapter.</p></div><div class="chapter-grid" id="chapterGrid"></div></main>
+    <script src="jsbtf-question-bank.js"></script>
+    <script>
+        const courses = {
+            accounting: { title:'Accounting', chapters:15 },
+            btf: {
+                title:'Business, Technology & Finance',
+                chapters: [
+                    'Introduction to Business',
+                    'Managing a Business',
+                    'Organisational and Business Structures',
+                    'Introduction to Business Strategy',
+                    'Introduction to Risk Management',
+                    'The Finance Function and Financial Information',
+                    'Business Finance',
+                    'The Accountancy Profession',
+                    'Governance and Ethics',
+                    'Corporate Governance',
+                    'The Economic Environment of Business and Finance',
+                    'External Regulation of Business',
+                    'Data Analysis',
+                    'Developments in Technology'
+                ]
+            },
+            mi: { title:'Management Information', chapters:11 }, pot:{ title:'Principles of Taxation', chapters:5 }, law:{ title:'Business Law', chapters:5 }, it:{ title:'Information Technology', chapters:4 }
+        };
+        const key = new URLSearchParams(window.location.search).get('course') || 'accounting';
+        const course = courses[key] || courses.accounting;
+        document.title = `${course.title} Chapters | Road to CA`;
+        document.getElementById('courseTitle').textContent = course.title;
+        const chapterCount = Array.isArray(course.chapters) ? course.chapters.length : course.chapters;
+        const intro = document.getElementById('chapterIntro');
+        const grid = document.getElementById('chapterGrid');
+        const mode = new URLSearchParams(window.location.search).get('mode');
+        let timerInterval = null;
+        if (key === 'btf' && mode && typeof btfQuestions !== 'undefined') {
+            const isTest = mode === 'test';
+            const questions = isTest ? btfQuestions.slice(50) : btfQuestions;
+            document.querySelector('.hero p').textContent = isTest ? '' : 'Review all 100 MCQs and check each answer to reveal its explanation.';
+            document.querySelector('.chapter-heading h2').textContent = isTest ? 'Test Yourself' : 'Learn First: 100 MCQs';
+            intro.textContent = isTest ? '' : 'Check each answer to reveal its explanation.';
+            const quiz = document.createElement('div'); quiz.className = 'quiz-view';
+            if (isTest) {
+                const timer = document.createElement('div'); timer.className = 'timer-box'; timer.innerHTML = '<span><i class="fa-solid fa-stopwatch"></i> Exam Timer</span><span class="timer-badge" id="timerDisplay">50:00</span>'; quiz.appendChild(timer);
+            }
+            questions.forEach((question, index) => {
+                const card = document.createElement('article'); card.className = 'quiz-card';
+                const displayNumber = isTest ? index + 1 : question.id;
+                card.innerHTML = `<h3>${displayNumber}. ${question.question}</h3><p>${question.chapter}</p><div class="quiz-options">${question.options.map((option, optionIndex) => `<label class="quiz-option"><input type="radio" name="q${question.id}" value="${optionIndex}"><strong>${String.fromCharCode(65 + optionIndex)})</strong><span>${option}</span></label>`).join('')}</div>${isTest ? `<div class="test-feedback" hidden><strong>Incorrect.</strong> Correct answer: ${String.fromCharCode(65 + question.correctAnswer)}) ${question.options[question.correctAnswer]}<br>${question.explanation}</div>` : `<button class="btn btn-outline learn-check" type="button">Check Answer</button><div class="quiz-answer" hidden><strong>Answer: ${String.fromCharCode(65 + question.correctAnswer)}) ${question.options[question.correctAnswer]}</strong><br>${question.explanation}</div>`}`;
+                if (!isTest) card.querySelector('.learn-check').addEventListener('click', () => { card.querySelector('.quiz-answer').hidden = false; });
+                quiz.appendChild(card);
+            });
+            if (isTest) {
+                const result = document.createElement('div'); result.className = 'quiz-result'; result.hidden = true;
+                const submit = document.createElement('button'); submit.className = 'btn btn-solid quiz-submit'; submit.type = 'button'; submit.textContent = 'Submit Test';
+                let submitted = false;
+                const submitTest = () => { if (submitted) return; submitted = true; const score = questions.reduce((total, question) => { const selected = document.querySelector(`input[name="q${question.id}"]:checked`); const isCorrect = selected && Number(selected.value) === question.correctAnswer; if (selected && !isCorrect) document.querySelector(`input[name="q${question.id}"]`).closest('.quiz-card').querySelector('.test-feedback').hidden = false; return total + (isCorrect ? 1 : 0); }, 0); result.textContent = `Your score: ${score} / ${questions.length} (${Math.round(score / questions.length * 100)}%).`; result.hidden = false; submit.disabled = true; clearInterval(timerInterval); };
+                submit.addEventListener('click', submitTest); quiz.append(result, submit);
+                let remainingSeconds = 50 * 60;
+                timerInterval = setInterval(() => { remainingSeconds -= 1; document.getElementById('timerDisplay').textContent = `${String(Math.floor(remainingSeconds / 60)).padStart(2, '0')}:${String(remainingSeconds % 60).padStart(2, '0')}`; if (remainingSeconds <= 0) submitTest(); }, 1000);
+            }
+            grid.replaceWith(quiz);
+        } else {
+            intro.textContent = `${chapterCount} chapters available for guided study and timed practice.`;
+            for (let index = 1; index <= chapterCount; index += 1) {
+                const card = document.createElement('article'); card.className = 'chapter-card';
+                const chapterName = Array.isArray(course.chapters) ? course.chapters[index - 1] : `${course.title} fundamentals`;
+                const learnHref = key === 'btf' ? 'course-chapters.html?course=btf&mode=learn' : 'syllabus.html';
+                const testHref = key === 'btf' ? 'course-chapters.html?course=btf&mode=test' : 'mock-test.html';
+                card.innerHTML = `<div><h3>Chapter ${index}: ${chapterName}</h3><p>Certificate Level study material and practice MCQs</p></div><div class="chapter-actions"><a class="btn btn-outline" href="${learnHref}">Learn First</a><a class="btn btn-solid" href="${testHref}">Test You</a></div>`;
+                grid.appendChild(card);
+            }
+        }
+    </script>
+    <script src="nav.js"></script>
+</body>
+</html>
