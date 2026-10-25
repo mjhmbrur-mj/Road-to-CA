@@ -23,7 +23,7 @@ const mockTestData = [
     },
     {
         subjectId: 'financial-accounting',
-        subjectName: 'Financial Accounting (FA)',
+        subjectName: 'Accounting',
         tests: [
             { id: 'fa-1', title: 'Mock Test 1', questions: 50, duration: '50 mins', status: 'Coming Soon' },
             { id: 'fa-2', title: 'Mock Test 2', questions: 50, duration: '50 mins', status: 'Coming Soon' },
