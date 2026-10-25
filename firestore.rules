@@ -1,0 +1,45 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isInboxOwner() {
+      return request.auth != null
+        && request.auth.token.email == 'mjhmbrur@gmail.com'
+        && request.auth.token.email_verified == true;
+    }
+
+    match /feedback/{feedbackId} {
+      allow create: if request.auth != null
+        && request.auth.token.email_verified == true
+        && request.resource.data.keys().hasOnly([
+          'category', 'message', 'page', 'uid', 'email',
+          'displayName', 'status', 'createdAt'
+        ])
+        && request.resource.data.keys().hasAll([
+          'category', 'message', 'page', 'uid', 'email',
+          'displayName', 'status', 'createdAt'
+        ])
+        && request.resource.data.category in [
+          'Report a problem', 'Suggest an improvement',
+          'Ask a question', 'Other feedback'
+        ]
+        && request.resource.data.message is string
+        && request.resource.data.message.size() > 0
+        && request.resource.data.message.size() <= 2000
+        && request.resource.data.page is string
+        && request.resource.data.page.size() <= 2048
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.email == request.auth.token.email
+        && request.resource.data.displayName is string
+        && request.resource.data.displayName.size() <= 120
+        && request.resource.data.status == 'new'
+        && request.resource.data.createdAt == request.time;
+
+      allow get, list: if isInboxOwner();
+      allow update: if isInboxOwner()
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status'])
+        && request.resource.data.status in ['new', 'reviewed'];
+      allow delete: if isInboxOwner();
+    }
+  }
+}

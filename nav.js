@@ -37,6 +37,15 @@ function renderAnnouncements() {
 
 renderAnnouncements();
 
+import('./js/feedback.js').catch((error) => {
+    console.error('Unable to load the feedback form.', error);
+    const unavailableNotice = document.createElement('div');
+    unavailableNotice.className = 'feedback-launcher feedback-unavailable';
+    unavailableNotice.setAttribute('role', 'status');
+    unavailableNotice.textContent = 'Feedback is temporarily unavailable';
+    document.body.appendChild(unavailableNotice);
+});
+
 document.addEventListener('click', (event) => {
     const upcomingLink = event.target.closest('[data-upcoming]');
     if (!upcomingLink) return;
