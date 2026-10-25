@@ -2,6 +2,7 @@ import { auth, db, googleProvider } from './firebase-client.js';
 import { browserLocalPersistence, onAuthStateChanged, setPersistence, signInWithPopup, signOut } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js';
 import { collection, doc, getDocs, orderBy, query, serverTimestamp, setDoc } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js';
 
+const DASHBOARD_CACHE_VERSION = 1;
 const signInButton = document.getElementById('dashboard-sign-in');
 const signInView = document.getElementById('sign-in-view');
 const signOutButton = document.getElementById('dashboard-sign-out');
@@ -19,8 +20,58 @@ function setStatus(message = '', isError = false) {
 }
 
 function formatDate(timestamp) {
-    if (!timestamp || typeof timestamp.toDate !== 'function') return 'Date unavailable';
-    return new Intl.DateTimeFormat(undefined, { dateStyle: 'medium', timeStyle: 'short' }).format(timestamp.toDate());
+    const date = typeof timestamp?.toDate === 'function'
+        ? timestamp.toDate()
+        : (Number.isFinite(timestamp) ? new Date(timestamp) : null);
+    if (!date || Number.isNaN(date.getTime())) return 'Date unavailable';
+    return new Intl.DateTimeFormat(undefined, { dateStyle: 'medium', timeStyle: 'short' }).format(date);
+}
+
+function dashboardCacheKey(uid) {
+    return `road-to-ca-dashboard:${uid}`;
+}
+
+function readCachedActivities(uid) {
+    try {
+        const cached = JSON.parse(localStorage.getItem(dashboardCacheKey(uid)) || 'null');
+        if (cached?.version !== DASHBOARD_CACHE_VERSION || !Array.isArray(cached.activities)) return null;
+        if (!cached.activities.every(({ id, data }) =>
+            typeof id === 'string'
+            && data
+            && typeof data.subjectName === 'string'
+            && Number.isFinite(data.score)
+            && Number.isFinite(data.totalQuestions)
+            && data.totalQuestions > 0
+        )) return null;
+        return cached.activities;
+    } catch (error) {
+        console.warn('Unable to read the cached student dashboard.', error);
+        return null;
+    }
+}
+
+function writeCachedActivities(uid, activities) {
+    const cacheableActivities = activities.map(({ id, data }) => ({
+        id,
+        data: {
+            subjectName: data.subjectName,
+            testName: data.testName,
+            activityName: data.activityName,
+            score: data.score,
+            totalQuestions: data.totalQuestions,
+            completedAt: typeof data.completedAt?.toMillis === 'function'
+                ? data.completedAt.toMillis()
+                : data.completedAt
+        }
+    }));
+    try {
+        localStorage.setItem(dashboardCacheKey(uid), JSON.stringify({
+            version: DASHBOARD_CACHE_VERSION,
+            activities: cacheableActivities
+        }));
+    } catch (error) {
+        console.warn('Unable to cache the student dashboard.', error);
+    }
 }
 
 function renderAccount(user) {
@@ -78,16 +129,21 @@ function renderActivities(activities) {
     });
 }
 
+function updateUserProfile(user) {
+    return setDoc(doc(db, 'users', user.uid), {
+        displayName: user.displayName || '',
+        email: user.email || '',
+        photoURL: user.photoURL || '',
+        updatedAt: serverTimestamp()
+    }, { merge: true }).then(() => true).catch((error) => {
+        console.error('Unable to update the student profile.', error);
+        return false;
+    });
+}
+
 async function loadDashboard(user, version) {
-    setStatus('Loading your dashboard…');
-    dashboardContent.hidden = true;
+    const profileUpdate = updateUserProfile(user);
     try {
-        await setDoc(doc(db, 'users', user.uid), {
-            displayName: user.displayName || '',
-            email: user.email || '',
-            photoURL: user.photoURL || '',
-            updatedAt: serverTimestamp()
-        }, { merge: true });
         const [resultsSnapshot, legacySnapshot] = await Promise.all([
             getDocs(query(
                 collection(db, 'users', user.uid, 'testResults'),
@@ -103,16 +159,17 @@ async function loadDashboard(user, version) {
             ...resultsSnapshot.docs.map((item) => ({ id: item.id, data: item.data() })),
             ...legacySnapshot.docs.map((item) => ({ id: item.id, data: item.data() }))
         ].sort((left, right) => (right.data.completedAt?.toMillis?.() || 0) - (left.data.completedAt?.toMillis?.() || 0));
+        if (version !== authChangeVersion || auth.currentUser?.uid !== user.uid) return;
+        writeCachedActivities(user.uid, activities);
         renderActivities(activities);
-        signInView.hidden = true;
-        renderAccount(user);
-        dashboardContent.hidden = false;
-        signInButton.hidden = true;
         setStatus();
+        const profileUpdated = await profileUpdate;
+        if (!profileUpdated && version === authChangeVersion && auth.currentUser?.uid === user.uid) {
+            setStatus('Your dashboard loaded, but your profile could not be updated. Check your connection and Firestore rules.', true);
+        }
     } catch (error) {
         console.error('Unable to load the student dashboard.', error);
-        if (version !== authChangeVersion) return;
-        renderAccount(user);
+        if (version !== authChangeVersion || auth.currentUser?.uid !== user.uid) return;
         document.getElementById('stat-attempts').textContent = '—';
         document.getElementById('stat-average').textContent = '—';
         document.getElementById('stat-subjects').textContent = '7';
@@ -121,12 +178,13 @@ async function loadDashboard(user, version) {
         unavailable.className = 'empty-state';
         unavailable.textContent = 'Test history is unavailable until your profile and Firestore rules are configured.';
         activityList.appendChild(unavailable);
-        signInView.hidden = true;
-        signInButton.hidden = true;
-        dashboardContent.hidden = false;
-        setStatus(error.code === 'permission-denied'
-            ? 'Your profile or test results could not be loaded. Publish the updated Firestore security rules and try again.'
-            : 'Your dashboard could not be loaded. Check your connection and try again.', true);
+        const message = error.code === 'permission-denied'
+            ? 'Test history could not be refreshed. Check that the Firestore security rules are published.'
+            : 'Test history could not be refreshed. Check your connection and try again.';
+        setStatus(readCachedActivities(user.uid) !== null
+            ? `Showing your saved dashboard. ${message}`
+            : message, true);
+        await profileUpdate;
     }
 }
 
@@ -171,6 +229,19 @@ onAuthStateChanged(auth, (user) => {
     if (user) {
         signInButton.hidden = true;
         signInView.hidden = true;
+        renderAccount(user);
+        dashboardContent.hidden = false;
+        const cachedActivities = readCachedActivities(user.uid);
+        if (cachedActivities) {
+            renderActivities(cachedActivities);
+            setStatus();
+        } else {
+            document.getElementById('stat-attempts').textContent = '—';
+            document.getElementById('stat-average').textContent = '—';
+            document.getElementById('stat-subjects').textContent = '7';
+            activityList.replaceChildren();
+            setStatus('Loading your dashboard…');
+        }
         void loadDashboard(user, version);
     } else {
         dashboardContent.hidden = true;
