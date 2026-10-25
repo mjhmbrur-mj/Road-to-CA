@@ -50,14 +50,17 @@
         .search-field i { position: absolute; top: 50%; left: 1rem; color: var(--hub-muted); transform: translateY(-50%); }
         .search-field input { width: 100%; min-height: 3.1rem; padding: .75rem 1rem .75rem 2.8rem; border: 1px solid var(--hub-border); border-radius: .65rem; background: var(--hub-surface); color: var(--hub-text); font: inherit; }
         .search-field input:focus-visible, .subject-filter:focus-visible, .test-action:focus-visible { outline: 3px solid #93C5FD; outline-offset: 2px; }
-        .subject-filters { display: flex; gap: .55rem; overflow-x: auto; padding: .15rem .1rem .5rem; }
-        .subject-filter { flex: 0 0 auto; padding: .55rem .85rem; border: 1px solid var(--hub-border); border-radius: 999px; background: var(--hub-surface); color: var(--hub-primary); font: 600 .86rem 'Inter', sans-serif; cursor: pointer; }
-        .subject-filter:hover, .subject-filter[aria-pressed="true"] { border-color: var(--hub-primary); background: var(--hub-primary); color: var(--pure-white); }
+        .subject-filters { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 245px), 1fr)); gap: .9rem; }
+        .subject-filter { display: flex; align-items: center; gap: .9rem; min-height: 5.5rem; padding: 1rem; border: 1px solid var(--hub-border); border-left: 4px solid var(--hub-primary); border-radius: .8rem; background: var(--hub-surface); color: var(--hub-primary); font: 600 .95rem 'Inter', sans-serif; text-align: left; cursor: pointer; box-shadow: 0 2px 8px rgb(15 23 42 / 4%); }
+        .subject-filter i { flex: 0 0 auto; font-size: 1.15rem; }
+        .subject-filter:hover, .subject-filter[aria-expanded="true"] { border-color: var(--hub-primary); background: var(--pill-bg); }
         .hub-summary { margin: 0 0 1rem; color: var(--hub-muted); font-size: .9rem; }
-        .subject-section { margin-top: 2rem; scroll-margin-top: 1rem; }
-        .subject-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: .9rem; }
+        .subject-section { margin-top: 1.5rem; scroll-margin-top: 1rem; }
+        .subject-heading { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
         .subject-heading h2 { margin: 0; color: var(--hub-primary); font-size: 1.35rem; }
         .subject-heading span { color: var(--hub-muted); font-size: .85rem; }
+        .subject-back { flex: 0 0 auto; padding: .55rem .8rem; border: 1px solid var(--hub-border); border-radius: .5rem; background: var(--hub-surface); color: var(--hub-primary); font: 600 .85rem 'Inter', sans-serif; cursor: pointer; }
+        .subject-back:hover { border-color: var(--hub-primary); }
         .test-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 245px), 1fr)); gap: 1rem; }
         .test-card { display: flex; flex-direction: column; min-height: 220px; padding: 1.15rem; border: 1px solid var(--hub-border); border-radius: .8rem; background: var(--hub-surface); box-shadow: 0 2px 8px rgb(15 23 42 / 4%); }
         .test-card h3 { margin: .85rem 0 .5rem; color: var(--hub-primary); font-size: 1rem; line-height: 1.45; }
@@ -70,7 +73,7 @@
         .test-action { display: inline-flex; justify-content: center; align-items: center; gap: .5rem; width: 100%; min-height: 2.65rem; margin-top: auto; padding: .6rem .85rem; border: 1px solid var(--hub-primary); border-radius: .5rem; background: var(--hub-primary); color: var(--pure-white); font: 600 .88rem 'Inter', sans-serif; text-decoration: none; }
         .test-action:hover { background: var(--hub-primary-light); }
         .test-action:disabled { border-color: var(--hub-border); background: #F1F5F9; color: var(--hub-muted); cursor: not-allowed; }
-        .no-results { margin-top: 2rem; padding: 2rem; border: 1px dashed var(--hub-border); border-radius: .8rem; color: var(--hub-muted); text-align: center; }
+        .no-results { margin-top: 1rem; padding: 2rem; border: 1px dashed var(--hub-border); border-radius: .8rem; color: var(--hub-muted); text-align: center; }
         .no-results[hidden], .subject-section[hidden] { display: none; }
         @media (max-width: 600px) {
             .hub-hero { padding: 2.5rem 1.1rem; }
@@ -126,13 +129,13 @@
         <div class="hub-controls">
             <label class="search-field">
                 <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
-                <input id="mock-search" type="search" placeholder="Search by subject or mock test number..." aria-label="Search mock tests by subject or test number" autocomplete="off">
+                <input id="mock-search" type="search" placeholder="Search subjects or mock test numbers..." aria-label="Search subjects or mock test numbers" autocomplete="off">
             </label>
             <nav class="subject-filters" id="subject-filters" aria-label="Filter mock tests by subject"></nav>
         </div>
         <p class="hub-summary" id="hub-summary" aria-live="polite"></p>
         <div id="subject-sections"></div>
-        <p class="no-results" id="no-results" hidden>No mock tests match your search. Try a subject name or another test number.</p>
+        <p class="no-results" id="no-results" hidden>No subjects or mock tests match your search. Try another search.</p>
     </main>
     <script src="js/mock-test.js"></script>
     <script src="nav.js"></script>

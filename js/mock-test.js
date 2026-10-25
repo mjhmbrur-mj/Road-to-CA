@@ -83,7 +83,7 @@ const subjectFilters = document.getElementById('subject-filters');
 const subjectSections = document.getElementById('subject-sections');
 const hubSummary = document.getElementById('hub-summary');
 const noResults = document.getElementById('no-results');
-let selectedSubject = 'all';
+let selectedSubject = null;
 
 function createTestCard(subject, test) {
     const isReady = test.status === 'Ready';
@@ -121,60 +121,73 @@ function createTestCard(subject, test) {
 
 function renderHub() {
     const queryTokens = searchInput.value.trim().toLowerCase().split(/\s+/).filter(Boolean);
-    const visibleCount = { tests: 0, subjects: 0 };
+    const matchingSubjects = mockTestData.filter((subject) => {
+        const searchableText = `${subject.subjectName} ${subject.tests.map((test) => `${test.title} ${test.id}`).join(' ')}`.toLowerCase();
+        return queryTokens.every((token) => searchableText.includes(token));
+    });
+    const activeSubject = mockTestData.find(({ subjectId }) => subjectId === selectedSubject);
+    const matchingTests = activeSubject?.tests.filter((test) => {
+        const searchableText = `${activeSubject.subjectName} ${test.title} ${test.id}`.toLowerCase();
+        return queryTokens.every((token) => searchableText.includes(token));
+    }) || [];
+
+    subjectFilters.replaceChildren();
     subjectSections.replaceChildren();
-
-    mockTestData.forEach((subject) => {
-        const matchingTests = subject.tests.filter((test) => {
-            const matchesSubject = selectedSubject === 'all' || subject.subjectId === selectedSubject;
-            const searchableText = `${subject.subjectName} ${test.title} ${test.id}`.toLowerCase();
-            return matchesSubject && queryTokens.every((token) => searchableText.includes(token));
+    matchingSubjects.forEach((subject) => {
+        const button = document.createElement('button');
+        button.className = 'subject-filter';
+        button.type = 'button';
+        button.setAttribute('aria-expanded', String(subject.subjectId === selectedSubject));
+        button.setAttribute('aria-controls', 'subject-sections');
+        const icon = document.createElement('i');
+        icon.className = 'fa-solid fa-book-open';
+        icon.setAttribute('aria-hidden', 'true');
+        const name = document.createElement('span');
+        name.textContent = subject.subjectName;
+        button.append(icon, name);
+        button.addEventListener('click', () => {
+            selectedSubject = subject.subjectId;
+            renderHub();
+            document.getElementById('subject-sections').scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
-        if (!matchingTests.length) return;
+        subjectFilters.append(button);
+    });
 
-        visibleCount.tests += matchingTests.length;
-        visibleCount.subjects += 1;
+    if (activeSubject) {
         const section = document.createElement('section');
         section.className = 'subject-section';
 
         const heading = document.createElement('div');
         heading.className = 'subject-heading';
+        const titleGroup = document.createElement('div');
         const title = document.createElement('h2');
-        title.textContent = subject.subjectName;
+        title.textContent = activeSubject.subjectName;
         const count = document.createElement('span');
-        count.textContent = `${matchingTests.length} ${matchingTests.length === 1 ? 'test' : 'tests'}`;
-        heading.append(title, count);
+        count.textContent = `${matchingTests.length} of ${activeSubject.tests.length} mock tests`;
+        titleGroup.append(title, count);
+        const backButton = document.createElement('button');
+        backButton.className = 'subject-back';
+        backButton.type = 'button';
+        backButton.textContent = 'All Subjects';
+        backButton.addEventListener('click', () => {
+            selectedSubject = null;
+            renderHub();
+            subjectFilters.querySelector('button')?.focus();
+        });
+        heading.append(titleGroup, backButton);
 
         const grid = document.createElement('div');
         grid.className = 'test-grid';
-        matchingTests.forEach((test) => grid.append(createTestCard(subject, test)));
+        matchingTests.forEach((test) => grid.append(createTestCard(activeSubject, test)));
         section.append(heading, grid);
         subjectSections.append(section);
-    });
+    }
 
-    hubSummary.textContent = `Showing ${visibleCount.tests} of 35 mock tests across ${visibleCount.subjects} subjects.`;
-    noResults.hidden = visibleCount.tests > 0;
-}
-
-function renderSubjectFilters() {
-    const filters = [{ id: 'all', name: 'All Subjects' }, ...mockTestData.map(({ subjectId, subjectName }) => ({ id: subjectId, name: subjectName }))];
-    filters.forEach(({ id, name }) => {
-        const button = document.createElement('button');
-        button.className = 'subject-filter';
-        button.type = 'button';
-        button.textContent = name;
-        button.setAttribute('aria-pressed', String(id === selectedSubject));
-        button.addEventListener('click', () => {
-            selectedSubject = id;
-            subjectFilters.querySelectorAll('.subject-filter').forEach((filter) => {
-                filter.setAttribute('aria-pressed', String(filter === button));
-            });
-            renderHub();
-        });
-        subjectFilters.append(button);
-    });
+    hubSummary.textContent = activeSubject
+        ? `Showing ${matchingTests.length} of ${activeSubject.tests.length} mock tests for this subject.`
+        : `Choose a subject to view its five full-syllabus mock tests (${mockTestData.length} subjects available).`;
+    noResults.hidden = matchingSubjects.length > 0;
 }
 
 searchInput.addEventListener('input', renderHub);
-renderSubjectFilters();
 renderHub();
