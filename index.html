@@ -296,6 +296,37 @@
             margin-bottom: 1rem;
         }
 
+        .question-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 0.75rem;
+            margin: 0 0 1.5rem;
+            padding: 0;
+            list-style: none;
+        }
+
+        .question-feature {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            min-height: 56px;
+            padding: 0.75rem;
+            border: 1px solid rgba(107, 5, 24, 0.12);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.82);
+            color: var(--deep-maroon);
+            font-size: 0.88rem;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        .question-feature i {
+            flex: 0 0 1.5rem;
+            color: var(--primary-maroon);
+            font-size: 1.1rem;
+            text-align: center;
+        }
+
         .hero-content p {
             font-size: 1.1rem;
             color: var(--text-muted);
@@ -1011,6 +1042,13 @@
             <div class="hero-content" data-reveal="left">
                 <span class="tagline-badge">PRACTICE • PREPARE • PROGRESS</span>
                 <h2>Master Your CA Certificate Level Exam</h2>
+                <ul class="question-features" aria-label="Question features">
+                    <li class="question-feature"><i class="fa-solid fa-award" aria-hidden="true"></i><span>ICAEW-standard questions</span></li>
+                    <li class="question-feature"><i class="fa-solid fa-book-open" aria-hidden="true"></i><span>Fully focused on the ICAB 2026 syllabus</span></li>
+                    <li class="question-feature"><i class="fa-solid fa-chalkboard-user" aria-hidden="true"></i><span>Integrated with ICAB teacher suggestions</span></li>
+                    <li class="question-feature"><i class="fa-solid fa-circle-check" aria-hidden="true"></i><span>Highly optimized and carefully error-checked</span></li>
+                    <li class="question-feature"><i class="fa-solid fa-bullseye" aria-hidden="true"></i><span>Designed for complete final-exam preparation</span></li>
+                </ul>
                 <p>Structured chapter-wise practice, complete syllabus coverage, and real exam simulations for ICAB aspirants.</p>
                 <a href="#courses" class="btn btn-solid" style="padding: 0.8rem 1.8rem; font-size: 1rem;">Start Practicing Now <i class="fa-solid font-arrow-right" style="margin-left:8px;"></i></a>
             </div>
@@ -1076,19 +1114,19 @@
                         <span class="chapter-badge">16 Chapters</span>
                     </div>
                     <ul class="chapter-list-preview">
-                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 1: Concept of & Need for Assurance</li>
-                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 2: Process of Assurance Engagements</li>
-                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 3: Internal Controls – Concept & Components</li>
-                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 4: Internal Controls – Business Cycles</li>
-                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 5: IT Systems and Controls</li>
-                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 6: Internal Audit Function</li>
-                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 7: Gathering Audit Evidence</li>
-                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 8: Audit Sampling & Testing</li>
-                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 9: Substantive Testing – Assets/Liabilities</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 1: Concept and Need for Assurance</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 2: Process of Assurance: Obtaining an Engagement</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 3: Process of Assurance: Planning the Assignment</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 4: Process of Assurance: Evidence and Reporting</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 5: Introduction to Internal Control</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 6: Revenue Systems</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 7: Purchase Systems</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 8: Employee Cost</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 9: Internal Control</li>
                         <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 10: Substantive Testing – Income/Expenses</li>
                         <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 11: Audit Documentation & Working Papers</li>
                         <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 12: Professional Ethics & Principles</li>
-                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 13: Ethical Threats and Safeguards</li>
+                        <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 13: Key Financial Statement Figures</li>
                         <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 14: Regulatory Framework & Legal Issues</li>
                         <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 15: Fraud, Error & Non-Compliance</li>
                         <li class="chapter-item"><i class="fa-solid fa-angle-right"></i> Ch 16: Completion, Review & Reports</li>
@@ -1339,6 +1377,7 @@
                     <li><a href="syllabus.html">ICAB Syllabus 2026</a></li>
                     <li><a href="certificate%20level%20routine%20for%20novemeber%202026.jpeg">Updated November 2026 Exam Routine</a></li>
                     <li><a href="#">Student Support</a></li>
+                    <li><a href="https://github.com/mjhmbrur-mj" target="_blank" rel="noopener noreferrer">Developer Profile</a></li>
                 </ul>
             </div>
             <div>

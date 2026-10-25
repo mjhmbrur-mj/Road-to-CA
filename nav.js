@@ -41,7 +41,7 @@ document.addEventListener('click', (event) => {
     const upcomingLink = event.target.closest('[data-upcoming]');
     if (!upcomingLink) return;
     event.preventDefault();
-    window.alert('Upcoming');
+    window.alert('Only BTF and Assurance are available right now, Others are upcoming');
 });
 
 if (tickerViewport) {
