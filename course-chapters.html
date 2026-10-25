@@ -16,7 +16,7 @@
         .brand-logo img { width:170px; height:58px; object-fit:contain; }.auth-buttons { display:flex; gap:1rem; margin-left:auto; }.btn { display:inline-block; padding:.6rem 1.2rem; border:1.5px solid var(--primary-maroon); border-radius:6px; text-decoration:none; font-weight:600; cursor:pointer; }.btn-outline { color:var(--primary-maroon); background:transparent; }.btn-solid { color:var(--pure-white); background:var(--primary-maroon); }
         .hero { background:var(--off-white); border-bottom:1px solid var(--border-color); padding:3rem 2rem; }.hero-inner,.chapter-container { max-width:1200px; margin:auto; }.eyebrow { color:var(--primary-maroon); font-size:.8rem; font-weight:700; letter-spacing:2px; }.hero h1 { color:var(--deep-maroon); font:800 2.4rem/1.2 'Montserrat',sans-serif; margin:.6rem 0 .8rem; }.hero p { color:var(--text-muted); max-width:720px; }
         .chapter-container { padding:3rem 2rem 6rem; }.chapter-heading { margin-bottom:1.5rem; }.chapter-heading h2 { color:var(--deep-maroon); font:700 1.7rem 'Montserrat',sans-serif; }.chapter-heading p { color:var(--text-muted); font-size:.9rem; }.chapter-grid { display:grid; gap:1rem; }.chapter-card { display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; border:1px solid var(--border-color); border-left:5px solid var(--primary-maroon); border-radius:8px; padding:1.2rem 1.4rem; background:var(--pure-white); }.chapter-card h3 { color:var(--deep-maroon); font:700 1.05rem 'Montserrat',sans-serif; }.chapter-card p { color:var(--text-muted); font-size:.82rem; margin-top:.2rem; }.chapter-actions { display:flex; gap:.7rem; }.chapter-actions .btn { white-space:nowrap; }
-        .quiz-view { display:grid; gap:1rem; }.quiz-card { padding:1.4rem; border:1px solid var(--border-color); border-left:5px solid var(--primary-maroon); border-radius:8px; background:var(--pure-white); }.quiz-card h3 { color:var(--deep-maroon); font:700 1rem/1.4 'Montserrat',sans-serif; }.quiz-options { display:grid; gap:.5rem; margin-top:1rem; }.quiz-option { display:flex; gap:.6rem; align-items:flex-start; padding:.7rem; border:1px solid var(--border-color); border-radius:6px; }.quiz-option strong { color:var(--primary-maroon); }.quiz-answer { margin-top:.8rem; padding:.7rem; background:var(--pill-bg); color:var(--deep-maroon); font-size:.85rem; }.learn-check { margin-top:.8rem; }.test-feedback { margin-top:.8rem; padding:.7rem; border-left:4px solid var(--primary-maroon); background:var(--pill-bg); color:var(--deep-maroon); font-size:.85rem; }.timer-box { display:flex; align-items:center; justify-content:space-between; padding:1rem 1.2rem; border:1px solid var(--primary-maroon); border-radius:8px; background:var(--pill-bg); color:var(--deep-maroon); font-weight:700; position:sticky; top:90px; z-index:5; }.timer-badge { padding:.35rem .7rem; border-radius:5px; background:var(--primary-maroon); color:var(--pure-white); font-variant-numeric:tabular-nums; }.quiz-submit { position:sticky; bottom:1rem; justify-self:start; }.quiz-result { padding:1rem; border:1px solid var(--primary-maroon); border-radius:8px; background:var(--pill-bg); color:var(--deep-maroon); font-weight:700; }
+        .quiz-view { display:grid; gap:1rem; }.quiz-card { padding:1.4rem; border:1px solid var(--border-color); border-left:5px solid var(--primary-maroon); border-radius:8px; background:var(--pure-white); }.quiz-card h3 { color:var(--deep-maroon); font:700 1rem/1.4 'Montserrat',sans-serif; white-space:pre-line; }.quiz-options { display:grid; gap:.5rem; margin-top:1rem; }.quiz-option { display:flex; gap:.6rem; align-items:flex-start; padding:.7rem; border:1px solid var(--border-color); border-radius:6px; }.quiz-option strong { color:var(--primary-maroon); }.quiz-answer { margin-top:.8rem; padding:.7rem; background:var(--pill-bg); color:var(--deep-maroon); font-size:.85rem; }.learn-check { margin-top:.8rem; }.test-feedback { margin-top:.8rem; padding:.7rem; border-left:4px solid var(--primary-maroon); background:var(--pill-bg); color:var(--deep-maroon); font-size:.85rem; }.timer-box { display:flex; align-items:center; justify-content:space-between; padding:1rem 1.2rem; border:1px solid var(--primary-maroon); border-radius:8px; background:var(--pill-bg); color:var(--deep-maroon); font-weight:700; position:sticky; top:90px; z-index:5; }.timer-badge { padding:.35rem .7rem; border-radius:5px; background:var(--primary-maroon); color:var(--pure-white); font-variant-numeric:tabular-nums; }.quiz-submit { position:sticky; bottom:1rem; justify-self:start; }.quiz-result { padding:1rem; border:1px solid var(--primary-maroon); border-radius:8px; background:var(--pill-bg); color:var(--deep-maroon); font-weight:700; }
         @media (max-width:768px) { .auth-buttons { display:none; }.hero h1 { font-size:2rem; }.chapter-actions { width:100%; }.chapter-actions .btn { flex:1; text-align:center; } }
     </style>
 </head>
@@ -59,12 +59,26 @@
         const intro = document.getElementById('chapterIntro');
         const grid = document.getElementById('chapterGrid');
         const mode = new URLSearchParams(window.location.search).get('mode');
+        const chapter = new URLSearchParams(window.location.search).get('chapter');
+        const chapterQuestionSet = key === 'btf' && chapter === '4'
+            ? btfChapter4Questions
+            : (key === 'btf' && chapter === '6'
+                ? btfChapter6Questions
+                : (key === 'btf' && chapter === '10' ? btfChapter10Questions : null));
+        const hasChapterQuestionSet = Boolean(chapterQuestionSet);
         let timerInterval = null;
         if (key === 'btf' && mode && typeof btfQuestions !== 'undefined') {
             const isTest = mode === 'test';
-            const questions = isTest ? btfQuestions.slice(50) : btfQuestions;
-            document.querySelector('.hero p').textContent = isTest ? '' : 'Review all 100 MCQs and check each answer to reveal its explanation.';
-            document.querySelector('.chapter-heading h2').textContent = isTest ? 'Test Yourself' : 'Learn First: 100 MCQs';
+            const questions = hasChapterQuestionSet
+                ? chapterQuestionSet
+                : (isTest ? btfQuestions.slice(50) : btfQuestions);
+            const questionCount = questions.length;
+            document.querySelector('.hero p').textContent = isTest
+                ? ''
+                : `Review all ${questionCount} MCQs and check each answer to reveal its explanation.`;
+            document.querySelector('.chapter-heading h2').textContent = isTest
+                ? 'Test Yourself'
+                : `Learn First: ${questionCount} MCQs`;
             intro.textContent = isTest ? '' : 'Check each answer to reveal its explanation.';
             const quiz = document.createElement('div'); quiz.className = 'quiz-view';
             if (isTest) {
@@ -72,7 +86,7 @@
             }
             questions.forEach((question, index) => {
                 const card = document.createElement('article'); card.className = 'quiz-card';
-                const displayNumber = isTest ? index + 1 : question.id;
+                const displayNumber = isTest || hasChapterQuestionSet ? index + 1 : question.id;
                 card.innerHTML = `<h3>${displayNumber}. ${question.question}</h3><p>${question.chapter}</p><div class="quiz-options">${question.options.map((option, optionIndex) => `<label class="quiz-option"><input type="radio" name="q${question.id}" value="${optionIndex}"><strong>${String.fromCharCode(65 + optionIndex)})</strong><span>${option}</span></label>`).join('')}</div>${isTest ? `<div class="test-feedback" hidden><strong>Incorrect.</strong> Correct answer: ${String.fromCharCode(65 + question.correctAnswer)}) ${question.options[question.correctAnswer]}<br>${question.explanation}</div>` : `<button class="btn btn-outline learn-check" type="button">Check Answer</button><div class="quiz-answer" hidden><strong>Answer: ${String.fromCharCode(65 + question.correctAnswer)}) ${question.options[question.correctAnswer]}</strong><br>${question.explanation}</div>`}`;
                 if (!isTest) card.querySelector('.learn-check').addEventListener('click', () => { card.querySelector('.quiz-answer').hidden = false; });
                 quiz.appendChild(card);
@@ -92,9 +106,14 @@
             for (let index = 1; index <= chapterCount; index += 1) {
                 const card = document.createElement('article'); card.className = 'chapter-card';
                 const chapterName = Array.isArray(course.chapters) ? course.chapters[index - 1] : `${course.title} fundamentals`;
-                const learnHref = key === 'btf' ? 'course-chapters.html?course=btf&mode=learn' : 'syllabus.html';
-                const testHref = key === 'btf' ? 'course-chapters.html?course=btf&mode=test' : 'mock-test.html';
-                card.innerHTML = `<div><h3>Chapter ${index}: ${chapterName}</h3><p>Certificate Level study material and practice MCQs</p></div><div class="chapter-actions"><a class="btn btn-outline" href="${learnHref}">Learn First</a><a class="btn btn-solid" href="${testHref}">Test You</a></div>`;
+                const chapterQuery = key === 'btf' && [4, 6, 10].includes(index) ? `&chapter=${index}` : '';
+                const learnAction = key === 'btf'
+                    ? `href="course-chapters.html?course=btf${chapterQuery}&mode=learn"`
+                    : 'href="#" data-upcoming';
+                const testAction = key === 'btf'
+                    ? `href="course-chapters.html?course=btf${chapterQuery}&mode=test"`
+                    : 'href="#" data-upcoming';
+                card.innerHTML = `<div><h3>Chapter ${index}: ${chapterName}</h3><p>Certificate Level study material and practice MCQs</p></div><div class="chapter-actions"><a class="btn btn-outline" ${learnAction}>Learn First</a><a class="btn btn-solid" ${testAction}>Test You</a></div>`;
                 grid.appendChild(card);
             }
         }

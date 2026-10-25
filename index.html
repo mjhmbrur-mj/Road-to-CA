@@ -226,7 +226,9 @@
 
         /* --- HERO SECTION --- */
         .hero {
-            background-color: var(--off-white);
+            background:
+                radial-gradient(circle at 82% 32%, rgba(107, 5, 24, 0.045), transparent 24rem),
+                var(--off-white);
             padding: 5rem 2rem;
             border-bottom: 1px solid var(--border-color);
             position: relative;
@@ -243,15 +245,34 @@
             border: 80px solid rgba(107, 5, 24, 0.03);
             border-radius: 50%;
             pointer-events: none;
+            animation: hero-ring-drift 18s ease-in-out infinite alternate;
+        }
+
+        @keyframes hero-ring-drift {
+            from { transform: translate3d(0, 0, 0) scale(1); opacity: 0.7; }
+            to { transform: translate3d(-18px, 14px, 0) scale(1.04); opacity: 1; }
         }
 
         .hero-container {
-            max-width: 1200px;
+            max-width: 900px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: center;
+            grid-template-columns: minmax(0, 1fr);
+            align-items: start;
+        }
+
+        .home-video {
+            width: 100%;
+            margin: 0;
+            overflow: hidden;
+            background: #171717;
+        }
+
+        .home-video video {
+            display: block;
+            width: 100%;
+            height: clamp(200px, 26vw, 500px);
+            object-fit: cover;
         }
 
         .tagline-badge {
@@ -279,63 +300,6 @@
             font-size: 1.1rem;
             color: var(--text-muted);
             margin-bottom: 2rem;
-        }
-
-        .hero-video {
-            width: min(260px, 100%);
-            margin: 0 0 0 auto;
-        }
-
-        .hero-video-frame {
-            position: relative;
-        }
-
-        .hero-video video {
-            display: block;
-            width: 100%;
-            aspect-ratio: 9 / 16;
-            height: auto;
-            background: #171717;
-            border-radius: 12px;
-            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
-            object-fit: cover;
-        }
-
-        .video-fallback {
-            display: none;
-            padding: 1.5rem;
-            background: var(--deep-maroon);
-            color: var(--pure-white);
-            border-radius: 12px;
-            text-align: center;
-            font-size: 0.9rem;
-        }
-
-        .video-fallback.is-visible { display: block; }
-
-        .video-sound-toggle {
-            position: absolute;
-            right: 0.75rem;
-            bottom: 0.75rem;
-            background: rgba(74, 0, 14, 0.9);
-            color: var(--pure-white);
-            border: 1px solid rgba(255, 255, 255, 0.45);
-            border-radius: 6px;
-            padding: 0.5rem 0.7rem;
-            font-size: 0.75rem;
-            font-weight: 600;
-            cursor: pointer;
-        }
-
-        .video-sound-toggle:hover {
-            background: var(--primary-maroon);
-        }
-
-        .hero-video figcaption {
-            color: var(--text-muted);
-            font-size: 0.8rem;
-            margin-top: 0.6rem;
-            text-align: center;
         }
 
         /* --- LATEST NEWS --- */
@@ -495,15 +459,36 @@
             border-radius: 8px;
             border-top: 4px solid var(--primary-maroon);
             padding: 1.8rem;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            transition: transform 0.26s ease, box-shadow 0.26s ease, border-color 0.26s ease;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
         }
 
-        .course-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 20px rgba(107, 5, 24, 0.08);
+        .course-card:hover, .course-card:focus-within {
+            transform: translateY(-6px);
+            border-color: rgba(107, 5, 24, 0.28);
+            box-shadow: 0 16px 30px rgba(107, 5, 24, 0.11);
+        }
+
+        .motion-ready [data-reveal] {
+            opacity: 0;
+            transform: translateY(18px);
+            transition: opacity 0.65s ease, transform 0.65s cubic-bezier(0.2, 0.7, 0.2, 1);
+            transition-delay: var(--reveal-delay, 0ms);
+        }
+
+        .motion-ready [data-reveal="left"] {
+            transform: translateX(-20px);
+        }
+
+        .motion-ready [data-reveal="right"] {
+            transform: translateX(20px);
+        }
+
+        .motion-ready [data-reveal].is-revealed {
+            opacity: 1;
+            transform: translate(0, 0);
         }
 
         .card-top {
@@ -697,6 +682,12 @@
 
         .routine-table tbody tr:hover {
             background: rgba(107, 5, 24, 0.03);
+        }
+
+        .routine-note {
+            margin-top: 1rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
         }
 
         /* --- CA FIRM LIST DOWNLOADS --- */
@@ -955,6 +946,16 @@
                 justify-content: center;
             }
         }
+
+        @media (prefers-reduced-motion: reduce) {
+            .hero::before {
+                animation: none;
+            }
+
+            .course-card, .motion-ready [data-reveal] {
+                transition: none;
+            }
+        }
     </style>
 </head>
 <body>
@@ -963,7 +964,7 @@
     <header>
         <div class="nav-container">
             <button class="menu-toggle" type="button" aria-label="Open menu" aria-controls="site-drawer" aria-expanded="false"><span></span></button>
-            <a href="#" class="brand-logo">
+            <a href="index.html" class="brand-logo">
                 <img class="site-logo" src="logo.png" alt="Road to CA">
             </a>
             <form class="site-search" role="search">
@@ -997,39 +998,36 @@
         <a href="profile.html" data-page="profile"><i class="fa-solid fa-user" aria-hidden="true"></i><span>Profile</span></a>
     </nav>
 
+    <section class="home-video" aria-label="Homepage video">
+        <video autoplay muted loop playsinline preload="metadata" aria-label="Road to CA homepage video">
+            <source src="video%20for%20home%20page.mp4" type="video/mp4">
+            Your browser does not support the video element.
+        </video>
+    </section>
+
     <!-- HERO SECTION -->
     <section class="hero">
         <div class="hero-container">
-            <div class="hero-content">
+            <div class="hero-content" data-reveal="left">
                 <span class="tagline-badge">PRACTICE • PREPARE • PROGRESS</span>
                 <h2>Master Your CA Certificate Level Exam</h2>
                 <p>Structured chapter-wise practice, complete syllabus coverage, and real exam simulations for ICAB aspirants.</p>
                 <a href="#courses" class="btn btn-solid" style="padding: 0.8rem 1.8rem; font-size: 1rem;">Start Practicing Now <i class="fa-solid font-arrow-right" style="margin-left:8px;"></i></a>
             </div>
-            <figure class="hero-video">
-                <div class="hero-video-frame">
-                    <video id="documentary-video" autoplay muted loop playsinline preload="auto">
-                        <source src="documentary.mp4" type="video/mp4">
-                    </video>
-                    <p class="video-fallback" id="video-fallback">The documentary video could not be loaded in this browser.</p>
-                    <button class="video-sound-toggle" id="video-sound-toggle" type="button" aria-pressed="false">&#128263; Enable sound</button>
-                </div>
-                <figcaption>&#128249; Documentary</figcaption>
-            </figure>
         </div>
     </section>
 
     <!-- LATEST NEWS -->
     <section class="latest-news-section" aria-labelledby="latest-news-title">
-        <div class="latest-news-card">
+        <div class="latest-news-card" data-reveal>
             <div class="latest-news-header">
                 <h3 class="latest-news-title" id="latest-news-title"><span class="latest-news-badge" aria-hidden="true">&#128226;</span> Latest News</h3>
                 <span class="latest-news-label">Announcements &amp; Updates</span>
             </div>
             <ul class="news-list" id="news-extra-items">
                 <li class="news-item">
-                    <time class="news-date" datetime="2026-09-12">12 Sep 2026</time>
-                    <a class="news-link" href="allexamtime2026.pdf">Certificate Level examination routine is now available for download</a>
+                    <time class="news-date" datetime="2026-10-17">17 Oct 2026</time>
+                    <a class="news-link" href="certificate%20level%20routine%20for%20novemeber%202026.jpeg">Updated Certificate Level examination schedule for November 2026</a>
                     <span class="news-type">Exam Notice</span>
                 </li>
                 <li class="news-item">
@@ -1063,7 +1061,7 @@
 
     <!-- COURSES & SYLLABUS SECTION -->
     <section class="courses-section" id="courses">
-        <div class="section-header">
+        <div class="section-header" data-reveal>
             <h3>Certificate Level Modules</h3>
             <p style="color: var(--text-muted);">Select a course module to access chapter-wise study notes and practice sets.</p>
         </div>
@@ -1127,8 +1125,8 @@
                     </ul>
                 </div>
                 <a href="course-chapters.html?course=accounting" class="btn btn-solid" style="text-align: center; margin-top: 1rem;">View All</a>
-                <a href="course-chapters.html?course=accounting" class="btn btn-outline" style="text-align: center; margin-top: 0.75rem;">Learn First</a>
-                <a href="mock-test.html" class="btn btn-outline" style="text-align: center; margin-top: 0.75rem;">Test You</a>
+                <a href="#" data-upcoming class="btn btn-outline" style="text-align: center; margin-top: 0.75rem;">Learn First</a>
+                <a href="#" data-upcoming class="btn btn-outline" style="text-align: center; margin-top: 0.75rem;">Test You</a>
             </div>
 
             <!-- 3. BTF -->
@@ -1182,8 +1180,8 @@
                     </ul>
                 </div>
                 <a href="course-chapters.html?course=mi" class="btn btn-solid" style="text-align: center; margin-top: 1rem;">View All</a>
-                <a href="course-chapters.html?course=mi" class="btn btn-outline" style="text-align: center; margin-top: 0.75rem;">Learn First</a>
-                <a href="mock-test.html" class="btn btn-outline" style="text-align: center; margin-top: 0.75rem;">Test You</a>
+                <a href="#" data-upcoming class="btn btn-outline" style="text-align: center; margin-top: 0.75rem;">Learn First</a>
+                <a href="#" data-upcoming class="btn btn-outline" style="text-align: center; margin-top: 0.75rem;">Test You</a>
             </div>
 
             <!-- 5. Principles of Taxation -->
@@ -1202,8 +1200,8 @@
                     </ul>
                 </div>
                 <a href="course-chapters.html?course=pot" class="btn btn-solid" style="text-align: center; margin-top: 1rem;">View All</a>
-                <a href="course-chapters.html?course=pot" class="btn btn-outline" style="text-align: center; margin-top: 0.75rem;">Learn First</a>
-                <a href="mock-test.html" class="btn btn-outline" style="text-align: center; margin-top: 0.75rem;">Test You</a>
+                <a href="#" data-upcoming class="btn btn-outline" style="text-align: center; margin-top: 0.75rem;">Learn First</a>
+                <a href="#" data-upcoming class="btn btn-outline" style="text-align: center; margin-top: 0.75rem;">Test You</a>
             </div>
 
             <!-- 6. Business Laws -->
@@ -1222,8 +1220,8 @@
                     </ul>
                 </div>
                 <a href="course-chapters.html?course=law" class="btn btn-solid" style="text-align: center; margin-top: 1rem;">View All</a>
-                <a href="course-chapters.html?course=law" class="btn btn-outline" style="text-align: center; margin-top: 0.75rem;">Learn First</a>
-                <a href="mock-test.html" class="btn btn-outline" style="text-align: center; margin-top: 0.75rem;">Test You</a>
+                <a href="#" data-upcoming class="btn btn-outline" style="text-align: center; margin-top: 0.75rem;">Learn First</a>
+                <a href="#" data-upcoming class="btn btn-outline" style="text-align: center; margin-top: 0.75rem;">Test You</a>
             </div>
 
             <!-- 7. Information Technology -->
@@ -1241,21 +1239,21 @@
                     </ul>
                 </div>
                 <a href="course-chapters.html?course=it" class="btn btn-solid" style="text-align: center; margin-top: 1rem;">View All</a>
-                <a href="course-chapters.html?course=it" class="btn btn-outline" style="text-align: center; margin-top: 0.75rem;">Learn First</a>
-                <a href="mock-test.html" class="btn btn-outline" style="text-align: center; margin-top: 0.75rem;">Test You</a>
+                <a href="#" data-upcoming class="btn btn-outline" style="text-align: center; margin-top: 0.75rem;">Learn First</a>
+                <a href="#" data-upcoming class="btn btn-outline" style="text-align: center; margin-top: 0.75rem;">Test You</a>
             </div>
 
         </div>
     </section>
 
     <!-- EXAM ROUTINE -->
-    <section class="exam-routine-section" aria-labelledby="exam-routine-title">
+    <section class="exam-routine-section" data-reveal aria-labelledby="exam-routine-title">
         <div class="exam-routine-card">
             <div class="exam-routine-header">
                 <div>
                     <span class="exam-routine-eyebrow">Certificate Level Examination</span>
-                    <h3 id="exam-routine-title">&#128197; Exam Routine</h3>
-                    <p>Next examination begins November 17, 2026.</p>
+                    <h3 id="exam-routine-title">&#128197; November 2026 Exam Routine</h3>
+                    <p>The November 2026 Certificate Level examination begins on November 23.</p>
                 </div>
                 <div class="countdown" aria-label="Time remaining until the next Certificate Level Exam">
                     <div class="countdown-unit"><span class="countdown-value" id="countdown-days">--</span><span class="countdown-label">Days</span></div>
@@ -1264,8 +1262,8 @@
                 </div>
             </div>
             <div class="routine-actions">
-                <a href="allexamtime2026.pdf" download="allexamtime2026.pdf" class="btn btn-solid" style="margin-right: 0.75rem;">
-                    <i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i> Download Exam Routine
+                <a href="certificate%20level%20routine%20for%20novemeber%202026.jpeg" download="certificate-level-routine-november-2026.jpeg" class="btn btn-solid" style="margin-right: 0.75rem;">
+                    <i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i> Download Updated Exam Routine
                 </a>
                 <button class="btn btn-outline routine-toggle" id="routine-toggle" type="button" aria-expanded="false" aria-controls="routine-details">
                     View Full Exam Routine Details &#128071; <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
@@ -1275,28 +1273,29 @@
                         <caption class="sr-only">Certificate Level examination routine</caption>
                         <thead>
                             <tr>
-                                <th scope="col">Subject</th>
                                 <th scope="col">Exam Date</th>
-                                <th scope="col">Start Time</th>
-                                <th scope="col">Duration</th>
+                                <th scope="col">Paper</th>
+                                <th scope="col">Subject</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr><td>Assurance</td><td>November 17, 2026</td><td>10:00 AM</td><td>3 hours</td></tr>
-                            <tr><td>Accounting</td><td>November 19, 2026</td><td>10:00 AM</td><td>3 hours</td></tr>
-                            <tr><td>Business Finance</td><td>November 21, 2026</td><td>10:00 AM</td><td>3 hours</td></tr>
-                            <tr><td>Law</td><td>November 23, 2026</td><td>10:00 AM</td><td>3 hours</td></tr>
-                            <tr><td>Principles of Taxation</td><td>November 25, 2026</td><td>10:00 AM</td><td>3 hours</td></tr>
-                            <tr><td>IT</td><td>November 27, 2026</td><td>10:00 AM</td><td>3 hours</td></tr>
+                            <tr><td><time datetime="2026-11-23">Monday, November 23, 2026</time></td><td>i</td><td>Assurance</td></tr>
+                            <tr><td><time datetime="2026-11-24">Tuesday, November 24, 2026</time></td><td>ii</td><td>Accounting</td></tr>
+                            <tr><td><time datetime="2026-11-25">Wednesday, November 25, 2026</time></td><td>iii</td><td>Business, Technology and Finance</td></tr>
+                            <tr><td><time datetime="2026-11-26">Thursday, November 26, 2026</time></td><td>iv</td><td>Management Information</td></tr>
+                            <tr><td><time datetime="2026-11-28">Saturday, November 28, 2026</time></td><td>v</td><td>Principles of Taxation</td></tr>
+                            <tr><td><time datetime="2026-11-30">Monday, November 30, 2026</time></td><td>vi</td><td>Business Law</td></tr>
+                            <tr><td><time datetime="2026-12-01">Tuesday, December 1, 2026</time></td><td>vii</td><td>Information Technology</td></tr>
                         </tbody>
                     </table>
+                    <p class="routine-note"><strong>Note:</strong> This is a prepared exam schedule based on an ICAB circular. Please follow the official schedule published by ICAB for any updates. Examinations are listed for Dhaka, Chattogram, Rajshahi, Rangpur, Khulna, Barishal, Sylhet, Mymensingh, and London centres.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- ALL CA FIRM LIST -->
-    <section class="firm-list-section" aria-labelledby="firm-list-title">
+    <section class="firm-list-section" data-reveal aria-labelledby="firm-list-title">
         <div class="firm-list-container">
             <div class="firm-list-heading">
                 <span class="exam-routine-eyebrow">Reference Documents</span>
@@ -1328,7 +1327,7 @@
     <footer>
         <div class="footer-container">
             <div class="footer-brand">
-                <a href="#" class="brand-logo">
+                <a href="index.html" class="brand-logo">
                     <img class="site-logo" src="logo.png" alt="Road to CA">
                 </a>
                 <p>Dedicated online practice and preparation platform for ICAB Certificate Level candidates in Bangladesh.</p>
@@ -1338,17 +1337,17 @@
                 <ul class="footer-links">
                     <li><a href="index.html">About Road to CA</a></li>
                     <li><a href="syllabus.html">ICAB Syllabus 2026</a></li>
-                    <li><a href="allexamtime2026.pdf">Exam Routine</a></li>
+                    <li><a href="certificate%20level%20routine%20for%20novemeber%202026.jpeg">Updated November 2026 Exam Routine</a></li>
                     <li><a href="#">Student Support</a></li>
                 </ul>
             </div>
             <div>
                 <h4 class="footer-title">Courses</h4>
                 <ul class="footer-links">
-                    <li><a href="#">Assurance</a></li>
-                    <li><a href="#">Accounting</a></li>
-                    <li><a href="#">Business, Tech & Finance</a></li>
-                    <li><a href="#">Management Info</a></li>
+                    <li><a href="assurance.html">Assurance</a></li>
+                    <li><a href="course-chapters.html?course=accounting">Accounting</a></li>
+                    <li><a href="course-chapters.html?course=btf">Business, Tech &amp; Finance</a></li>
+                    <li><a href="course-chapters.html?course=mi">Management Info</a></li>
                 </ul>
             </div>
             <div>
@@ -1365,29 +1364,36 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const examDate = new Date(2026, 10, 17, 10, 0, 0).getTime();
+            const examDate = new Date(2026, 10, 23).getTime();
             const countdownDays = document.getElementById('countdown-days');
             const countdownHours = document.getElementById('countdown-hours');
             const countdownMinutes = document.getElementById('countdown-minutes');
             const routineToggle = document.getElementById('routine-toggle');
             const routineDetails = document.getElementById('routine-details');
-            const documentaryVideo = document.getElementById('documentary-video');
-            const videoSoundToggle = document.getElementById('video-sound-toggle');
-            const videoFallback = document.getElementById('video-fallback');
             const newsViewAll = document.getElementById('news-view-all');
             const extraNewsItems = document.querySelectorAll('.news-item-extra');
 
-            documentaryVideo.muted = true;
-            documentaryVideo.volume = 0;
-            documentaryVideo.addEventListener('error', () => {
-                videoFallback.classList.add('is-visible');
-                videoSoundToggle.hidden = true;
-            });
-            documentaryVideo.load();
-            documentaryVideo.play().catch(() => {
-                videoFallback.classList.add('is-visible');
-                videoSoundToggle.hidden = true;
-            });
+            const revealTargets = document.querySelectorAll(
+                '[data-reveal], .course-card'
+            );
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+                const courseCards = document.querySelectorAll('.course-card');
+                courseCards.forEach((card, index) => {
+                    card.dataset.reveal = 'up';
+                    card.style.setProperty('--reveal-delay', `${(index % 4) * 70}ms`);
+                });
+                document.body.classList.add('motion-ready');
+                const revealObserver = new IntersectionObserver((entries, observer) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('is-revealed');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.12, rootMargin: '0px 0px -36px 0px' });
+
+                revealTargets.forEach((target) => revealObserver.observe(target));
+            }
 
             function updateCountdown() {
                 const remaining = Math.max(0, examDate - Date.now());
@@ -1405,17 +1411,6 @@
                 const isExpanded = routineToggle.getAttribute('aria-expanded') === 'true';
                 routineToggle.setAttribute('aria-expanded', String(!isExpanded));
                 routineDetails.hidden = isExpanded;
-            });
-
-            videoSoundToggle.addEventListener('click', () => {
-                const soundEnabled = videoSoundToggle.getAttribute('aria-pressed') === 'true';
-                documentaryVideo.muted = soundEnabled;
-                documentaryVideo.volume = documentaryVideo.muted ? 0 : 1;
-                videoSoundToggle.setAttribute('aria-pressed', String(!soundEnabled));
-                videoSoundToggle.innerHTML = documentaryVideo.muted
-                    ? '&#128263; Enable sound'
-                    : '&#128266; Mute sound';
-                documentaryVideo.play();
             });
 
             newsViewAll.addEventListener('click', () => {

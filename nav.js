@@ -37,6 +37,13 @@ function renderAnnouncements() {
 
 renderAnnouncements();
 
+document.addEventListener('click', (event) => {
+    const upcomingLink = event.target.closest('[data-upcoming]');
+    if (!upcomingLink) return;
+    event.preventDefault();
+    window.alert('Upcoming');
+});
+
 if (tickerViewport) {
     let pauseTimeout;
     tickerViewport.addEventListener('pointerdown', () => {
@@ -90,4 +97,3 @@ document.querySelectorAll('[data-page]').forEach((link) => {
     link.classList.toggle('active', isActive);
     if (isActive) link.setAttribute('aria-current', 'page');
 });
-
