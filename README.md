@@ -1,5 +1,11 @@
 # Road-to-CA
 
+## GitHub Pages deployment
+
+The static site entry point and assets are in the repository root. `.github/workflows/static.yml` publishes that root to GitHub Pages on pushes to `main` and supports manual runs.
+
+Keep the repository private. In GitHub, open **Settings → Pages** and select **GitHub Actions** as the build and deployment source. Private-repository Pages availability depends on the account plan. The deployed website itself is public, so HTML, JavaScript, and other published assets can be viewed by site visitors even though the GitHub repository remains private.
+
 ## Private feedback setup
 
 The site feedback form and student dashboard use Google Authentication and Cloud Firestore. Before those features can be used:
