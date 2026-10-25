@@ -3,37 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mock Test | Road to CA</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <meta name="description" content="Subject-wise full-syllabus mock tests for all seven ICAB Certificate Level subjects.">
+    <title>Mock Test Hub | Road to CA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="nav.css">
     <style>
-        :root { --primary-maroon:#6B0518; --deep-maroon:#4A000E; --pure-white:#FFF; --off-white:#F8F9FA; --text-dark:#1F1F1F; --text-muted:#6C757D; --border-color:#E0E0E0; --pill-bg:rgba(107,5,24,.08); }
-        * { box-sizing:border-box; margin:0; font-family:'Inter',sans-serif; }
-        body { background:var(--off-white); color:var(--text-dark); line-height:1.6; }
-        header { position:sticky; top:0; z-index:1000; background:var(--pure-white); border-bottom:1px solid var(--border-color); }
-        .nav-container { max-width:1200px; margin:auto; padding:1rem 2rem; display:flex; align-items:center; }
-        .brand-logo img { width:170px; height:58px; object-fit:contain; }
-        .auth-buttons { display:flex; gap:1rem; margin-left:auto; }
-        .btn { display:inline-block; padding:.65rem 1.2rem; border-radius:6px; text-decoration:none; font-weight:600; }
-        .btn-outline { border:1.5px solid var(--primary-maroon); color:var(--primary-maroon); }
-        .btn-solid { border:1.5px solid var(--primary-maroon); background:var(--primary-maroon); color:var(--pure-white); }
-        main { max-width:1000px; margin:auto; padding:4rem 2rem 6rem; }
-        .eyebrow { color:var(--primary-maroon); font-weight:700; letter-spacing:2px; font-size:.8rem; }
-        h1,h2 { color:var(--deep-maroon); font-family:'Montserrat',sans-serif; }
-        h1 { font-size:2.8rem; margin:.6rem 0 1rem; }
-        .intro { max-width:680px; color:var(--text-muted); font-size:1.05rem; }
-        .test-panel { margin-top:2.5rem; background:var(--pure-white); border:1px solid var(--border-color); border-top:4px solid var(--primary-maroon); border-radius:8px; padding:1.5rem; }
-        .test-panel h2 { font-size:1.3rem; margin-bottom:.5rem; }
-        .test-panel p { color:var(--text-muted); margin-bottom:1.2rem; }
-        @media (max-width:768px) { .auth-buttons { display:none; } h1 { font-size:2.2rem; } }
+        :root {
+            --primary-maroon: #6B0518;
+            --deep-maroon: #4A000E;
+            --pure-white: #FFFFFF;
+            --off-white: #F8F9FA;
+            --text-dark: #1F1F1F;
+            --text-muted: #6C757D;
+            --border-color: #E0E0E0;
+            --pill-bg: rgba(107, 5, 24, 0.08);
+            --hub-primary: var(--primary-maroon);
+            --hub-primary-light: var(--deep-maroon);
+            --hub-accent: var(--primary-maroon);
+            --hub-background: var(--pure-white);
+            --hub-surface: var(--pure-white);
+            --hub-text: var(--text-dark);
+            --hub-muted: var(--text-muted);
+            --hub-border: var(--border-color);
+            --hub-ready: #1B5E20;
+            --hub-ready-bg: #E8F5E9;
+            --hub-soon: #8A5A00;
+            --hub-soon-bg: #FFF4D6;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background-color: var(--hub-background); color: var(--hub-text); line-height: 1.6; }
+        h1, h2, h3 { font-family: 'Montserrat', sans-serif; }
+        header { background-color: var(--pure-white); border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 4px rgba(0,0,0,0.03); }
+        .nav-container { max-width: 1200px; margin: 0 auto; padding: 1rem 2rem; display: flex; justify-content: flex-start; align-items: center; }
+        .brand-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+        .nav-container .brand-logo .site-logo { width: 125px !important; height: 43px !important; display: block; object-fit: contain; }
+        .hub-hero { padding: 3.5rem 1.5rem; background: var(--off-white); color: var(--text-dark); border-bottom: 1px solid var(--border-color); }
+        .hub-hero-inner, .hub-content { width: min(1120px, 100%); margin: 0 auto; }
+        .hub-eyebrow { color: var(--primary-maroon); font-size: .78rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
+        .hub-hero h1 { margin: .55rem 0 .75rem; color: var(--deep-maroon); font-size: clamp(2rem, 5vw, 3rem); line-height: 1.15; }
+        .hub-hero p { max-width: 700px; margin: 0; color: var(--text-muted); }
+        .hub-content { padding: 2rem 1.5rem 5rem; }
+        .hub-controls { display: grid; gap: 1rem; margin-bottom: 2rem; }
+        .search-field { position: relative; }
+        .search-field i { position: absolute; top: 50%; left: 1rem; color: var(--hub-muted); transform: translateY(-50%); }
+        .search-field input { width: 100%; min-height: 3.1rem; padding: .75rem 1rem .75rem 2.8rem; border: 1px solid var(--hub-border); border-radius: .65rem; background: var(--hub-surface); color: var(--hub-text); font: inherit; }
+        .search-field input:focus-visible, .subject-filter:focus-visible, .test-action:focus-visible { outline: 3px solid #93C5FD; outline-offset: 2px; }
+        .subject-filters { display: flex; gap: .55rem; overflow-x: auto; padding: .15rem .1rem .5rem; }
+        .subject-filter { flex: 0 0 auto; padding: .55rem .85rem; border: 1px solid var(--hub-border); border-radius: 999px; background: var(--hub-surface); color: var(--hub-primary); font: 600 .86rem 'Inter', sans-serif; cursor: pointer; }
+        .subject-filter:hover, .subject-filter[aria-pressed="true"] { border-color: var(--hub-primary); background: var(--hub-primary); color: var(--pure-white); }
+        .hub-summary { margin: 0 0 1rem; color: var(--hub-muted); font-size: .9rem; }
+        .subject-section { margin-top: 2rem; scroll-margin-top: 1rem; }
+        .subject-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: .9rem; }
+        .subject-heading h2 { margin: 0; color: var(--hub-primary); font-size: 1.35rem; }
+        .subject-heading span { color: var(--hub-muted); font-size: .85rem; }
+        .test-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 245px), 1fr)); gap: 1rem; }
+        .test-card { display: flex; flex-direction: column; min-height: 220px; padding: 1.15rem; border: 1px solid var(--hub-border); border-radius: .8rem; background: var(--hub-surface); box-shadow: 0 2px 8px rgb(15 23 42 / 4%); }
+        .test-card h3 { margin: .85rem 0 .5rem; color: var(--hub-primary); font-size: 1rem; line-height: 1.45; }
+        .test-details { display: flex; flex-wrap: wrap; gap: .45rem 1rem; margin-bottom: 1rem; color: var(--hub-muted); font-size: .82rem; }
+        .test-details span { display: inline-flex; align-items: center; gap: .4rem; }
+        .test-details i { color: var(--hub-accent); }
+        .status-badge { align-self: flex-start; padding: .22rem .6rem; border-radius: 999px; font-size: .72rem; font-weight: 700; }
+        .status-ready { background: var(--hub-ready-bg); color: var(--hub-ready); }
+        .status-soon { background: var(--hub-soon-bg); color: var(--hub-soon); }
+        .test-action { display: inline-flex; justify-content: center; align-items: center; gap: .5rem; width: 100%; min-height: 2.65rem; margin-top: auto; padding: .6rem .85rem; border: 1px solid var(--hub-primary); border-radius: .5rem; background: var(--hub-primary); color: var(--pure-white); font: 600 .88rem 'Inter', sans-serif; text-decoration: none; }
+        .test-action:hover { background: var(--hub-primary-light); }
+        .test-action:disabled { border-color: var(--hub-border); background: #F1F5F9; color: var(--hub-muted); cursor: not-allowed; }
+        .no-results { margin-top: 2rem; padding: 2rem; border: 1px dashed var(--hub-border); border-radius: .8rem; color: var(--hub-muted); text-align: center; }
+        .no-results[hidden], .subject-section[hidden] { display: none; }
+        @media (max-width: 600px) {
+            .hub-hero { padding: 2.5rem 1.1rem; }
+            .hub-content { padding: 1.5rem 1.1rem 4rem; }
+            .subject-heading { align-items: flex-start; flex-direction: column; gap: .15rem; }
+            .test-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 768px) {
+            .nav-container .brand-logo .site-logo { width: 105px !important; height: 38px !important; }
+        }
     </style>
 </head>
 <body>
-    <header><div class="nav-container"><button class="menu-toggle" type="button" aria-label="Open menu" aria-controls="site-drawer" aria-expanded="false"><span></span></button><a href="index.html" class="brand-logo"><img src="logo.png" alt="Road to CA"></a><form class="site-search" role="search"><input type="search" name="search" placeholder="Search courses..." aria-label="Search courses and resources"><button type="submit" aria-label="Submit search"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i></button></form><a class="profile-link" href="profile.html" aria-label="Open your profile"><i class="fa-solid fa-user" aria-hidden="true"></i><span>Profile</span></a></div></header>
-    <section class="announcement-ticker" aria-label="Latest announcements"><strong class="ticker-label">LATEST ANNOUNCEMENTS</strong><div class="ticker-viewport"><div class="ticker-track" id="announcementTrack"></div></div></section>
-    <div class="drawer-overlay" data-drawer-close></div><aside class="site-drawer" id="site-drawer" aria-hidden="true"><div class="drawer-heading"><h2>Menu</h2><button class="drawer-close" type="button" aria-label="Close menu">&times;</button></div><nav class="drawer-links" aria-label="Main menu"><a href="index.html" data-page="home"><i class="fa-solid fa-house" aria-hidden="true"></i>Home</a><a href="courses.html" data-page="courses"><i class="fa-solid fa-book-open" aria-hidden="true"></i>Courses</a><a href="mock-test.html" data-page="mock-test"><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i>Mock Test</a><a href="profile.html" data-page="profile"><i class="fa-solid fa-user" aria-hidden="true"></i>Profile</a></nav></aside><nav class="bottom-nav" aria-label="Mobile navigation"><a href="index.html" data-page="home"><i class="fa-solid fa-house" aria-hidden="true"></i><span>Home</span></a><a href="courses.html" data-page="courses"><i class="fa-solid fa-book-open" aria-hidden="true"></i><span>Courses</span></a><a href="mock-test.html" data-page="mock-test"><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i><span>Mock Test</span></a><a href="profile.html" data-page="profile"><i class="fa-solid fa-user" aria-hidden="true"></i><span>Profile</span></a></nav>
-    <main><span class="eyebrow">SIMULATE EXAM DAY</span><h1>Mock Test</h1><p class="intro">Practice under realistic time limits and use your results to decide where to focus next.</p><section class="test-panel"><h2>Certificate Level mock papers</h2><p>Choose a full-length simulation or open the existing mock exam library for subject-focused practice.</p><a class="btn btn-solid" href="mock-exams.html">Open mock exams</a></section></main>
+    <header>
+        <div class="nav-container">
+            <button class="menu-toggle" type="button" aria-label="Open menu" aria-controls="site-drawer" aria-expanded="false"><span></span></button>
+            <a href="index.html" class="brand-logo"><img class="site-logo" src="logo.png" alt="Road to CA"></a>
+            <form class="site-search" role="search">
+                <input type="search" name="search" placeholder="Search courses..." aria-label="Search courses and resources">
+                <button type="submit" aria-label="Submit search"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i></button>
+            </form>
+            <a class="profile-link" href="profile.html" aria-label="Open your profile"><i class="fa-solid fa-user" aria-hidden="true"></i><span>Profile</span></a>
+        </div>
+    </header>
+    <section class="announcement-ticker" aria-label="Latest announcements">
+        <strong class="ticker-label">LATEST ANNOUNCEMENTS</strong>
+        <div class="ticker-viewport"><div class="ticker-track" id="announcementTrack"></div></div>
+    </section>
+    <div class="drawer-overlay" data-drawer-close></div>
+    <aside class="site-drawer" id="site-drawer" aria-hidden="true">
+        <div class="drawer-heading"><h2>Menu</h2><button class="drawer-close" type="button" aria-label="Close menu">&times;</button></div>
+        <nav class="drawer-links" aria-label="Main menu">
+            <a href="index.html" data-page="home"><i class="fa-solid fa-house" aria-hidden="true"></i>Home</a>
+            <a href="courses.html" data-page="courses"><i class="fa-solid fa-book-open" aria-hidden="true"></i>Courses</a>
+            <a href="mock-test.html" data-page="mock-test"><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i>Mock Test</a>
+            <a href="profile.html" data-page="profile"><i class="fa-solid fa-user" aria-hidden="true"></i>Profile</a>
+        </nav>
+    </aside>
+    <nav class="bottom-nav" aria-label="Mobile navigation">
+        <a href="index.html" data-page="home"><i class="fa-solid fa-house" aria-hidden="true"></i><span>Home</span></a>
+        <a href="courses.html" data-page="courses"><i class="fa-solid fa-book-open" aria-hidden="true"></i><span>Courses</span></a>
+        <a href="mock-test.html" data-page="mock-test"><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i><span>Mock Test</span></a>
+        <a href="profile.html" data-page="profile"><i class="fa-solid fa-user" aria-hidden="true"></i><span>Profile</span></a>
+    </nav>
+    <section class="hub-hero">
+        <div class="hub-hero-inner">
+            <span class="hub-eyebrow">ICAB Certificate Level</span>
+            <h1>Subject-wise Mock Tests</h1>
+            <p>Choose a full-syllabus mock test from any of the seven Certificate Level subjects. Each paper is planned for 50 MCQs and 50 minutes. Tests will become available as their question sets are added.</p>
+        </div>
+    </section>
+    <main class="hub-content">
+        <div class="hub-controls">
+            <label class="search-field">
+                <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                <input id="mock-search" type="search" placeholder="Search by subject or mock test number..." aria-label="Search mock tests by subject or test number" autocomplete="off">
+            </label>
+            <nav class="subject-filters" id="subject-filters" aria-label="Filter mock tests by subject"></nav>
+        </div>
+        <p class="hub-summary" id="hub-summary" aria-live="polite"></p>
+        <div id="subject-sections"></div>
+        <p class="no-results" id="no-results" hidden>No mock tests match your search. Try a subject name or another test number.</p>
+    </main>
+    <script src="js/mock-test.js"></script>
     <script src="nav.js"></script>
 </body>
 </html>

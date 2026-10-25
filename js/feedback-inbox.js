@@ -1,6 +1,6 @@
 import { auth, db, googleProvider } from './firebase-client.js';
-import { signInWithPopup, signOut } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js';
-import { collection, getDocs, limit, orderBy, query, updateDoc, doc } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js';
+import { signInWithPopup, signOut } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js';
+import { collection, getDocs, limit, orderBy, query, updateDoc, doc } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js';
 
 const ownerEmail = 'mjhmbrur@gmail.com';
 const signInButton = document.getElementById('inbox-sign-in');

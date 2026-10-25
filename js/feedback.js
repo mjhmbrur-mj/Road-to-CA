@@ -1,6 +1,6 @@
 import { auth, db, googleProvider } from './firebase-client.js';
-import { signInWithPopup } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js';
-import { addDoc, collection, serverTimestamp } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js';
+import { signInWithPopup } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js';
+import { addDoc, collection, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js';
 
 document.body.insertAdjacentHTML('beforeend', `
     <button class="feedback-launcher" id="feedback-launcher" type="button" aria-haspopup="dialog" aria-controls="site-feedback-dialog">

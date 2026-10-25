@@ -95,7 +95,33 @@
                 const result = document.createElement('div'); result.className = 'quiz-result'; result.hidden = true;
                 const submit = document.createElement('button'); submit.className = 'btn btn-solid quiz-submit'; submit.type = 'button'; submit.textContent = 'Submit Test';
                 let submitted = false;
-                const submitTest = () => { if (submitted) return; submitted = true; const score = questions.reduce((total, question) => { const selected = document.querySelector(`input[name="q${question.id}"]:checked`); const isCorrect = selected && Number(selected.value) === question.correctAnswer; if (selected && !isCorrect) document.querySelector(`input[name="q${question.id}"]`).closest('.quiz-card').querySelector('.test-feedback').hidden = false; return total + (isCorrect ? 1 : 0); }, 0); result.textContent = `Your score: ${score} / ${questions.length} (${Math.round(score / questions.length * 100)}%).`; result.hidden = false; submit.disabled = true; clearInterval(timerInterval); };
+                const submitTest = async () => {
+                    if (submitted) return;
+                    submitted = true;
+                    const score = questions.reduce((total, question) => {
+                        const selected = document.querySelector(`input[name="q${question.id}"]:checked`);
+                        const isCorrect = selected && Number(selected.value) === question.correctAnswer;
+                        if (selected && !isCorrect) document.querySelector(`input[name="q${question.id}"]`).closest('.quiz-card').querySelector('.test-feedback').hidden = false;
+                        return total + (isCorrect ? 1 : 0);
+                    }, 0);
+                    result.textContent = `Your score: ${score} / ${questions.length} (${Math.round(score / questions.length * 100)}%). Saving activity…`;
+                    result.hidden = false;
+                    submit.disabled = true;
+                    clearInterval(timerInterval);
+                    try {
+                        const { saveQuizActivity } = await import('./js/activity-tracker.js');
+                        const saved = await saveQuizActivity({
+                            subjectId: 'btf',
+                            activityName: 'Timed BTF practice test',
+                            score,
+                            totalQuestions: questions.length
+                        });
+                        result.textContent = `Your score: ${score} / ${questions.length} (${Math.round(score / questions.length * 100)}%). ${saved ? 'Saved to your student dashboard.' : 'Sign in with Google before a quiz to save results to your dashboard.'}`;
+                    } catch (error) {
+                        console.error('Unable to save BTF quiz activity.', error);
+                        result.textContent = `Your score: ${score} / ${questions.length} (${Math.round(score / questions.length * 100)}%). Your attempt could not be saved to your dashboard.`;
+                    }
+                };
                 submit.addEventListener('click', submitTest); quiz.append(result, submit);
                 let remainingSeconds = 50 * 60;
                 timerInterval = setInterval(() => { remainingSeconds -= 1; document.getElementById('timerDisplay').textContent = `${String(Math.floor(remainingSeconds / 60)).padStart(2, '0')}:${String(remainingSeconds % 60).padStart(2, '0')}`; if (remainingSeconds <= 0) submitTest(); }, 1000);

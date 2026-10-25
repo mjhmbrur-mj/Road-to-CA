@@ -3,29 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile | Road to CA</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <title>Student Dashboard | Road to CA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="nav.css">
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        :root { --primary-maroon:#6B0518; --deep-maroon:#4A000E; --pure-white:#FFF; --off-white:#F8F9FA; --text-muted:#6C757D; --border-color:#E0E0E0; }
-        * { box-sizing:border-box; margin:0; font-family:'Inter',sans-serif; }
-        body { background:var(--off-white); color:var(--deep-maroon); line-height:1.6; }
-        header { position:sticky; top:0; z-index:1000; background:var(--pure-white); border-bottom:1px solid var(--border-color); }
-        .nav-container { max-width:1200px; margin:auto; padding:1rem 2rem; display:flex; align-items:center; }
-        .brand-logo img { width:170px; height:58px; object-fit:contain; }
-        main { max-width:1200px; margin:auto; padding:4rem 2rem 6rem; }
-        .profile-card { max-width:760px; margin:auto; padding:3rem 2rem; background:var(--pure-white); border:1px solid var(--border-color); border-top:4px solid var(--primary-maroon); border-radius:8px; text-align:center; }
-        .profile-icon { display:grid; place-items:center; width:72px; height:72px; margin:0 auto 1rem; border-radius:50%; background:var(--primary-maroon); color:var(--pure-white); font-size:1.7rem; }
-        h1 { margin-bottom:.7rem; font:800 2.2rem 'Montserrat',sans-serif; }
-        p { color:var(--text-muted); }
+        :root { --primary-maroon:#6B0518; --deep-maroon:#4A000E; --pure-white:#FFF; --off-white:#F8F9FA; --text-dark:#1F1F1F; --text-muted:#6C757D; --border-color:#E0E0E0; --pill-bg:rgba(107,5,24,.08); }
+        body { background:var(--off-white); color:var(--text-dark); font-family:'Inter',sans-serif; line-height:1.6; }
+        header { position:sticky; top:0; z-index:1000; background:var(--pure-white); border-bottom:1px solid var(--border-color); box-shadow:0 2px 4px rgba(0,0,0,.03); }
+        .nav-container { min-height:68px; max-width:1200px; margin:0 auto; padding:.65rem 1.25rem; display:flex; align-items:center; gap:.75rem; }
+        .nav-container .menu-toggle { color:var(--deep-maroon); }
+        .nav-container .brand-logo .site-logo { display:block; width:120px !important; height:42px !important; object-fit:contain; }
+        main .text-slate-900 { color:var(--deep-maroon) !important; }
+        main .text-slate-700, main .text-slate-600, main .text-slate-500 { color:var(--text-muted) !important; }
+        main .text-rose-900, main .text-rose-800 { color:var(--primary-maroon) !important; }
+        main .bg-rose-50 { background:var(--pill-bg) !important; }
+        main .border-slate-200 { border-color:var(--border-color) !important; }
+        #sign-in-view .bg-slate-900 { background:var(--primary-maroon) !important; }
+        #sign-in-view .sign-in-button:hover { background:var(--deep-maroon) !important; }
+        main .dashboard-content .activity-item { background:var(--pure-white); }
+        [hidden] { display:none !important; }
+        .dashboard-content[hidden] { display:none !important; }
+        .dashboard-status.is-error { border-color:#FECACA; background:#FEF2F2; color:#991B1B; }
+        .activity-item { display:flex; align-items:center; gap:1rem; padding:.9rem 1rem; border:1px solid #E2E8F0; border-radius:.75rem; }
+        .activity-icon { display:grid; place-items:center; width:2.75rem; height:2.75rem; flex:0 0 2.75rem; border-radius:50%; background:#FFF1F2; color:#881337; }
+        .activity-detail { min-width:0; flex:1; }
+        .activity-score { flex:0 0 auto; padding:.4rem .7rem; border-radius:999px; font-size:.8rem; font-weight:700; white-space:nowrap; }
+        .activity-score.is-pass { background:#DCFCE7; color:#166534; }
+        .activity-score.is-fail { background:#FEE2E2; color:#991B1B; }
+        .empty-state { padding:2rem 1rem; color:#64748B; text-align:center; }
+        .empty-state p { margin:.35rem 0 0; }
+        .site-drawer { color:var(--deep-maroon); }
+        .bottom-nav { --deep-maroon:#4A000E; --primary-maroon:#6B0518; --pure-white:#FFF; --border-color:#E0E0E0; --pill-bg:rgba(107,5,24,.08); }
+        @media (max-width:640px) {
+            .nav-container { min-height:60px; }
+            .nav-container .brand-logo .site-logo { width:105px !important; height:37px !important; }
+            .activity-item { align-items:flex-start; gap:.65rem; padding:.75rem; }
+            .activity-score { align-self:center; font-size:.72rem; }
+        }
     </style>
 </head>
 <body>
-    <header><div class="nav-container"><button class="menu-toggle" type="button" aria-label="Open menu" aria-controls="site-drawer" aria-expanded="false"><span></span></button><a href="index.html" class="brand-logo"><img src="logo.png" alt="Road to CA"></a><form class="site-search" role="search"><input type="search" name="search" placeholder="Search courses..." aria-label="Search courses and resources"><button type="submit" aria-label="Submit search"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i></button></form><a class="profile-link" href="profile.html" aria-label="Open your profile"><i class="fa-solid fa-user" aria-hidden="true"></i><span>Profile</span></a></div></header>
-    <section class="announcement-ticker" aria-label="Latest announcements"><strong class="ticker-label">LATEST ANNOUNCEMENTS</strong><div class="ticker-viewport"><div class="ticker-track" id="announcementTrack"></div></div></section>
-    <div class="drawer-overlay" data-drawer-close></div><aside class="site-drawer" id="site-drawer" aria-hidden="true"><div class="drawer-heading"><h2>Menu</h2><button class="drawer-close" type="button" aria-label="Close menu">&times;</button></div><nav class="drawer-links" aria-label="Main menu"><a href="index.html" data-page="home"><i class="fa-solid fa-house" aria-hidden="true"></i>Home</a><a href="courses.html" data-page="courses"><i class="fa-solid fa-book-open" aria-hidden="true"></i>Courses</a><a href="mock-test.html" data-page="mock-test"><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i>Mock Test</a><a href="profile.html" data-page="profile"><i class="fa-solid fa-user" aria-hidden="true"></i>Profile</a></nav></aside><nav class="bottom-nav" aria-label="Mobile navigation"><a href="index.html" data-page="home"><i class="fa-solid fa-house" aria-hidden="true"></i><span>Home</span></a><a href="courses.html" data-page="courses"><i class="fa-solid fa-book-open" aria-hidden="true"></i><span>Courses</span></a><a href="mock-test.html" data-page="mock-test"><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i><span>Mock Test</span></a><a href="profile.html" data-page="profile"><i class="fa-solid fa-user" aria-hidden="true"></i><span>Profile</span></a></nav>
-    <main><section class="profile-card"><div class="profile-icon"><i class="fa-solid fa-user" aria-hidden="true"></i></div><h1>Profile</h1><p>Profile and sign-in features are currently being rebuilt.</p></section></main>
+    <header>
+        <div class="nav-container">
+            <button class="menu-toggle" type="button" aria-label="Open menu" aria-controls="site-drawer" aria-expanded="false"><span></span></button>
+            <a href="index.html" class="brand-logo" aria-label="Road to CA home"><img class="site-logo" src="logo.png" alt="Road to CA"></a>
+        </div>
+    </header>
+    <div class="drawer-overlay" data-drawer-close></div>
+    <aside class="site-drawer" id="site-drawer" aria-hidden="true">
+        <div class="drawer-heading"><h2>Menu</h2><button class="drawer-close" type="button" aria-label="Close menu">&times;</button></div>
+        <nav class="drawer-links" aria-label="Main menu">
+            <a href="index.html" data-page="home"><i class="fa-solid fa-house" aria-hidden="true"></i>Home</a>
+            <a href="courses.html" data-page="courses"><i class="fa-solid fa-book-open" aria-hidden="true"></i>Courses</a>
+            <a href="mock-test.html" data-page="mock-test"><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i>Mock Test</a>
+            <a href="profile.html" data-page="profile"><i class="fa-solid fa-user" aria-hidden="true"></i>Profile</a>
+        </nav>
+    </aside>
+    <nav class="bottom-nav" aria-label="Mobile navigation">
+        <a href="index.html" data-page="home"><i class="fa-solid fa-house" aria-hidden="true"></i><span>Home</span></a>
+        <a href="courses.html" data-page="courses"><i class="fa-solid fa-book-open" aria-hidden="true"></i><span>Courses</span></a>
+        <a href="mock-test.html" data-page="mock-test"><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i><span>Mock Test</span></a>
+        <a href="profile.html" data-page="profile"><i class="fa-solid fa-user" aria-hidden="true"></i><span>Profile</span></a>
+    </nav>
+    <main class="mx-auto max-w-5xl px-4 py-10 pb-24 sm:px-6 sm:py-12">
+        <section class="mx-auto max-w-xl rounded-xl border border-slate-200 bg-white p-8 text-center shadow-sm sm:p-10" id="sign-in-view">
+            <div class="mx-auto mb-5 grid h-14 w-14 place-items-center rounded-full bg-rose-50 text-xl text-rose-900"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i></div>
+            <span class="text-xs font-bold uppercase tracking-[.16em] text-rose-900">ICAB Certificate Level</span>
+            <h1 class="mt-2 font-['Montserrat'] text-2xl font-extrabold text-slate-900 sm:text-3xl">Welcome, students</h1>
+            <p class="mx-auto mt-3 max-w-md text-sm leading-6 text-slate-600">Sign in with your Google account to track your mock test performance, review scores, and monitor your preparation.</p>
+            <button class="sign-in-button mt-7 inline-flex min-h-12 w-full items-center justify-center gap-3 rounded-lg bg-slate-900 px-5 py-3 font-semibold text-white shadow-sm transition hover:bg-slate-800 focus:outline-none focus:ring-4 focus:ring-slate-200 sm:w-auto" id="dashboard-sign-in" type="button">
+                <svg aria-hidden="true" width="20" height="20" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.92c-.58 2.96-2.24 5.48-4.68 7.18l7.57 5.88c4.42-4.08 6.97-10.08 6.97-17.53z"/><path fill="#FBBC05" d="M10.53 28.59A14.4 14.4 0 0 1 9.75 24c0-1.59.27-3.13.76-4.59l-7.98-6.19A23.9 23.9 0 0 0 0 24c0 3.87.93 7.53 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.91-5.92l-7.57-5.88c-2.1 1.41-4.8 2.25-8.34 2.25-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+                Sign in with Google
+            </button>
+        </section>
+        <p class="dashboard-status mx-auto mt-4 max-w-3xl rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm text-slate-600" id="dashboard-status" role="status" aria-live="polite" hidden></p>
+        <section class="dashboard-content" id="dashboard-content" hidden>
+            <div class="mb-6 flex flex-wrap items-center gap-4 rounded-xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+                <img class="account-avatar h-14 w-14 rounded-full object-cover" id="account-avatar" alt="" hidden>
+                <div class="account-avatar-fallback grid h-14 w-14 place-items-center rounded-full bg-rose-50 text-xl text-rose-900" id="account-avatar-fallback" aria-hidden="true"><i class="fa-solid fa-user"></i></div>
+                <div class="account-info min-w-0 flex-1"><h2 class="break-words font-['Montserrat'] text-lg font-bold text-slate-900" id="account-name"></h2><p class="break-all text-sm text-slate-500" id="account-email"></p></div>
+                <button class="sign-out-button inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-slate-500 hover:bg-slate-50" id="dashboard-sign-out" type="button"><i class="fa-solid fa-arrow-right-from-bracket" aria-hidden="true"></i> Sign Out</button>
+            </div>
+            <div class="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-3" aria-label="Student statistics">
+                <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm"><span class="flex items-center gap-2 text-sm font-semibold text-slate-600"><i class="fa-solid fa-clipboard-check text-rose-800" aria-hidden="true"></i> Tests Completed</span><strong class="mt-2 block font-['Montserrat'] text-3xl font-extrabold text-slate-900" id="stat-attempts">0</strong></article>
+                <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm"><span class="flex items-center gap-2 text-sm font-semibold text-slate-600"><i class="fa-solid fa-chart-line text-rose-800" aria-hidden="true"></i> Average Score</span><strong class="mt-2 block font-['Montserrat'] text-3xl font-extrabold text-slate-900" id="stat-average">—</strong></article>
+                <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm"><span class="flex items-center gap-2 text-sm font-semibold text-slate-600"><i class="fa-solid fa-book-open text-rose-800" aria-hidden="true"></i> Active Subjects</span><strong class="mt-2 block font-['Montserrat'] text-3xl font-extrabold text-slate-900" id="stat-subjects">7</strong><span class="text-xs text-slate-500">ICAB subjects</span></article>
+            </div>
+            <section class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+                <div class="mb-4"><h2 class="font-['Montserrat'] text-xl font-bold text-slate-900">Recent Mock Test History</h2><p class="mt-1 text-sm text-slate-500">Completed tests, dates, and score results. Scores of 70% or higher are marked Pass.</p></div>
+                <div class="activity-list space-y-3" id="activity-list"></div>
+            </section>
+        </section>
+    </main>
     <script src="nav.js"></script>
+    <script type="module" src="js/profile.js"></script>
 </body>
 </html>

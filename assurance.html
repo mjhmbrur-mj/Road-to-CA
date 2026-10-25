@@ -1413,6 +1413,8 @@
 
         let timerInterval = null;
         let currentQuestionsList = [];
+        let currentActivityName = '';
+        let isQuizSubmitted = false;
 
         // Render 16 Chapters onto the page
         const grid = document.getElementById("chapterGrid");
@@ -1482,7 +1484,9 @@
         // Open "Test You" Modal with Countdown Timer (50 minutes for 50 Qs)
         function openTestMode(chIndex) {
             clearInterval(timerInterval);
+            isQuizSubmitted = false;
             const ch = assuranceChapters[chIndex];
+            currentActivityName = ch.name;
             currentQuestionsList = ch.testQuestions || ch.questions;
 
             document.getElementById("modalTitle").innerText = ch.name;
@@ -1554,7 +1558,9 @@
         }
 
         // Evaluate Quiz Results
-        function submitQuiz() {
+        async function submitQuiz() {
+            if (isQuizSubmitted) return;
+            isQuizSubmitted = true;
             clearInterval(timerInterval);
             let score = 0;
             
@@ -1608,6 +1614,27 @@
                     </span>
                 </div>
             `;
+
+            const activityStatus = document.createElement('p');
+            activityStatus.setAttribute('role', 'status');
+            activityStatus.style.cssText = 'margin-top:.75rem;font-size:.85rem;';
+            activityStatus.textContent = 'Saving your quiz activity…';
+            document.getElementById("quizScore").appendChild(activityStatus);
+            try {
+                const { saveQuizActivity } = await import('./js/activity-tracker.js');
+                const saved = await saveQuizActivity({
+                    subjectId: 'assurance',
+                    activityName: currentActivityName,
+                    score,
+                    totalQuestions: currentQuestionsList.length
+                });
+                activityStatus.textContent = saved
+                    ? 'This result was saved to your student dashboard.'
+                    : 'Sign in with Google before a quiz to save results to your dashboard.';
+            } catch (error) {
+                console.error('Unable to save Assurance quiz activity.', error);
+                activityStatus.textContent = 'Your score is shown, but this attempt could not be saved to your dashboard.';
+            }
 
             // Display Exit Button at bottom
             document.getElementById("exitContainer").style.display = "block";

@@ -9,7 +9,7 @@ const siteSearch = document.querySelector('.site-search');
 const announcements = [
     { text: 'New chapter quizzes are now available for Assurance.', href: 'assurance.html' },
     { text: 'Download the latest Certificate Level syllabus.', href: 'syllabus.html' },
-    { text: 'Test your readiness with a timed mock exam.', href: 'mock-test.html' }
+    { text: 'Explore subject-wise Certificate Level mock tests.', href: 'mock-test.html' }
 ];
 
 function renderAnnouncements() {
@@ -66,7 +66,7 @@ if (siteSearch) {
     const searchPages = [
         { href: 'courses.html', terms: ['course', 'courses', 'accounting', 'assurance', 'tax', 'business', 'technology', 'finance', 'management', 'information', 'law'] },
         { href: 'syllabus.html', terms: ['syllabus', 'curriculum', 'icab', 'subject'] },
-        { href: 'mock-exams.html', terms: ['mock', 'exam', 'test', 'practice', 'simulation'] },
+        { href: 'mock-test.html', terms: ['mock', 'exam', 'test', 'practice', 'simulation'] },
     ];
 
     siteSearch.addEventListener('submit', (event) => {
