@@ -1,0 +1,25 @@
+{
+  "id": "./",
+  "name": "Road to CA",
+  "short_name": "Road to CA",
+  "description": "Practice, prepare, and progress on your CA journey.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#6b0518",
+  "icons": [
+    {
+      "src": "./icons/road-to-ca-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/road-to-ca-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

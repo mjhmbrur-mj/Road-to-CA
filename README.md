@@ -24,3 +24,7 @@ Students can sign in from `profile.html` with Google. Sign-in persists in the cu
 The dashboard keeps a per-user copy of recent activity in that browser and shows it immediately on return, while refreshing from Firestore in the background. The first visit on a browser still needs to load results from Firestore.
 
 Publish the updated `firestore.rules` before enabling profile and test-result storage. Rules restrict profile and test-result access to the signed-in owner. The current quiz modules support Assurance and BTF; the dashboard displays all seven Certificate Level subjects in its summary.
+
+## Installable mobile app
+
+The site can be installed from a supported mobile browser as a Progressive Web App. After three visits, Android browsers that support installation can show a native install prompt. On iPhone and iPad, the site shows instructions to use the browser's **Share → Add to Home Screen** option. The install offer can be dismissed and will wait for five more visits before appearing again. The service worker caches the main pages and app shell for basic offline access.
