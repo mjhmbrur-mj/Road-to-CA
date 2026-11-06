@@ -72,6 +72,9 @@
                 ? btfChapter6Questions
                 : (key === 'btf' && chapter === '10' ? btfChapter10Questions : null));
         const hasChapterQuestionSet = Boolean(chapterQuestionSet);
+        const examSettings = hasChapterQuestionSet
+            ? { durationSeconds: 90 * 60, marksPerQuestion: 2 }
+            : { durationSeconds: 50 * 60, marksPerQuestion: 1 };
         let timerInterval = null;
         if (key === 'btf' && mode && typeof btfQuestions !== 'undefined') {
             const isTest = mode === 'test';
@@ -80,7 +83,7 @@
                 : (isTest ? btfQuestions.slice(50) : btfQuestions);
             const questionCount = questions.length;
             document.querySelector('.hero p').textContent = isTest
-                ? ''
+                ? (hasChapterQuestionSet ? `${questionCount} MCQs · ${questionCount * examSettings.marksPerQuestion} marks total · ${examSettings.marksPerQuestion} marks per correct answer.` : '')
                 : `Review all ${questionCount} MCQs and check each answer to reveal its explanation.`;
             document.querySelector('.chapter-heading h2').textContent = isTest
                 ? 'Test Yourself'
@@ -88,7 +91,8 @@
             intro.textContent = isTest ? '' : 'Check each answer to reveal its explanation.';
             const quiz = document.createElement('div'); quiz.className = 'quiz-view';
             if (isTest) {
-                const timer = document.createElement('div'); timer.className = 'timer-box'; timer.innerHTML = '<span><i class="fa-solid fa-stopwatch"></i> Exam Timer</span><span class="timer-badge" id="timerDisplay">50:00</span>'; quiz.appendChild(timer);
+                const initialMinutes = String(Math.floor(examSettings.durationSeconds / 60)).padStart(2, '0');
+                const timer = document.createElement('div'); timer.className = 'timer-box'; timer.innerHTML = `<span><i class="fa-solid fa-stopwatch"></i> Exam Timer</span><span class="timer-badge" id="timerDisplay">${initialMinutes}:00</span>`; quiz.appendChild(timer);
             }
             questions.forEach((question, index) => {
                 const card = document.createElement('article'); card.className = 'quiz-card';
@@ -104,13 +108,15 @@
                 const submitTest = async () => {
                     if (submitted) return;
                     submitted = true;
-                    const score = questions.reduce((total, question) => {
+                    const correctAnswers = questions.reduce((total, question) => {
                         const selected = document.querySelector(`input[name="q${question.id}"]:checked`);
                         const isCorrect = selected && Number(selected.value) === question.correctAnswer;
                         if (selected && !isCorrect) document.querySelector(`input[name="q${question.id}"]`).closest('.quiz-card').querySelector('.test-feedback').hidden = false;
                         return total + (isCorrect ? 1 : 0);
                     }, 0);
-                    result.textContent = `Your score: ${score} / ${questions.length} (${Math.round(score / questions.length * 100)}%). Saving activity…`;
+                    const score = correctAnswers * examSettings.marksPerQuestion;
+                    const totalMarks = questions.length * examSettings.marksPerQuestion;
+                    result.textContent = `Your score: ${score} / ${totalMarks} marks (${Math.round(score / totalMarks * 100)}%). Saving activity…`;
                     result.hidden = false;
                     submit.disabled = true;
                     clearInterval(timerInterval);
@@ -118,18 +124,20 @@
                         const { saveQuizActivity } = await import('./js/activity-tracker.js');
                         const saved = await saveQuizActivity({
                             subjectId: 'btf',
-                            activityName: 'Timed BTF practice test',
+                            activityName: hasChapterQuestionSet
+                                ? `Chapter ${chapter}: ${course.chapters[Number(chapter) - 1]}`
+                                : 'Timed BTF practice test',
                             score,
-                            totalQuestions: questions.length
+                            totalQuestions: totalMarks
                         });
-                        result.textContent = `Your score: ${score} / ${questions.length} (${Math.round(score / questions.length * 100)}%). ${saved ? 'Saved to your student dashboard.' : 'Sign in with Google before a quiz to save results to your dashboard.'}`;
+                        result.textContent = `Your score: ${score} / ${totalMarks} marks (${Math.round(score / totalMarks * 100)}%). ${saved ? 'Saved to your student dashboard.' : 'Sign in with Google before a quiz to save results to your dashboard.'}`;
                     } catch (error) {
                         console.error('Unable to save BTF quiz activity.', error);
-                        result.textContent = `Your score: ${score} / ${questions.length} (${Math.round(score / questions.length * 100)}%). Your attempt could not be saved to your dashboard.`;
+                        result.textContent = `Your score: ${score} / ${totalMarks} marks (${Math.round(score / totalMarks * 100)}%). Your attempt could not be saved to your dashboard.`;
                     }
                 };
                 submit.addEventListener('click', submitTest); quiz.append(result, submit);
-                let remainingSeconds = 50 * 60;
+                let remainingSeconds = examSettings.durationSeconds;
                 timerInterval = setInterval(() => { remainingSeconds -= 1; document.getElementById('timerDisplay').textContent = `${String(Math.floor(remainingSeconds / 60)).padStart(2, '0')}:${String(remainingSeconds % 60).padStart(2, '0')}`; if (remainingSeconds <= 0) submitTest(); }, 1000);
             }
             grid.replaceWith(quiz);

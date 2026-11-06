@@ -1402,20 +1402,21 @@
             { q: "50. Which ICAB Assurance syllabus chapter group covers Substantive Procedures - Key Financial Statement Figures (Chapter 13)?", options: ["A) Gathering Evidence on an Assurance Engagement (Chapters 10 to 13), carrying a major weight in the exam specification grid (approx. 35%)","B) Professional Ethics and Regulatory Issues only","C) Internal Controls only","D) Concept and process of assurance only"], answer: 0, explanation: "Chapters 10 through 13 fall under evidence gathering, which constitutes approximately 35% of the Certificate Level Assurance exam specification." },
         ];
 
+        const completedChapterExamSettings = { durationSeconds: 90 * 60, marksPerQuestion: 2 };
         const assuranceChapters = [
-            { name: "Chapter 1: Concept and Need for Assurance", learnQuestions: ch1ConceptQuestions, testQuestions: ch1ConceptQuestions },
-            { name: "Chapter 2: Process of Assurance: Obtaining an Engagement", learnQuestions: ch2ObtainingEngagementQuestions, testQuestions: ch2ObtainingEngagementQuestions },
-            { name: "Chapter 3: Process of Assurance: Planning the Assignment", learnQuestions: ch3PlanningAssignmentQuestions, testQuestions: ch3PlanningAssignmentQuestions },
-            { name: "Chapter 4: Process of Assurance: Evidence and Reporting", learnQuestions: ch4EvidenceReportingQuestions, testQuestions: ch4EvidenceReportingQuestions },
-            { name: "Chapter 5: Introduction to Internal Control", learnQuestions: ch5InternalControlIntroductionQuestions, testQuestions: ch5InternalControlIntroductionQuestions },
-            { name: "Chapter 6: Revenue Systems", learnQuestions: ch6RevenueQuestions, testQuestions: ch6RevenueQuestions },
-            { name: "Chapter 7: Purchase Systems", learnQuestions: ch7PurchaseQuestions, testQuestions: ch7PurchaseQuestions },
-            { name: "Chapter 8: Employee Cost", learnQuestions: ch8EmployeeCostQuestions, testQuestions: ch8EmployeeCostQuestions },
-            { name: "Chapter 9: Internal Control", learnQuestions: ch9InternalControlQuestions, testQuestions: ch9InternalControlQuestions },
+            { name: "Chapter 1: Concept and Need for Assurance", learnQuestions: ch1ConceptQuestions, testQuestions: ch1ConceptQuestions, examSettings: completedChapterExamSettings },
+            { name: "Chapter 2: Process of Assurance: Obtaining an Engagement", learnQuestions: ch2ObtainingEngagementQuestions, testQuestions: ch2ObtainingEngagementQuestions, examSettings: completedChapterExamSettings },
+            { name: "Chapter 3: Process of Assurance: Planning the Assignment", learnQuestions: ch3PlanningAssignmentQuestions, testQuestions: ch3PlanningAssignmentQuestions, examSettings: completedChapterExamSettings },
+            { name: "Chapter 4: Process of Assurance: Evidence and Reporting", learnQuestions: ch4EvidenceReportingQuestions, testQuestions: ch4EvidenceReportingQuestions, examSettings: completedChapterExamSettings },
+            { name: "Chapter 5: Introduction to Internal Control", learnQuestions: ch5InternalControlIntroductionQuestions, testQuestions: ch5InternalControlIntroductionQuestions, examSettings: completedChapterExamSettings },
+            { name: "Chapter 6: Revenue Systems", learnQuestions: ch6RevenueQuestions, testQuestions: ch6RevenueQuestions, examSettings: completedChapterExamSettings },
+            { name: "Chapter 7: Purchase Systems", learnQuestions: ch7PurchaseQuestions, testQuestions: ch7PurchaseQuestions, examSettings: completedChapterExamSettings },
+            { name: "Chapter 8: Employee Cost", learnQuestions: ch8EmployeeCostQuestions, testQuestions: ch8EmployeeCostQuestions, examSettings: completedChapterExamSettings },
+            { name: "Chapter 9: Internal Control", learnQuestions: ch9InternalControlQuestions, testQuestions: ch9InternalControlQuestions, examSettings: completedChapterExamSettings },
             { name: "Chapter 10: Substantive Testing – Income and Expenses", learnQuestions: ch1Questions, testQuestions: ch1Questions.slice(0, 50) },
             { name: "Chapter 11: Audit Documentation and Working Papers", learnQuestions: ch1Questions, testQuestions: ch1Questions.slice(0, 50) },
             { name: "Chapter 12: Professional Ethics and Fundamental Principles", learnQuestions: ch1Questions, testQuestions: ch1Questions.slice(0, 50) },
-            { name: "Chapter 13: Key Financial Statement Figures", learnQuestions: ch13FinancialStatementFiguresQuestions, testQuestions: ch13FinancialStatementFiguresQuestions },
+            { name: "Chapter 13: Key Financial Statement Figures", learnQuestions: ch13FinancialStatementFiguresQuestions, testQuestions: ch13FinancialStatementFiguresQuestions, examSettings: completedChapterExamSettings },
             { name: "Chapter 14: Regulatory Framework and Legal Issues", learnQuestions: ch1Questions, testQuestions: ch1Questions.slice(0, 50) },
             { name: "Chapter 15: Fraud, Error, and Non-Compliance (Laws & Regulations)", learnQuestions: ch1Questions, testQuestions: ch1Questions.slice(0, 50) },
             { name: "Chapter 16: Completion, Review, and Assurance Reports", learnQuestions: ch1Questions, testQuestions: ch1Questions.slice(0, 50) }
@@ -1491,24 +1492,28 @@
             document.getElementById("modalOverlay").style.display = "flex";
         }
 
-        // Open "Test You" Modal with Countdown Timer (50 minutes for 50 Qs)
+        // Open "Test You" Modal using chapter-specific settings where available.
         function openTestMode(chIndex) {
             clearInterval(timerInterval);
             isQuizSubmitted = false;
             const ch = assuranceChapters[chIndex];
+            const examSettings = ch.examSettings || { durationSeconds: 50 * 60, marksPerQuestion: 1 };
             currentActivityName = ch.name;
             currentQuestionsList = ch.testQuestions || ch.questions;
 
             document.getElementById("modalTitle").innerText = ch.name;
-            document.getElementById("modalSubtitle").innerText = `Test You — Timed Practice Exam (${currentQuestionsList.length} Questions)`;
+            const totalMarks = currentQuestionsList.length * examSettings.marksPerQuestion;
+            const markLabel = examSettings.marksPerQuestion === 1 ? 'mark' : 'marks';
+            document.getElementById("modalSubtitle").innerText = `Test You — Timed Practice Exam (${currentQuestionsList.length} MCQs · ${totalMarks} marks · ${examSettings.marksPerQuestion} ${markLabel} each)`;
 
-            // Time set to 50 minutes (3000 seconds), with one point per correct answer and no penalty for wrong answers.
-            let totalSeconds = 3000;
+            let totalSeconds = examSettings.durationSeconds;
+            const initialMinutes = Math.floor(totalSeconds / 60);
+            const formattedMinutes = String(initialMinutes).padStart(2, '0');
 
             let html = `
                 <div class="timer-box">
                     <span><i class="fa-solid fa-stopwatch"></i> Exam Timer</span>
-                    <span class="timer-badge" id="timerDisplay">50:00</span>
+                    <span class="timer-badge" id="timerDisplay">${formattedMinutes}:00</span>
                 </div>
                 <form id="quizForm">
             `;
@@ -1572,7 +1577,9 @@
             if (isQuizSubmitted) return;
             isQuizSubmitted = true;
             clearInterval(timerInterval);
-            let score = 0;
+            const chapter = assuranceChapters.find(({ name }) => name === currentActivityName);
+            const marksPerQuestion = chapter?.examSettings?.marksPerQuestion || 1;
+            let correctAnswersCount = 0;
             
             // Disable all inputs & submit button after submission
             const inputs = document.querySelectorAll('#quizForm input');
@@ -1590,7 +1597,7 @@
                 const expBox = document.getElementById(`expBox_${qIdx}`);
                 
                 if (isCorrect) {
-                    score++;
+                    correctAnswersCount++;
                     box.style.border = "2px solid var(--correct-green)";
                     box.style.background = "#e8f5e9";
                 } else {
@@ -1613,14 +1620,16 @@
                 });
             });
 
-            const percentage = ((score / currentQuestionsList.length) * 100).toFixed(1);
+            const score = correctAnswersCount * marksPerQuestion;
+            const totalMarks = currentQuestionsList.length * marksPerQuestion;
+            const percentage = ((score / totalMarks) * 100).toFixed(1);
             document.getElementById("quizScore").innerHTML = `
                 <div style="background:var(--off-white); padding:1.2rem; border-radius:8px; border:1px solid var(--border-color);">
                     Test Completed!<br>
-                    <span style="font-size:1.8rem; color:var(--primary-maroon);">${score} / ${currentQuestionsList.length}</span>
+                    <span style="font-size:1.8rem; color:var(--primary-maroon);">${score} / ${totalMarks} marks</span>
                     <span style="font-size:1rem; color:var(--text-muted); font-weight:normal; display:block;">(${percentage}%)</span>
                     <span style="font-size:0.95rem; font-weight:normal; display:block; margin-top:8px;">
-                        ${score >= (currentQuestionsList.length * 0.7) ? '🎉 Excellent work! You passed this module.' : '💡 Review the explanations for incorrect answers and try again.'}
+                        ${score >= (totalMarks * 0.7) ? '🎉 Excellent work! You passed this module.' : '💡 Review the explanations for incorrect answers and try again.'}
                     </span>
                 </div>
             `;
@@ -1636,7 +1645,7 @@
                     subjectId: 'assurance',
                     activityName: currentActivityName,
                     score,
-                    totalQuestions: currentQuestionsList.length
+                    totalQuestions: totalMarks
                 });
                 activityStatus.textContent = saved
                     ? 'This result was saved to your student dashboard.'
