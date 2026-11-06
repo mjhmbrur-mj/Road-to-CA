@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="logo.png">
+    <title>Resources | Road to CA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="nav.css">
+    <style>
+        :root { --primary-maroon:#6B0518; --deep-maroon:#4A000E; --pure-white:#FFF; --off-white:#F8F9FA; --text-dark:#1F1F1F; --text-muted:#6C757D; --border-color:#E0E0E0; --pill-bg:rgba(107,5,24,.08); }
+        * { margin:0; padding:0; box-sizing:border-box; font-family:'Inter',sans-serif; }
+        body { background:var(--pure-white); color:var(--text-dark); line-height:1.6; }
+        header { background:var(--pure-white); border-bottom:1px solid var(--border-color); position:sticky; top:0; z-index:1000; box-shadow:0 2px 4px rgba(0,0,0,.03); }
+        .nav-container { max-width:1200px; margin:0 auto; padding:1rem 2rem; display:flex; justify-content:space-between; align-items:center; }
+        .brand-logo { display:flex; align-items:center; gap:12px; text-decoration:none; }
+        .site-logo { width:170px; height:58px; display:block; object-fit:contain; }
+        .profile-link { display:inline-flex; align-items:center; gap:.5rem; margin-left:auto; color:var(--deep-maroon); font-size:.82rem; font-weight:700; text-decoration:none; white-space:nowrap; }
+        h1,h2,h3,h4 { font-family:'Montserrat',sans-serif; color:var(--deep-maroon); }
+        .page-hero { background:var(--off-white); padding:4.5rem 2rem; border-bottom:1px solid var(--border-color); }
+        .page-hero-inner,.content { max-width:1200px; margin:0 auto; }
+        .tagline { display:inline-block; background:var(--pill-bg); color:var(--primary-maroon); font-weight:700; font-size:.8rem; letter-spacing:2px; padding:.4rem .8rem; border-radius:4px; margin-bottom:1.2rem; }
+        h1 { font-size:2.8rem; line-height:1.2; margin-bottom:1rem; }
+        .page-hero p { max-width:700px; color:var(--text-muted); font-size:1.1rem; }
+        .content { padding:4rem 2rem; }
+        .section-heading { margin-bottom:2rem; }
+        .section-heading h2 { font-size:1.8rem; }
+        .section-heading p { color:var(--text-muted); }
+        .resource-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.25rem; }
+        .resource-card { display:flex; flex-direction:column; align-items:flex-start; padding:1.5rem; border:1px solid var(--border-color); border-top:4px solid var(--primary-maroon); border-radius:8px; background:var(--pure-white); }
+        .resource-icon { display:grid; width:2.8rem; height:2.8rem; place-items:center; margin-bottom:1rem; border-radius:8px; background:var(--pill-bg); color:var(--primary-maroon); font-size:1.2rem; }
+        .resource-card h3 { margin-bottom:.45rem; font-size:1.15rem; }
+        .resource-card p { flex:1; margin-bottom:1.2rem; color:var(--text-muted); font-size:.9rem; }
+        .resource-actions { display:flex; flex-wrap:wrap; gap:.6rem; }
+        .btn { display:inline-flex; align-items:center; gap:.5rem; padding:.65rem 1rem; border:1.5px solid var(--primary-maroon); border-radius:6px; background:var(--primary-maroon); color:var(--pure-white); font-size:.85rem; font-weight:600; text-decoration:none; transition:background .2s ease; }
+        .btn:hover { background:var(--deep-maroon); border-color:var(--deep-maroon); }
+        .btn-outline { background:transparent; color:var(--primary-maroon); }
+        .btn-outline:hover { background:var(--pill-bg); color:var(--deep-maroon); }
+        footer { background:var(--deep-maroon); color:var(--pure-white); padding:3rem 2rem 1.5rem; }
+        .footer-container { max-width:1200px; margin:0 auto; display:flex; flex-wrap:wrap; justify-content:space-between; gap:2rem; }
+        .footer-brand p { max-width:380px; margin-top:.75rem; color:#E0C2C7; font-size:.9rem; }
+        .footer-title { margin-bottom:1rem; color:var(--pure-white); font-size:1rem; }
+        .footer-links { list-style:none; }.footer-links li { margin-bottom:.6rem; }.footer-links a { color:#E0C2C7; text-decoration:none; font-size:.9rem; }.footer-links a:hover { color:var(--pure-white); }
+        .footer-bottom { max-width:1200px; margin:2rem auto 0; padding-top:1.25rem; border-top:1px solid rgba(255,255,255,.1); font-size:.8rem; color:#E0C2C7; }
+        @media (max-width:768px) { h1 { font-size:2.2rem; }.page-hero { padding:3rem 1.25rem; }.content { padding:3rem 1.25rem; }.footer-container { flex-direction:column; } }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="nav-container">
+            <button class="menu-toggle" type="button" aria-label="Open menu" aria-controls="site-drawer" aria-expanded="false"><span></span></button>
+            <a href="index.html" class="brand-logo"><img class="site-logo" src="logo.png" alt="Road to CA"></a>
+            <form class="site-search" role="search">
+                <input type="search" name="search" placeholder="Search courses &amp; resources..." aria-label="Search courses and resources">
+                <button type="submit" aria-label="Submit search"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i></button>
+            </form>
+            <a class="profile-link" href="profile.html" aria-label="Open your profile"><i class="fa-solid fa-user" aria-hidden="true"></i><span>Profile</span></a>
+        </div>
+    </header>
+    <section class="announcement-ticker" aria-label="Latest announcements"><strong class="ticker-label">LATEST ANNOUNCEMENTS</strong><div class="ticker-viewport"><div class="ticker-track" id="announcementTrack"></div></div></section>
+    <div class="drawer-overlay" data-drawer-close></div>
+    <aside class="site-drawer" id="site-drawer" aria-hidden="true">
+        <div class="drawer-heading"><h2>Menu</h2><button class="drawer-close" type="button" aria-label="Close menu">&times;</button></div>
+        <nav class="drawer-links" aria-label="Main menu">
+            <a href="index.html" data-page="home"><i class="fa-solid fa-house" aria-hidden="true"></i>Home</a>
+            <a href="courses.html" data-page="courses"><i class="fa-solid fa-book-open" aria-hidden="true"></i>Courses</a>
+            <a href="resources.html" data-page="resources"><i class="fa-solid fa-folder-open" aria-hidden="true"></i>Resources</a>
+            <a href="mock-test.html" data-page="mock-test"><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i>Mock Test</a>
+            <a href="profile.html" data-page="profile"><i class="fa-solid fa-user" aria-hidden="true"></i>Profile</a>
+        </nav>
+    </aside>
+    <nav class="bottom-nav" aria-label="Mobile navigation">
+        <a href="index.html" data-page="home"><i class="fa-solid fa-house" aria-hidden="true"></i><span>Home</span></a>
+        <a href="courses.html" data-page="courses"><i class="fa-solid fa-book-open" aria-hidden="true"></i><span>Courses</span></a>
+        <a href="resources.html" data-page="resources"><i class="fa-solid fa-folder-open" aria-hidden="true"></i><span>Resources</span></a>
+        <a href="mock-test.html" data-page="mock-test"><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i><span>Mock Test</span></a>
+        <a href="profile.html" data-page="profile"><i class="fa-solid fa-user" aria-hidden="true"></i><span>Profile</span></a>
+    </nav>
+    <main>
+        <section class="page-hero">
+            <div class="page-hero-inner">
+                <span class="tagline">STUDENT LIBRARY</span>
+                <h1>Resources</h1>
+                <p>Find useful study materials, exam information, and reference documents for your CA journey. This library will grow as more resources are added.</p>
+            </div>
+        </section>
+        <section class="content" aria-labelledby="study-materials-heading">
+            <div class="section-heading">
+                <h2 id="study-materials-heading">Study materials &amp; references</h2>
+                <p>Open a document or download a copy for offline study.</p>
+            </div>
+            <div class="resource-grid">
+                <article class="resource-card">
+                    <span class="resource-icon"><i class="fa-solid fa-book" aria-hidden="true"></i></span>
+                    <h3>ICAB Certificate Level Syllabus (2026)</h3>
+                    <p>The syllabus and exam guidance for the ICAB Certificate Level.</p>
+                    <div class="resource-actions">
+                        <a class="btn" href="ICAB_Syllabus_2026.pdf" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-eye" aria-hidden="true"></i>View PDF</a>
+                        <a class="btn btn-outline" href="ICAB_Syllabus_2026.pdf" download="ICAB_Certificate_Level_Syllabus_2026.pdf"><i class="fa-solid fa-download" aria-hidden="true"></i>Download</a>
+                    </div>
+                </article>
+                <article class="resource-card">
+                    <span class="resource-icon"><i class="fa-solid fa-file-circle-question" aria-hidden="true"></i></span>
+                    <h3>Assurance Question Bank (ICAEW, 2024)</h3>
+                    <p>Assurance practice questions to support your exam preparation.</p>
+                    <div class="resource-actions">
+                        <a class="btn" href="Assurance_Question_Bank_2024__ICAEW_.pdf%20(1).pdf" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-eye" aria-hidden="true"></i>View PDF</a>
+                        <a class="btn btn-outline" href="Assurance_Question_Bank_2024__ICAEW_.pdf%20(1).pdf" download="Assurance_Question_Bank_2024_ICAEW.pdf"><i class="fa-solid fa-download" aria-hidden="true"></i>Download</a>
+                    </div>
+                </article>
+                <article class="resource-card">
+                    <span class="resource-icon"><i class="fa-solid fa-building" aria-hidden="true"></i></span>
+                    <h3>CA Firm List in Bangladesh</h3>
+                    <p>Browse the CA firm directory online or keep a copy for reference.</p>
+                    <div class="resource-actions">
+                        <a class="btn" href="All_CA_firm_list_in_bangladesh-pdf%20file.pdf" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-file-pdf" aria-hidden="true"></i>View PDF</a>
+                        <a class="btn btn-outline" href="All_CA_firm_list_in_bangladesh-%20execl%20file.xlsx" download><i class="fa-solid fa-file-excel" aria-hidden="true"></i>Download Excel</a>
+                    </div>
+                </article>
+                <article class="resource-card">
+                    <span class="resource-icon"><i class="fa-solid fa-calendar-days" aria-hidden="true"></i></span>
+                    <h3>Certificate Level Exam Time &amp; Routine</h3>
+                    <p>Keep the current exam timing and November 2026 routine close at hand.</p>
+                    <div class="resource-actions">
+                        <a class="btn" href="allexamtime2026.pdf" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-file-pdf" aria-hidden="true"></i>View Exam Time</a>
+                        <a class="btn btn-outline" href="certificate%20level%20routine%20for%20novemeber%202026.jpeg" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-image" aria-hidden="true"></i>View November Routine</a>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <div class="footer-container">
+            <div class="footer-brand"><a href="index.html" class="brand-logo"><img class="site-logo" src="logo.png" alt="Road to CA"></a><p>Dedicated online practice and preparation platform for ICAB Certificate Level candidates in Bangladesh.</p></div>
+            <div><h2 class="footer-title">Quick Links</h2><ul class="footer-links"><li><a href="courses.html">Courses</a></li><li><a href="syllabus.html">ICAB Syllabus</a></li><li><a href="resources.html" aria-current="page">Resources</a></li><li><a href="mock-test.html">Mock Tests</a></li></ul></div>
+        </div>
+        <div class="footer-bottom"><span>&copy; 2026 Road to CA. All rights reserved.</span></div>
+    </footer>
+    <script src="nav.js"></script>
+</body>
+</html>

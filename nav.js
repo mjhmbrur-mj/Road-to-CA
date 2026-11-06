@@ -64,6 +64,7 @@ if (tickerViewport) {
 
 if (siteSearch) {
     const searchPages = [
+        { href: 'resources.html', terms: ['resource', 'firm', 'question', 'bank', 'routine', 'download'] },
         { href: 'courses.html', terms: ['course', 'courses', 'accounting', 'assurance', 'tax', 'business', 'technology', 'finance', 'management', 'information', 'law'] },
         { href: 'syllabus.html', terms: ['syllabus', 'curriculum', 'icab', 'subject'] },
         { href: 'mock-test.html', terms: ['mock', 'exam', 'test', 'practice', 'simulation'] },
