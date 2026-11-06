@@ -1039,7 +1039,7 @@
                 <input type="search" name="search" placeholder="Search courses &amp; resources..." aria-label="Search courses and resources">
                 <button type="submit" aria-label="Submit search"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i></button>
             </form>
-            <a class="profile-link" href="profile.html" aria-label="Open your profile"><i class="fa-solid fa-user" aria-hidden="true"></i><span>Profile</span></a>
+            <a class="profile-link" href="profile.html" aria-label="Open your profile"><img class="profile-avatar" id="home-profile-avatar" alt="" hidden><i class="fa-solid fa-user" aria-hidden="true"></i><span>Profile</span></a>
         </div>
     </header>
 
@@ -1069,7 +1069,7 @@
     </nav>
 
     <section class="home-video" aria-label="Homepage video">
-        <video autoplay muted loop playsinline preload="auto" poster="home-video-poster.jpg" aria-label="Road to CA homepage video">
+        <video autoplay muted playsinline preload="auto" poster="home-video-poster.jpg" aria-label="Road to CA homepage video">
             <source src="video%20for%20home%20page.mp4" type="video/mp4">
             Your browser does not support the video element.
         </video>
@@ -1508,6 +1508,8 @@
     </script>
 
     <script src="nav.js"></script>
+    <script type="module" src="js/home-profile.js"></script>
+    <script src="js/home-video.js"></script>
     <script src="js/pwa-install.js"></script>
 </body>
 </html>
