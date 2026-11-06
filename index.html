@@ -19,6 +19,8 @@
         :root {
             --primary-maroon: #6B0518;
             --deep-maroon: #4A000E;
+            --electric-green: #39FF14;
+            --deep-green: #14532D;
             --pure-white: #FFFFFF;
             --off-white: #F8F9FA;
             --text-dark: #1F1F1F;
@@ -317,18 +319,27 @@
             gap: 0.7rem;
             min-height: 56px;
             padding: 0.75rem;
-            border: 1px solid rgba(107, 5, 24, 0.12);
+            border: 1px solid rgba(57, 255, 20, 0.55);
+            border-left: 4px solid var(--electric-green);
             border-radius: 8px;
-            background: rgba(255, 255, 255, 0.82);
-            color: var(--deep-maroon);
+            background: rgba(57, 255, 20, 0.08);
+            color: var(--deep-green);
             font-size: 0.88rem;
             font-weight: 600;
             line-height: 1.4;
+            box-shadow: 0 3px 12px rgba(20, 83, 45, 0.06);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+        }
+
+        .question-feature:hover {
+            transform: translateY(-2px);
+            background: rgba(57, 255, 20, 0.14);
+            box-shadow: 0 6px 16px rgba(20, 83, 45, 0.12);
         }
 
         .question-feature i {
             flex: 0 0 1.5rem;
-            color: var(--primary-maroon);
+            color: #18B900;
             font-size: 1.1rem;
             text-align: center;
         }
