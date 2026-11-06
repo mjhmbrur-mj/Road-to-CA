@@ -1,4 +1,4 @@
-const CACHE_NAME = 'road-to-ca-site-shell-v1';
+const CACHE_NAME = 'road-to-ca-site-shell-v2';
 const APP_SHELL = [
     'index.html',
     'assurance.html',
@@ -42,6 +42,7 @@ self.addEventListener('fetch', (event) => {
     const request = event.request;
     const requestUrl = new URL(request.url);
     if (request.method !== 'GET' || requestUrl.origin !== self.location.origin) return;
+    if (request.headers.has('range') || /\.(mp4|webm|ogg)$/i.test(requestUrl.pathname)) return;
 
     if (request.mode === 'navigate') {
         event.respondWith(
