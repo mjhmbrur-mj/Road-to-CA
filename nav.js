@@ -6,11 +6,54 @@ const bottomNav = document.querySelector('.bottom-nav');
 const tickerTrack = document.getElementById('announcementTrack');
 const tickerViewport = document.querySelector('.ticker-viewport');
 const siteSearch = document.querySelector('.site-search');
+const welcomeStorageKey = 'roadToCaWelcomeDismissed';
 const announcements = [
     { text: 'New chapter quizzes are now available for Assurance.', href: 'assurance.html' },
     { text: 'Download the latest Certificate Level syllabus.', href: 'syllabus.html' },
     { text: 'Explore subject-wise Certificate Level mock tests.', href: 'mock-test.html' }
 ];
+
+function showFirstVisitWelcome() {
+    let hasVisited = false;
+    try {
+        hasVisited = window.localStorage.getItem(welcomeStorageKey) === 'true';
+    } catch (error) {
+        console.warn('Unable to check whether the welcome message was previously dismissed.', error);
+    }
+
+    if (hasVisited || typeof HTMLDialogElement === 'undefined') return;
+
+    const welcomeDialog = document.createElement('dialog');
+    welcomeDialog.className = 'welcome-dialog';
+    welcomeDialog.setAttribute('aria-labelledby', 'welcome-title');
+    welcomeDialog.setAttribute('aria-describedby', 'welcome-message');
+    welcomeDialog.innerHTML = `
+        <div class="welcome-sparkle" aria-hidden="true">✨</div>
+        <p class="welcome-eyebrow">WELCOME TO ROAD TO CA</p>
+        <h2 id="welcome-title">Hey, Future Chartered Accountant!</h2>
+        <p class="welcome-message" id="welcome-message">Your ultimate partner in the CA journey is here! 🚀</p>
+        <form method="dialog" class="welcome-actions">
+            <button type="submit" class="welcome-action">Let’s get started <span aria-hidden="true">→</span></button>
+        </form>
+        <button type="button" class="welcome-close" aria-label="Close welcome message">&times;</button>
+    `;
+
+    welcomeDialog.querySelector('.welcome-close').addEventListener('click', () => welcomeDialog.close());
+    welcomeDialog.addEventListener('close', () => {
+        try {
+            window.localStorage.setItem(welcomeStorageKey, 'true');
+        } catch (error) {
+            console.warn('Unable to remember that the welcome message was dismissed.', error);
+        }
+        welcomeDialog.remove();
+    }, { once: true });
+
+    document.body.appendChild(welcomeDialog);
+    welcomeDialog.showModal();
+    welcomeDialog.querySelector('.welcome-action').focus();
+}
+
+showFirstVisitWelcome();
 
 function renderAnnouncements() {
     if (!tickerTrack) return;
