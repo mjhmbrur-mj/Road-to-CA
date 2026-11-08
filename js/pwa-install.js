@@ -1,5 +1,6 @@
 const VISITS_KEY = 'road-to-ca-visits';
 const VISIT_SESSION_KEY = 'road-to-ca-visit-counted';
+const OFFER_SESSION_KEY = 'road-to-ca-install-offer-shown';
 const DISMISSED_VISIT_KEY = 'road-to-ca-install-dismissed-at';
 const INSTALLED_KEY = 'road-to-ca-installed';
 const VISIT_THRESHOLD = 3;
@@ -8,6 +9,7 @@ let deferredInstallPrompt = null;
 let visitCount = 0;
 let installDialog;
 let installButton;
+let installLauncher;
 let isIosInstallGuide = false;
 
 function isMobileDevice() {
@@ -64,6 +66,23 @@ function wasRecentlyDismissed() {
     return dismissedAtVisit > 0 && visitCount < dismissedAtVisit + 5;
 }
 
+function wasOfferShownThisSession() {
+    try {
+        return sessionStorage.getItem(OFFER_SESSION_KEY) === 'true';
+    } catch (error) {
+        console.warn('Unable to check whether the app install offer was shown.', error);
+        return false;
+    }
+}
+
+function markOfferShownThisSession() {
+    try {
+        sessionStorage.setItem(OFFER_SESSION_KEY, 'true');
+    } catch (error) {
+        console.warn('Unable to remember that the app install offer was shown.', error);
+    }
+}
+
 function createDialog() {
     const dialog = document.createElement('dialog');
     dialog.className = 'pwa-install-dialog';
@@ -86,7 +105,9 @@ function createDialog() {
 
     const message = document.createElement('p');
     message.className = 'pwa-install-message';
-    message.textContent = 'Add Road to CA to your Home Screen for quick access to study resources and practice.';
+    message.textContent = isIosInstallGuide
+        ? 'Add Road to CA to your Home Screen for quick access to study resources and practice.'
+        : 'Install Road to CA for quick access to study resources and practice.';
 
     const actions = document.createElement('div');
     actions.className = 'pwa-install-actions';
@@ -100,17 +121,25 @@ function createDialog() {
     installButton = document.createElement('button');
     installButton.className = 'pwa-install-action';
     installButton.type = 'button';
-    installButton.textContent = isIosInstallGuide ? 'Got it' : 'Install app';
+    const showManualInstructions = isIosInstallGuide || !deferredInstallPrompt;
+    installButton.textContent = showManualInstructions ? 'Got it' : 'Install app';
     installButton.addEventListener('click', handleInstallAction);
 
-    if (isIosInstallGuide) {
+    if (showManualInstructions) {
         const instructions = document.createElement('ol');
         instructions.className = 'pwa-install-steps';
-        [
-            'Tap the Share button in your browser.',
-            'Choose “Add to Home Screen”.',
-            'Tap “Add” to finish.'
-        ].forEach((step) => {
+        const steps = isIosInstallGuide
+            ? [
+                'Tap the Share button in your browser.',
+                'Choose “Add to Home Screen”.',
+                'Tap “Add” to finish.'
+            ]
+            : [
+                'Open your browser menu.',
+                'Choose “Install app” or “Add to Home Screen”.',
+                'Follow the prompt to finish.'
+            ];
+        steps.forEach((step) => {
             const item = document.createElement('li');
             item.textContent = step;
             instructions.appendChild(item);
@@ -133,20 +162,41 @@ function createDialog() {
 }
 
 function canShowInstallOffer() {
-    if (!isMobileDevice() || isAppInstalled() || visitCount < VISIT_THRESHOLD || wasRecentlyDismissed()) {
+    if (!isMobileDevice()
+        || isAppInstalled()
+        || (visitCount !== 1 && visitCount < VISIT_THRESHOLD)
+        || wasRecentlyDismissed()
+        || wasOfferShownThisSession()) {
         return false;
     }
-    return isIosInstallGuide || Boolean(deferredInstallPrompt);
+    return isIosInstallGuide || Boolean(deferredInstallPrompt) || visitCount === 1;
 }
 
 function showInstallOffer() {
     if (!canShowInstallOffer()) return;
 
+    showInstallDialog();
+    markOfferShownThisSession();
+}
+
+function showInstallDialog() {
+    if (isAppInstalled()) return;
     if (!installDialog) installDialog = createDialog();
     if (!installDialog.open) {
         installDialog.showModal();
         document.body.classList.add('pwa-install-open');
     }
+}
+
+function createInstallLauncher() {
+    installLauncher = document.createElement('button');
+    installLauncher.className = 'pwa-install-launcher';
+    installLauncher.type = 'button';
+    installLauncher.textContent = 'Install mobile app';
+    installLauncher.setAttribute('aria-label', 'Install Road to CA mobile app');
+    installLauncher.addEventListener('click', showInstallDialog);
+    installLauncher.hidden = isAppInstalled();
+    document.body.appendChild(installLauncher);
 }
 
 function dismissDialog() {
@@ -155,12 +205,8 @@ function dismissDialog() {
 }
 
 async function handleInstallAction() {
-    if (isIosInstallGuide) {
+    if (isIosInstallGuide || !deferredInstallPrompt) {
         dismissDialog();
-        return;
-    }
-    if (!deferredInstallPrompt) {
-        installDialog.close();
         return;
     }
 
@@ -171,6 +217,7 @@ async function handleInstallAction() {
         if (outcome === 'accepted') {
             writeStorage(INSTALLED_KEY, 'true');
             installDialog.close();
+            installLauncher.hidden = true;
         } else {
             dismissDialog();
         }
@@ -189,6 +236,8 @@ if ('serviceWorker' in navigator) {
     });
 }
 
+createInstallLauncher();
+
 if (isMobileDevice()) {
     isIosInstallGuide = isIosDevice();
     visitCount = recordVisit();
@@ -196,16 +245,21 @@ if (isMobileDevice()) {
     window.addEventListener('beforeinstallprompt', (event) => {
         event.preventDefault();
         deferredInstallPrompt = event;
+        if (installButton && !isIosInstallGuide) {
+            installButton.textContent = 'Install app';
+            installDialog?.querySelector('.pwa-install-steps')?.remove();
+        }
         window.setTimeout(showInstallOffer, 1500);
     });
 
     window.addEventListener('appinstalled', () => {
         writeStorage(INSTALLED_KEY, 'true');
         deferredInstallPrompt = null;
+        if (installLauncher) installLauncher.hidden = true;
         if (installDialog?.open) installDialog.close();
     });
 
-    if (isIosInstallGuide) {
+    if (isIosInstallGuide || visitCount === 1) {
         window.setTimeout(showInstallOffer, 1500);
     }
 }
