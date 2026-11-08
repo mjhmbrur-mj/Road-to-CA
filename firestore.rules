@@ -91,7 +91,9 @@ service cloud.firestore {
             || (request.resource.data.topicReport is map
               && request.resource.data.topicReport.keys().hasOnly([
                 'version', 'subjectId', 'chapterName', 'generatedAt',
-                'questionCount', 'correctCount', 'topics', 'responses'
+                'candidateName', 'candidatePhotoURL', 'marksPerQuestion',
+                'score', 'totalMarks', 'percentage', 'passed',
+                'questionCount', 'correctCount', 'topics'
               ])
               && request.resource.data.topicReport.version == 1
               && request.resource.data.topicReport.subjectId == request.resource.data.subjectId
@@ -99,17 +101,32 @@ service cloud.firestore {
               && request.resource.data.topicReport.chapterName.size() <= 160
               && request.resource.data.topicReport.generatedAt is string
               && request.resource.data.topicReport.generatedAt.size() <= 40
+              && request.resource.data.topicReport.candidateName is string
+              && request.resource.data.topicReport.candidateName.size() <= 120
+              && request.resource.data.topicReport.candidatePhotoURL is string
+              && request.resource.data.topicReport.candidatePhotoURL.size() <= 2048
+              && request.resource.data.topicReport.marksPerQuestion is int
+              && request.resource.data.topicReport.marksPerQuestion == 2
               && request.resource.data.topicReport.questionCount is int
               && request.resource.data.topicReport.questionCount > 0
               && request.resource.data.topicReport.questionCount <= 100
               && request.resource.data.topicReport.correctCount is int
               && request.resource.data.topicReport.correctCount >= 0
               && request.resource.data.topicReport.correctCount <= request.resource.data.topicReport.questionCount
+              && request.resource.data.topicReport.score is int
+              && request.resource.data.topicReport.score >= 0
+              && request.resource.data.topicReport.totalMarks is int
+              && request.resource.data.topicReport.totalMarks > 0
+              && request.resource.data.topicReport.totalMarks == request.resource.data.topicReport.questionCount * request.resource.data.topicReport.marksPerQuestion
+              && request.resource.data.topicReport.score == request.resource.data.topicReport.correctCount * request.resource.data.topicReport.marksPerQuestion
+              && request.resource.data.topicReport.percentage is int
+              && request.resource.data.topicReport.percentage >= 0
+              && request.resource.data.topicReport.percentage <= 100
+              && request.resource.data.topicReport.passed is bool
+              && request.resource.data.topicReport.passed == (request.resource.data.topicReport.percentage >= 45)
               && request.resource.data.topicReport.topics is list
               && request.resource.data.topicReport.topics.size() > 0
-              && request.resource.data.topicReport.topics.size() <= 30
-              && request.resource.data.topicReport.responses is list
-              && request.resource.data.topicReport.responses.size() == request.resource.data.topicReport.questionCount))
+              && request.resource.data.topicReport.topics.size() <= 30))
           && request.resource.data.completedAt == request.time;
 
         allow get, list: if request.auth != null

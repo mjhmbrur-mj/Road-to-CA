@@ -1647,7 +1647,7 @@
             let topicReport;
             let premiumReportAccess = false;
             try {
-                const { createTopicReport, renderTopicReport, downloadTopicReport, hasPremiumReportAccess } = await import('./js/topic-analysis.js');
+                const { createTopicReport, renderTopicReport, previewTopicReport, hasPremiumReportAccess } = await import('./js/topic-analysis.js');
                 topicReport = createTopicReport({
                     subjectId: 'assurance',
                     chapterName: currentActivityName,
@@ -1659,8 +1659,8 @@
                     const downloadButton = document.createElement('button');
                     downloadButton.className = 'btn btn-outline topic-report-download';
                     downloadButton.type = 'button';
-                    downloadButton.textContent = 'Download SWOT report';
-                    downloadButton.addEventListener('click', () => downloadTopicReport(topicReport, currentActivityName));
+                    downloadButton.textContent = 'Preview / Download PDF';
+                    downloadButton.addEventListener('click', () => previewTopicReport(topicReport, currentActivityName));
                     document.getElementById("quizScore").appendChild(downloadButton);
                 }
             } catch (error) {

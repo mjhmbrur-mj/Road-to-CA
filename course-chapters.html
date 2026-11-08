@@ -145,7 +145,7 @@
                     let premiumReportAccess = false;
                     if (hasChapterQuestionSet) {
                         try {
-                            const { createTopicReport, renderTopicReport, downloadTopicReport, hasPremiumReportAccess } = await import('./js/topic-analysis.js');
+                            const { createTopicReport, renderTopicReport, previewTopicReport, hasPremiumReportAccess } = await import('./js/topic-analysis.js');
                             topicReport = createTopicReport({
                                 subjectId: 'btf',
                                 chapterName: `Chapter ${chapter}: ${course.chapters[Number(chapter) - 1]}`,
@@ -157,8 +157,8 @@
                                 const download = document.createElement('button');
                                 download.className = 'btn btn-outline topic-report-download';
                                 download.type = 'button';
-                                download.textContent = 'Download SWOT report';
-                                download.addEventListener('click', () => downloadTopicReport(topicReport, topicReport.chapterName));
+                                download.textContent = 'Preview / Download PDF';
+                                download.addEventListener('click', () => previewTopicReport(topicReport, topicReport.chapterName));
                                 result.appendChild(download);
                             }
                         } catch (error) {
@@ -181,7 +181,9 @@
                             ...(topicReport && premiumReportAccess ? { topicReport } : {})
                         });
                         saveStatus.textContent = saved
-                            ? (topicReport ? 'Result and SWOT report saved to your student dashboard.' : 'Saved to your student dashboard.')
+                            ? (topicReport && premiumReportAccess
+                                ? 'Result and SWOT report saved to your student dashboard.'
+                                : 'Saved to your student dashboard.')
                             : 'Sign in with Google before a quiz to save results to your dashboard.';
                     } catch (error) {
                         console.error('Unable to save BTF quiz activity.', error);

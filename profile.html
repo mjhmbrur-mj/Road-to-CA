@@ -31,6 +31,15 @@
         main .dashboard-content .activity-item { background:var(--pure-white); }
         [hidden] { display:none !important; }
         .dashboard-content[hidden] { display:none !important; }
+        .premium-dashboard-banner { display:flex; align-items:flex-start; justify-content:space-between; gap:1.25rem; margin-bottom:1.5rem; padding:1.5rem; border:1px solid #D6BD88; border-radius:1rem; background:radial-gradient(circle at 90% 15%,rgba(214,189,136,.24),transparent 34%),linear-gradient(115deg,#3A0712,#6B0518 68%,#4A000E); color:#FFF; box-shadow:0 12px 30px rgba(74,0,14,.18); }
+        .premium-dashboard-eyebrow { margin:0; color:#E8D6AE; font-size:.7rem; font-weight:800; letter-spacing:.16em; text-transform:uppercase; }
+        .premium-dashboard-banner h1 { margin:.35rem 0 0; color:#FFF; font-family:'Montserrat',sans-serif; font-size:clamp(1.35rem,3vw,1.8rem); font-weight:800; line-height:1.2; }
+        .premium-dashboard-banner p { max-width:42rem; margin:.55rem 0 0; color:rgba(255,255,255,.82); font-size:.9rem; }
+        .premium-dashboard-benefits { display:flex; flex-wrap:wrap; gap:.5rem; margin-top:1rem; }
+        .premium-dashboard-benefit { display:inline-flex; align-items:center; gap:.4rem; padding:.35rem .6rem; border:1px solid rgba(232,214,174,.38); border-radius:999px; background:rgba(255,255,255,.08); color:#FFF; font-size:.72rem; font-weight:600; }
+        .premium-dashboard-badge { display:inline-flex; flex:0 0 auto; align-items:center; gap:.45rem; padding:.55rem .8rem; border:1px solid #E8D6AE; border-radius:999px; background:#F8F1DF; color:#4A000E; font-size:.75rem; font-weight:800; letter-spacing:.05em; text-transform:uppercase; }
+        .dashboard-content.is-premium > div[aria-label="Student statistics"] article { border-color:#D6BD88; box-shadow:0 5px 16px rgba(74,0,14,.06); }
+        .dashboard-content.is-premium > section { border-color:#D6BD88; }
         .dashboard-status.is-error { border-color:#FECACA; background:#FEF2F2; color:#991B1B; }
         .activity-item { display:flex; align-items:center; gap:1rem; padding:.9rem 1rem; border:1px solid #E2E8F0; border-radius:.75rem; }
         .activity-icon { display:grid; place-items:center; width:2.75rem; height:2.75rem; flex:0 0 2.75rem; border-radius:50%; background:#FFF1F2; color:#881337; }
@@ -46,6 +55,7 @@
         @media (max-width:640px) {
             .nav-container { min-height:60px; }
             .nav-container .brand-logo .site-logo { width:105px !important; height:37px !important; }
+            .premium-dashboard-banner { flex-direction:column; padding:1.15rem; }
             .activity-item { align-items:flex-start; flex-wrap:wrap; gap:.65rem; padding:.75rem; }
             .activity-score { align-self:center; font-size:.72rem; }
             .activity-report-download { width:100%; }
@@ -90,6 +100,19 @@
         </section>
         <p class="dashboard-status mx-auto mt-4 max-w-3xl rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm text-slate-600" id="dashboard-status" role="status" aria-live="polite" hidden></p>
         <section class="dashboard-content" id="dashboard-content" hidden>
+            <section class="premium-dashboard-banner" id="premium-dashboard-banner" aria-label="Premium account dashboard" hidden>
+                <div>
+                    <p class="premium-dashboard-eyebrow">Road to CA · Premium access active</p>
+                    <h1>Premium Learning Dashboard</h1>
+                    <p>Your chapter-test topic analysis, saved report history, and A4 PDF previews are unlocked for this authorized account.</p>
+                    <div class="premium-dashboard-benefits" aria-label="Premium dashboard features">
+                        <span class="premium-dashboard-benefit"><i class="fa-solid fa-chart-pie" aria-hidden="true"></i> Topic SWOT reports</span>
+                        <span class="premium-dashboard-benefit"><i class="fa-solid fa-file-pdf" aria-hidden="true"></i> A4 PDF reports</span>
+                        <span class="premium-dashboard-benefit"><i class="fa-solid fa-clock-rotate-left" aria-hidden="true"></i> Saved test history</span>
+                    </div>
+                </div>
+                <span class="premium-dashboard-badge"><i class="fa-solid fa-crown" aria-hidden="true"></i> Premium</span>
+            </section>
             <div class="mb-6 flex flex-wrap items-center gap-4 rounded-xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
                 <img class="account-avatar h-14 w-14 rounded-full object-cover" id="account-avatar" alt="" hidden>
                 <div class="account-avatar-fallback grid h-14 w-14 place-items-center rounded-full bg-rose-50 text-xl text-rose-900" id="account-avatar-fallback" aria-hidden="true"><i class="fa-solid fa-user"></i></div>

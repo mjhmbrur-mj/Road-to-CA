@@ -1,13 +1,14 @@
 import { auth, db, googleProvider } from './firebase-client.js';
 import { browserLocalPersistence, onAuthStateChanged, setPersistence, signInWithPopup, signOut } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js';
 import { collection, doc, getDocs, orderBy, query, serverTimestamp, setDoc } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js';
-import { downloadTopicReport, hasPremiumReportAccess, renderTopicReport } from './topic-analysis.js';
+import { createTopicReport, hasPremiumReportAccess, previewTopicReport, renderTopicReport } from './topic-analysis.js';
 
 const DASHBOARD_CACHE_VERSION = 1;
 const signInButton = document.getElementById('dashboard-sign-in');
 const signInView = document.getElementById('sign-in-view');
 const signOutButton = document.getElementById('dashboard-sign-out');
 const dashboardContent = document.getElementById('dashboard-content');
+const premiumDashboardBanner = document.getElementById('premium-dashboard-banner');
 const dashboardStatus = document.getElementById('dashboard-status');
 const activityList = document.getElementById('activity-list');
 const accountAvatar = document.getElementById('account-avatar');
@@ -33,15 +34,54 @@ function dashboardCacheKey(uid) {
 }
 
 function isValidTopicReport(report) {
-    return report === undefined
-        || (report
-            && report.version === 1
-            && Array.isArray(report.topics)
-            && Array.isArray(report.responses)
-            && report.topics.length > 0
-            && report.topics.length <= 30
-            && report.responses.length > 0
-            && report.responses.length <= 100);
+    if (report === undefined) return true;
+    if (!report || report.version !== 1 || !Array.isArray(report.topics)
+        || report.topics.length < 1 || report.topics.length > 30) return false;
+    if (Number.isInteger(report.score)
+        && Number.isInteger(report.totalMarks)
+        && Number.isInteger(report.percentage)
+        && typeof report.passed === 'boolean'
+        && Number.isInteger(report.questionCount)
+        && Number.isInteger(report.correctCount)
+        && report.marksPerQuestion === 2
+        && typeof report.candidateName === 'string'
+        && typeof report.candidatePhotoURL === 'string'
+        && report.topics.every((topic) => topic
+            && typeof topic.topic === 'string'
+            && Number.isInteger(topic.correct)
+            && Number.isInteger(topic.total)
+            && Number.isInteger(topic.percentage))) return true;
+    return typeof report.subjectId === 'string'
+        && typeof report.chapterName === 'string'
+        && Array.isArray(report.responses)
+        && report.responses.length > 0
+        && report.responses.length <= 100
+        && report.responses.every((response) =>
+            response
+            && typeof response.question === 'string'
+            && typeof response.correct === 'boolean'
+            && Array.isArray(response.selectedAnswers)
+            && Array.isArray(response.correctAnswers));
+}
+
+function getTopicReport(report) {
+    if (!report) return null;
+    if (isValidTopicReport(report) && Number.isInteger(report.score)) return report;
+    try {
+        return createTopicReport({
+            subjectId: report.subjectId,
+            chapterName: report.chapterName,
+            responses: report.responses.map((response) => ({
+                question: { q: response.question },
+                isCorrect: response.correct,
+                selectedAnswers: response.selectedAnswers,
+                correctAnswers: response.correctAnswers
+            }))
+        });
+    } catch (error) {
+        console.warn('Unable to migrate a saved topic report to the current format.', error);
+        return null;
+    }
 }
 
 function readCachedActivities(uid) {
@@ -140,22 +180,23 @@ function renderActivities(activities) {
         score.textContent = `${data.score}/${data.totalQuestions} · ${Math.round(percentage)}% · ${passed ? 'Pass' : 'Fail'}`;
         detail.append(title, date);
         item.append(icon, detail, score);
-        if (isValidTopicReport(data.topicReport) && data.topicReport) {
+        const topicReport = getTopicReport(data.topicReport);
+        if (topicReport) {
             const premiumAccess = hasPremiumReportAccess();
             const reportPreview = document.createElement('details');
             reportPreview.className = 'activity-report-preview';
             const reportSummary = document.createElement('summary');
             reportSummary.textContent = 'SWOT analysis · Premium';
             reportPreview.appendChild(reportSummary);
-            renderTopicReport(reportPreview, data.topicReport, { locked: !premiumAccess });
+            renderTopicReport(reportPreview, topicReport, { locked: !premiumAccess });
             if (premiumAccess) {
                 const reportButton = document.createElement('button');
                 reportButton.className = 'activity-report-download';
                 reportButton.type = 'button';
-                reportButton.textContent = 'Download SWOT report';
+                reportButton.textContent = 'Preview / Download PDF';
                 reportButton.addEventListener('click', () => {
                     try {
-                        downloadTopicReport(data.topicReport, data.testName || data.activityName || 'Chapter test', data.completedAt);
+                        previewTopicReport(topicReport, data.testName || data.activityName || 'Chapter test', data.completedAt);
                     } catch (error) {
                         console.error('Unable to download the saved topic report.', error);
                         setStatus('This SWOT report could not be downloaded. Please refresh your dashboard and try again.', true);
@@ -269,6 +310,9 @@ onAuthStateChanged(auth, (user) => {
     if (user) {
         signInButton.hidden = true;
         signInView.hidden = true;
+        const premiumAccess = hasPremiumReportAccess(user);
+        dashboardContent.classList.toggle('is-premium', premiumAccess);
+        premiumDashboardBanner.hidden = !premiumAccess;
         renderAccount(user);
         dashboardContent.hidden = false;
         const cachedActivities = readCachedActivities(user.uid);
@@ -285,6 +329,8 @@ onAuthStateChanged(auth, (user) => {
         void loadDashboard(user, version);
     } else {
         dashboardContent.hidden = true;
+        dashboardContent.classList.remove('is-premium');
+        premiumDashboardBanner.hidden = true;
         signInView.hidden = false;
         signInButton.hidden = false;
         activityList.replaceChildren();
