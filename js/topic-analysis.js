@@ -389,7 +389,7 @@ function previewTopicReport(report, title, completedAt) {
         : '<div class="candidate-photo candidate-placeholder" aria-label="Candidate photo placeholder">CA</div>';
     const grade = report.percentage >= 65
         ? 'A · DISTINCTION'
-        : (report.percentage >= PASS_PERCENTAGE ? 'B · PASSED' : 'C / D / E · FAILED');
+        : (report.percentage >= PASS_PERCENTAGE ? 'B · PASSED' : 'F · FAILED');
     const html = `<!doctype html>
 <html lang="en">
 <head>
@@ -488,12 +488,12 @@ td:last-child{text-align:right;color:#4a000e;font-variant-numeric:tabular-nums}
 <table><thead><tr><th>Grade</th><th>Result</th><th>Marks</th></tr></thead><tbody>
 <tr><td>A</td><td>Passed with Distinction</td><td>65–99</td></tr>
 <tr><td>B</td><td>Passed</td><td>45–64</td></tr>
-<tr><td>C / D / E</td><td>Failed</td><td>Below 45</td></tr>
-<tr><td>F</td><td>Not Appeared</td><td>Below 45</td></tr>
-<tr><td>EP</td><td>Earlier Passed</td><td>Below 45</td></tr>
-<tr><td>EX</td><td>Exempted</td><td>Below 45</td></tr>
+<tr><td>C / D / E</td><td>Official exam codes</td><td>Not assigned here</td></tr>
+<tr><td>F</td><td>Failed score / Not Appeared</td><td>Below 45</td></tr>
+<tr><td>EP</td><td>Earlier Passed</td><td>Status only</td></tr>
+<tr><td>EX</td><td>Exempted</td><td>Status only</td></tr>
 </tbody></table>
-<p class="grading-note">A score of 100% is reported in the top A distinction band. F, EP and EX are exam-status codes and are not inferred from this test.</p>
+<p class="grading-note">For this practice report, every score below 45% receives grade F. A score of 100% is in the A distinction band; EP and EX require official exam status.</p>
 </aside>
 </section>
 <section><h2 class="section-heading">Topic Performance</h2><p class="caption">Topic/chapter wise performance</p>
