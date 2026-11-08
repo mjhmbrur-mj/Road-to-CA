@@ -1,4 +1,4 @@
-const CACHE_NAME = 'road-to-ca-site-shell-v2';
+const CACHE_NAME = 'road-to-ca-site-shell-v3';
 const APP_SHELL = [
     'index.html',
     'assurance.html',
@@ -12,6 +12,10 @@ const APP_SHELL = [
     'nav.css',
     'nav.js',
     'js/pwa-install.js',
+    'js/profile.js',
+    'js/topic-analysis.js',
+    'js/activity-tracker.js',
+    'js/firebase-client.js',
     'logo.png',
     'icons/road-to-ca-180.png',
     'icons/road-to-ca-192.png',

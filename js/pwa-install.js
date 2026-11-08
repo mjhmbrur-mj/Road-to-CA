@@ -231,9 +231,37 @@ async function handleInstallAction() {
 }
 
 if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./service-worker.js').catch((error) => {
-        console.error('Unable to register the offline app support.', error);
-    });
+    const hadServiceWorkerController = Boolean(navigator.serviceWorker.controller);
+
+    if (hadServiceWorkerController) {
+        navigator.serviceWorker.addEventListener('controllerchange', () => {
+            let notice = document.getElementById('pwa-update-notice');
+            if (!notice) {
+                notice = document.createElement('div');
+                notice.id = 'pwa-update-notice';
+                notice.className = 'pwa-update-notice';
+                notice.setAttribute('role', 'status');
+                notice.setAttribute('aria-live', 'polite');
+
+                const message = document.createElement('span');
+                message.textContent = 'A new version of Road to CA is ready.';
+                const refreshButton = document.createElement('button');
+                refreshButton.type = 'button';
+                refreshButton.textContent = 'Refresh app';
+                refreshButton.addEventListener('click', () => window.location.reload());
+                notice.append(message, refreshButton);
+                document.body.appendChild(notice);
+            }
+        });
+    }
+
+    navigator.serviceWorker.register('./service-worker.js', { updateViaCache: 'none' })
+        .then((registration) => registration.update().catch((error) => {
+            console.warn('Unable to check for app updates right now.', error);
+        }))
+        .catch((error) => {
+            console.error('Unable to register the offline app support.', error);
+        });
 }
 
 createInstallLauncher();
