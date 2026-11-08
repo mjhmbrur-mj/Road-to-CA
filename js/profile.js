@@ -1,6 +1,7 @@
 import { auth, db, googleProvider } from './firebase-client.js';
 import { browserLocalPersistence, onAuthStateChanged, setPersistence, signInWithPopup, signOut } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js';
 import { collection, doc, getDocs, orderBy, query, serverTimestamp, setDoc } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js';
+import { downloadTopicReport, hasPremiumReportAccess, renderTopicReport } from './topic-analysis.js';
 
 const DASHBOARD_CACHE_VERSION = 1;
 const signInButton = document.getElementById('dashboard-sign-in');
@@ -31,6 +32,18 @@ function dashboardCacheKey(uid) {
     return `road-to-ca-dashboard:${uid}`;
 }
 
+function isValidTopicReport(report) {
+    return report === undefined
+        || (report
+            && report.version === 1
+            && Array.isArray(report.topics)
+            && Array.isArray(report.responses)
+            && report.topics.length > 0
+            && report.topics.length <= 30
+            && report.responses.length > 0
+            && report.responses.length <= 100);
+}
+
 function readCachedActivities(uid) {
     try {
         const cached = JSON.parse(localStorage.getItem(dashboardCacheKey(uid)) || 'null');
@@ -42,6 +55,7 @@ function readCachedActivities(uid) {
             && Number.isFinite(data.score)
             && Number.isFinite(data.totalQuestions)
             && data.totalQuestions > 0
+            && isValidTopicReport(data.topicReport)
         )) return null;
         return cached.activities;
     } catch (error) {
@@ -59,6 +73,7 @@ function writeCachedActivities(uid, activities) {
             activityName: data.activityName,
             score: data.score,
             totalQuestions: data.totalQuestions,
+            ...(data.topicReport ? { topicReport: data.topicReport } : {}),
             completedAt: typeof data.completedAt?.toMillis === 'function'
                 ? data.completedAt.toMillis()
                 : data.completedAt
@@ -125,6 +140,31 @@ function renderActivities(activities) {
         score.textContent = `${data.score}/${data.totalQuestions} · ${Math.round(percentage)}% · ${passed ? 'Pass' : 'Fail'}`;
         detail.append(title, date);
         item.append(icon, detail, score);
+        if (isValidTopicReport(data.topicReport) && data.topicReport) {
+            const premiumAccess = hasPremiumReportAccess();
+            const reportPreview = document.createElement('details');
+            reportPreview.className = 'activity-report-preview';
+            const reportSummary = document.createElement('summary');
+            reportSummary.textContent = 'SWOT analysis · Premium';
+            reportPreview.appendChild(reportSummary);
+            renderTopicReport(reportPreview, data.topicReport, { locked: !premiumAccess });
+            if (premiumAccess) {
+                const reportButton = document.createElement('button');
+                reportButton.className = 'activity-report-download';
+                reportButton.type = 'button';
+                reportButton.textContent = 'Download SWOT report';
+                reportButton.addEventListener('click', () => {
+                    try {
+                        downloadTopicReport(data.topicReport, data.testName || data.activityName || 'Chapter test', data.completedAt);
+                    } catch (error) {
+                        console.error('Unable to download the saved topic report.', error);
+                        setStatus('This SWOT report could not be downloaded. Please refresh your dashboard and try again.', true);
+                    }
+                });
+                reportPreview.appendChild(reportButton);
+            }
+            item.appendChild(reportPreview);
+        }
         activityList.appendChild(item);
     });
 }

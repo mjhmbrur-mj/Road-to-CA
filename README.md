@@ -19,11 +19,11 @@ The owner-only inbox is available at `feedback-inbox.html`. Firestore rules rest
 
 ## Student dashboard
 
-Students can sign in from `profile.html` with Google. Sign-in persists in the current browser. On sign-in, the site creates or updates the student's private `users/{uid}` profile document. Submitted Assurance chapter tests and BTF timed practice tests are saved to `users/{uid}/testResults` and shown in the dashboard history. Existing results in `users/{uid}/activities` are also displayed for continuity. Students can take quizzes without signing in, but those attempts will not be saved.
+Students can sign in from `profile.html` with Google. Sign-in persists in the current browser. On sign-in, the site creates or updates the student's private `users/{uid}` profile document. Submitted Assurance chapter tests and BTF chapter tests with question banks are saved to `users/{uid}/testResults` and shown in dashboard history. These chapter tests generate topic-level SWOT summaries from question wording and explanations. Reports are blurred and downloads are hidden by default, with a Premium notice. The verified Google account `mjhmbrur@gmail.com` is temporarily allowlisted for Premium UI testing; this client-side allowlist is not secure access control and must be replaced with a trusted server-verified premium/authorized-user source before production use. Automatic topic classification is based on the existing question bank and should be reviewed as topics or questions change. Existing results in `users/{uid}/activities` are also displayed for continuity. Students can take quizzes without signing in, but those attempts will not be saved to the dashboard.
 
 The dashboard keeps a per-user copy of recent activity in that browser and shows it immediately on return, while refreshing from Firestore in the background. The first visit on a browser still needs to load results from Firestore.
 
-Publish the updated `firestore.rules` before enabling profile and test-result storage. Rules restrict profile and test-result access to the signed-in owner. The current quiz modules support Assurance and BTF; the dashboard displays all seven Certificate Level subjects in its summary.
+Publish the updated `firestore.rules` before enabling profile and test-result storage or topic-report saving. Rules restrict profile and test-result access to the signed-in owner. The current quiz modules support Assurance and BTF; the dashboard displays all seven Certificate Level subjects in its summary.
 
 ## Installable mobile app
 

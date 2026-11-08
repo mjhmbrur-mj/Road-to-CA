@@ -66,7 +66,7 @@ service cloud.firestore {
           && request.auth.uid == userId
           && request.resource.data.keys().hasOnly([
             'subjectId', 'subjectName', 'testName',
-            'score', 'totalQuestions', 'completedAt'
+            'score', 'totalQuestions', 'completedAt', 'topicReport'
           ])
           && request.resource.data.keys().hasAll([
             'subjectId', 'subjectName', 'testName',
@@ -87,6 +87,29 @@ service cloud.firestore {
           && request.resource.data.totalQuestions is int
           && request.resource.data.totalQuestions > 0
           && request.resource.data.score <= request.resource.data.totalQuestions
+          && (!('topicReport' in request.resource.data)
+            || (request.resource.data.topicReport is map
+              && request.resource.data.topicReport.keys().hasOnly([
+                'version', 'subjectId', 'chapterName', 'generatedAt',
+                'questionCount', 'correctCount', 'topics', 'responses'
+              ])
+              && request.resource.data.topicReport.version == 1
+              && request.resource.data.topicReport.subjectId == request.resource.data.subjectId
+              && request.resource.data.topicReport.chapterName is string
+              && request.resource.data.topicReport.chapterName.size() <= 160
+              && request.resource.data.topicReport.generatedAt is string
+              && request.resource.data.topicReport.generatedAt.size() <= 40
+              && request.resource.data.topicReport.questionCount is int
+              && request.resource.data.topicReport.questionCount > 0
+              && request.resource.data.topicReport.questionCount <= 100
+              && request.resource.data.topicReport.correctCount is int
+              && request.resource.data.topicReport.correctCount >= 0
+              && request.resource.data.topicReport.correctCount <= request.resource.data.topicReport.questionCount
+              && request.resource.data.topicReport.topics is list
+              && request.resource.data.topicReport.topics.size() > 0
+              && request.resource.data.topicReport.topics.size() <= 30
+              && request.resource.data.topicReport.responses is list
+              && request.resource.data.topicReport.responses.size() == request.resource.data.topicReport.questionCount))
           && request.resource.data.completedAt == request.time;
 
         allow get, list: if request.auth != null

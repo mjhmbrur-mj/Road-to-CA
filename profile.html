@@ -38,6 +38,7 @@
         .activity-score { flex:0 0 auto; padding:.4rem .7rem; border-radius:999px; font-size:.8rem; font-weight:700; white-space:nowrap; }
         .activity-score.is-pass { background:#DCFCE7; color:#166534; }
         .activity-score.is-fail { background:#FEE2E2; color:#991B1B; }
+        .activity-report-download { flex:0 0 auto; }
         .empty-state { padding:2rem 1rem; color:#64748B; text-align:center; }
         .empty-state p { margin:.35rem 0 0; }
         .site-drawer { color:var(--deep-maroon); }
@@ -45,8 +46,9 @@
         @media (max-width:640px) {
             .nav-container { min-height:60px; }
             .nav-container .brand-logo .site-logo { width:105px !important; height:37px !important; }
-            .activity-item { align-items:flex-start; gap:.65rem; padding:.75rem; }
+            .activity-item { align-items:flex-start; flex-wrap:wrap; gap:.65rem; padding:.75rem; }
             .activity-score { align-self:center; font-size:.72rem; }
+            .activity-report-download { width:100%; }
         }
     </style>
 </head>
@@ -100,7 +102,7 @@
                 <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm"><span class="flex items-center gap-2 text-sm font-semibold text-slate-600"><i class="fa-solid fa-book-open text-rose-800" aria-hidden="true"></i> Active Subjects</span><strong class="mt-2 block font-['Montserrat'] text-3xl font-extrabold text-slate-900" id="stat-subjects">7</strong><span class="text-xs text-slate-500">ICAB subjects</span></article>
             </div>
             <section class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
-                <div class="mb-4"><h2 class="font-['Montserrat'] text-xl font-bold text-slate-900">Recent Mock Test History</h2><p class="mt-1 text-sm text-slate-500">Completed tests, dates, and score results. Scores of 70% or higher are marked Pass.</p></div>
+                <div class="mb-4"><h2 class="font-['Montserrat'] text-xl font-bold text-slate-900">Recent Test History</h2><p class="mt-1 text-sm text-slate-500">Completed tests, dates, and scores. Chapter-test SWOT reports can be downloaded from each result.</p></div>
                 <div class="activity-list space-y-3" id="activity-list"></div>
             </section>
         </section>

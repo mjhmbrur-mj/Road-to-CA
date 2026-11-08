@@ -1413,13 +1413,13 @@
             { name: "Chapter 7: Purchase Systems", learnQuestions: ch7PurchaseQuestions, testQuestions: ch7PurchaseQuestions, examSettings: completedChapterExamSettings },
             { name: "Chapter 8: Employee Cost", learnQuestions: ch8EmployeeCostQuestions, testQuestions: ch8EmployeeCostQuestions, examSettings: completedChapterExamSettings },
             { name: "Chapter 9: Internal Control", learnQuestions: ch9InternalControlQuestions, testQuestions: ch9InternalControlQuestions, examSettings: completedChapterExamSettings },
-            { name: "Chapter 10: Substantive Testing – Income and Expenses", learnQuestions: ch1Questions, testQuestions: ch1Questions.slice(0, 50) },
-            { name: "Chapter 11: Audit Documentation and Working Papers", learnQuestions: ch1Questions, testQuestions: ch1Questions.slice(0, 50) },
-            { name: "Chapter 12: Professional Ethics and Fundamental Principles", learnQuestions: ch1Questions, testQuestions: ch1Questions.slice(0, 50) },
+            { name: "Chapter 10: Substantive Testing – Income and Expenses" },
+            { name: "Chapter 11: Audit Documentation and Working Papers" },
+            { name: "Chapter 12: Professional Ethics and Fundamental Principles" },
             { name: "Chapter 13: Key Financial Statement Figures", learnQuestions: ch13FinancialStatementFiguresQuestions, testQuestions: ch13FinancialStatementFiguresQuestions, examSettings: completedChapterExamSettings },
-            { name: "Chapter 14: Regulatory Framework and Legal Issues", learnQuestions: ch1Questions, testQuestions: ch1Questions.slice(0, 50) },
-            { name: "Chapter 15: Fraud, Error, and Non-Compliance (Laws & Regulations)", learnQuestions: ch1Questions, testQuestions: ch1Questions.slice(0, 50) },
-            { name: "Chapter 16: Completion, Review, and Assurance Reports", learnQuestions: ch1Questions, testQuestions: ch1Questions.slice(0, 50) }
+            { name: "Chapter 14: Regulatory Framework and Legal Issues" },
+            { name: "Chapter 15: Fraud, Error, and Non-Compliance (Laws & Regulations)" },
+            { name: "Chapter 16: Completion, Review, and Assurance Reports" }
         ];
 
         let timerInterval = null;
@@ -1435,15 +1435,11 @@
             card.innerHTML = `
                 <div class="chapter-info">
                     <h4>${ch.name}</h4>
-                    <p>ICAB Syllabus • ${ch.learnQuestions ? ch.learnQuestions.length : ch.questions.length} Learn First MCQs • ${ch.testQuestions ? ch.testQuestions.length : ch.questions.length} Test You MCQs</p>
+                    <p>${ch.learnQuestions ? `ICAB Syllabus • ${ch.learnQuestions.length} Learn First MCQs • ${ch.testQuestions.length} Test You MCQs` : 'ICAB Syllabus • Chapter questions are upcoming'}</p>
                 </div>
                 <div class="action-group">
-                    <button class="btn btn-outline" onclick="openLearnMode(${index})">
-                        <i class="fa-solid fa-graduation-cap"></i> Learn First
-                    </button>
-                    <button class="btn btn-solid" onclick="openTestMode(${index})">
-                        <i class="fa-solid fa-clock"></i> Test You
-                    </button>
+                    ${ch.learnQuestions ? `<button class="btn btn-outline" onclick="openLearnMode(${index})"><i class="fa-solid fa-graduation-cap"></i> Learn First</button>` : '<span class="btn btn-outline" aria-disabled="true">Learn is Upcoming</span>'}
+                    ${ch.testQuestions ? `<button class="btn btn-solid" onclick="openTestMode(${index})"><i class="fa-solid fa-clock"></i> Test You</button>` : '<span class="btn btn-solid" aria-disabled="true">Test is Upcoming</span>'}
                 </div>
             `;
             grid.appendChild(card);
@@ -1453,6 +1449,7 @@
         function openLearnMode(chIndex) {
             clearInterval(timerInterval);
             const ch = assuranceChapters[chIndex];
+            if (!ch?.learnQuestions) return;
             currentQuestionsList = ch.learnQuestions || ch.questions;
 
             document.getElementById("modalTitle").innerText = ch.name;
@@ -1497,6 +1494,7 @@
             clearInterval(timerInterval);
             isQuizSubmitted = false;
             const ch = assuranceChapters[chIndex];
+            if (!ch?.testQuestions) return;
             const examSettings = ch.examSettings || { durationSeconds: 50 * 60, marksPerQuestion: 1 };
             currentActivityName = ch.name;
             currentQuestionsList = ch.testQuestions || ch.questions;
@@ -1587,12 +1585,19 @@
             const submitBtn = document.getElementById("submitBtn");
             if(submitBtn) submitBtn.style.display = "none";
 
+            const responses = [];
             currentQuestionsList.forEach((item, qIdx) => {
                 const selectedAnswers = Array.from(document.querySelectorAll(`input[name="q_${qIdx}"]:checked`))
                     .map(input => Number(input.value));
                 const correctAnswers = Array.isArray(item.answer) ? item.answer : [item.answer];
                 const isCorrect = selectedAnswers.length === correctAnswers.length
                     && selectedAnswers.every(answer => correctAnswers.includes(answer));
+                responses.push({
+                    question: item,
+                    isCorrect,
+                    selectedAnswers: selectedAnswers.map(answer => item.options[answer]),
+                    correctAnswers: correctAnswers.map(answer => item.options[answer])
+                });
                 const box = document.getElementById(`qBox_${qIdx}`);
                 const expBox = document.getElementById(`expBox_${qIdx}`);
                 
@@ -1639,17 +1644,45 @@
             activityStatus.style.cssText = 'margin-top:.75rem;font-size:.85rem;';
             activityStatus.textContent = 'Saving your quiz activity…';
             document.getElementById("quizScore").appendChild(activityStatus);
+            let topicReport;
+            let premiumReportAccess = false;
+            try {
+                const { createTopicReport, renderTopicReport, downloadTopicReport, hasPremiumReportAccess } = await import('./js/topic-analysis.js');
+                topicReport = createTopicReport({
+                    subjectId: 'assurance',
+                    chapterName: currentActivityName,
+                    responses
+                });
+                premiumReportAccess = hasPremiumReportAccess();
+                renderTopicReport(document.getElementById("quizScore"), topicReport, { locked: !premiumReportAccess });
+                if (premiumReportAccess) {
+                    const downloadButton = document.createElement('button');
+                    downloadButton.className = 'btn btn-outline topic-report-download';
+                    downloadButton.type = 'button';
+                    downloadButton.textContent = 'Download SWOT report';
+                    downloadButton.addEventListener('click', () => downloadTopicReport(topicReport, currentActivityName));
+                    document.getElementById("quizScore").appendChild(downloadButton);
+                }
+            } catch (error) {
+                console.error('Unable to generate the Assurance topic report.', error);
+                activityStatus.textContent = 'Your score is shown, but the topic report could not be generated.';
+            }
             try {
                 const { saveQuizActivity } = await import('./js/activity-tracker.js');
                 const saved = await saveQuizActivity({
                     subjectId: 'assurance',
                     activityName: currentActivityName,
                     score,
-                    totalQuestions: totalMarks
+                    totalQuestions: totalMarks,
+                    ...(topicReport && premiumReportAccess ? { topicReport } : {})
                 });
-                activityStatus.textContent = saved
-                    ? 'This result was saved to your student dashboard.'
-                    : 'Sign in with Google before a quiz to save results to your dashboard.';
+                if (saved) {
+                    activityStatus.textContent = topicReport
+                        ? 'Test result saved to your student dashboard.'
+                        : 'This result was saved to your student dashboard.';
+                } else {
+                    activityStatus.textContent = 'Sign in with Google before a quiz to save results to your dashboard.';
+                }
             } catch (error) {
                 console.error('Unable to save Assurance quiz activity.', error);
                 activityStatus.textContent = 'Your score is shown, but this attempt could not be saved to your dashboard.';
