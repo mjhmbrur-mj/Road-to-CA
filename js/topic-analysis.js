@@ -1,7 +1,7 @@
 import { auth } from './firebase-client.js';
 
 const PREMIUM_EMAILS = new Set(['mjhmbrur@gmail.com']);
-const PASS_PERCENTAGE = 45;
+const PASS_PERCENTAGE = 50;
 
 const assuranceTopicRules = [
     { topic: 'Assurance purpose and parties', pattern: /intended user|responsible party|practitioner|three[- ]party|purpose of assurance/ },
@@ -361,7 +361,6 @@ function previewTopicReport(report, title, completedAt) {
         || report.totalMarks !== report.questionCount * report.marksPerQuestion
         || report.score !== report.correctCount * report.marksPerQuestion
         || report.percentage !== Math.round(report.score / report.totalMarks * 100)
-        || report.passed !== (report.percentage >= PASS_PERCENTAGE)
         || !report.topics.every((item) => item
             && typeof item.topic === 'string'
             && Number.isInteger(item.correct)
@@ -387,9 +386,13 @@ function previewTopicReport(report, title, completedAt) {
     const photo = report.candidatePhotoURL
         ? `<img class="candidate-photo" src="${escapeHtml(report.candidatePhotoURL)}" alt="Candidate photo">`
         : '<div class="candidate-photo candidate-placeholder" aria-label="Candidate photo placeholder">CA</div>';
-    const grade = report.percentage >= 65
+    const grade = report.percentage >= 70
         ? 'A · DISTINCTION'
-        : (report.percentage >= PASS_PERCENTAGE ? 'B · PASSED' : 'F · FAILED');
+        : (report.percentage >= 50
+            ? 'B · PASSED'
+            : (report.percentage >= 40
+                ? 'C · FAILED'
+                : (report.percentage >= 30 ? 'D · FAILED' : 'E · FAILED')));
     const html = `<!doctype html>
 <html lang="en">
 <head>
@@ -481,19 +484,19 @@ td:last-child{text-align:right;color:#4a000e;font-variant-numeric:tabular-nums}
 <div class="metrics">
 <div class="metric"><span class="metric-label">Total score obtained</span><strong class="metric-value">${report.score} / ${report.totalMarks}</strong><span class="metric-sub">${report.correctCount} correct × ${report.marksPerQuestion} marks each</span></div>
 <div class="metric"><span class="metric-label">Percentage</span><strong class="metric-value">${report.percentage}%</strong><span class="metric-sub">Certificate Level grading</span></div>
-<div class="metric"><span class="metric-label">Result &amp; grade</span><span class="status ${report.passed ? 'pass' : 'fail'}">${grade}</span><span class="metric-sub">Pass mark: 45%</span></div>
+<div class="metric"><span class="metric-label">Result &amp; grade</span><span class="status ${report.percentage >= PASS_PERCENTAGE ? 'pass' : 'fail'}">${grade}</span><span class="metric-sub">Pass mark: 50%</span></div>
 </div>
 <aside class="grading-reference" aria-label="ICAB Certificate Level grading reference">
 <h2>Grading reference</h2>
 <table><thead><tr><th>Grade</th><th>Result</th><th>Marks</th></tr></thead><tbody>
-<tr><td>A</td><td>Passed with Distinction</td><td>65–99</td></tr>
-<tr><td>B</td><td>Passed</td><td>45–64</td></tr>
-<tr><td>C / D / E</td><td>Official exam codes</td><td>Not assigned here</td></tr>
-<tr><td>F</td><td>Failed score / Not Appeared</td><td>Below 45</td></tr>
-<tr><td>EP</td><td>Earlier Passed</td><td>Status only</td></tr>
-<tr><td>EX</td><td>Exempted</td><td>Status only</td></tr>
+<tr><td>A</td><td>Passed with Distinction</td><td>70–100</td></tr>
+<tr><td>B</td><td>Passed</td><td>50–69</td></tr>
+<tr><td>C</td><td>Failed</td><td>40–49</td></tr>
+<tr><td>D</td><td>Failed</td><td>30–39</td></tr>
+<tr><td>E</td><td>Failed</td><td>Below 30</td></tr>
+<tr><td>F</td><td>Not Appeared</td><td>Status only</td></tr>
 </tbody></table>
-<p class="grading-note">For this practice report, every score below 45% receives grade F. A score of 100% is in the A distinction band; EP and EX require official exam status.</p>
+<p class="grading-note">Attempted practice tests are graded A–E by score. F is reserved for candidates who did not appear and is not assigned to a scored test.</p>
 </aside>
 </section>
 <section><h2 class="section-heading">Topic Performance</h2><p class="caption">Topic/chapter wise performance</p>

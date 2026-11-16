@@ -39,7 +39,7 @@ export async function saveQuizActivity({ subjectId, activityName, score, totalQu
                 || topicReport.totalMarks !== topicReport.questionCount * topicReport.marksPerQuestion
                 || topicReport.score !== topicReport.correctCount * topicReport.marksPerQuestion
                 || topicReport.percentage !== Math.round(topicReport.score / topicReport.totalMarks * 100)
-                || topicReport.passed !== (topicReport.percentage >= 45)
+                || topicReport.passed !== (topicReport.percentage >= 50)
                 || typeof topicReport.candidateName !== 'string'
                 || topicReport.candidateName.length > 120
                 || typeof topicReport.candidatePhotoURL !== 'string'
