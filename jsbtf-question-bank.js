@@ -4868,6 +4868,409 @@ const btfChapter13Questions = [
   }
 ];
 
+const btfChapter14Questions = [
+  {
+    id: 1401,
+    chapter: "Chapter 14: Developments in Technology",
+    question: "How is 'cloud computing' defined in a business and technology context?",
+    options: ["The complete replacement of physical hardware with local desk hard drives.", "The provision of computer system services by a third party, accessed by the user through the internet, such as data storage, SaaS, and IaaS.", "The manual physical archiving of paper documents in an external warehouse.", "Local desktop software updates downloaded via USB memory sticks."],
+    correctAnswer: 1,
+    explanation: "Cloud computing is defined as the provision of computer system services by a third party, accessed via the internet (including storage, SaaS, and IaaS) [cite: 7]."
+  },
+  {
+    id: 1402,
+    chapter: "Chapter 14: Developments in Technology",
+    question: "Which of the following best describes the key operational benefits of 'cloud accounting' for a business?",
+    options: ["It completely eliminates the need for financial statements.", "It restricts access to a single office terminal for maximum security.", "It uses internet-based software accessed via web browsers on remote servers, enabling remote access, real-time collaboration, automatic backups, and scalability.", "It prevents external auditors from ever inspecting financial records."],
+    correctAnswer: 2,
+    explanation: "Cloud accounting uses internet software on remote servers, allowing remote access, real-time collaboration, automatic backups, and scalability [cite: 7]."
+  },
+  {
+    id: 1403,
+    chapter: "Chapter 14: Developments in Technology",
+    question: "Which cloud computing model provides users with ready-to-use software applications over the internet without managing underlying infrastructure?",
+    options: ["Infrastructure as a Service (IaaS)", "Platform as a Service (PaaS)", "Software as a Service (SaaS)", "Local Area Network (LAN) hosting"],
+    correctAnswer: 2,
+    explanation: "SaaS provides ready-to-use application software hosted remotely and accessed over the web [cite: 7]."
+  },
+  {
+    id: 1404,
+    chapter: "Chapter 14: Developments in Technology",
+    question: "Which cloud service model provides virtual servers, data storage, and networking hardware, giving the business maximum configuration control?",
+    options: ["Software as a Service (SaaS)", "Infrastructure as a Service (IaaS)", "Platform as a Service (PaaS)", "Expert System processing"],
+    correctAnswer: 1,
+    explanation: "IaaS provides fundamental infrastructure resources like virtual servers and storage over the internet [cite: 7]."
+  },
+  {
+    id: 1405,
+    chapter: "Chapter 14: Developments in Technology",
+    question: "How is a 'digital asset' defined under modern technology and financial frameworks?",
+    options: ["Any physical cash note printed by a central bank.", "An asset that is stored electronically and can be bought, sold, owned, transferred, or traded.", "A paper ledger locked in a corporate safe.", "Traditional accounts receivable recorded in manual books."],
+    correctAnswer: 1,
+    explanation: "A digital asset is stored electronically and can be bought, sold, owned, transferred, or traded [cite: 5]."
+  },
+  {
+    id: 1406,
+    chapter: "Chapter 14: Developments in Technology",
+    question: "Which of the following is specifically cited as an example of a digital asset?",
+    options: ["Gold bullion bars", "Physical corporate office real estate", "Convertible virtual currencies and cryptocurrencies such as Bitcoin, stablecoins, and NFTs", "Paper promissory notes"],
+    correctAnswer: 2,
+    explanation: "Digital assets include cryptocurrencies like Bitcoin, stablecoins, and Non-Fungible Tokens (NFTs) [cite: 5]."
+  },
+  {
+    id: 1407,
+    chapter: "Chapter 14: Developments in Technology",
+    question: "What is the primary function of a 'convertible virtual currency' like cryptocurrency?",
+    options: ["It can only be used as a physical museum artifact.", "It acts as a substitute for real currency, used to pay for goods and services, traded digitally, or converted into other currencies.", "It is strictly regulated and issued solely by physical commercial banks.", "It can only be exchanged for paper vouchers."],
+    correctAnswer: 1,
+    explanation: "Convertible virtual currencies act as currency substitutes, used for payments, digital trading, or currency conversion [cite: 5]."
+  },
+  {
+    id: 1408,
+    chapter: "Chapter 14: Developments in Technology",
+    question: "What is 'blockchain' in simple terms according to your study notes?",
+    options: ["A physical chain linking office computers together.", "A shared, digital notebook where transactions are recorded as 'blocks' of data linked in a 'chain', distributed across a network of computers.", "A centralized private database controlled by a single commercial bank.", "A password-protected spreadsheet kept on one laptop."],
+    correctAnswer: 1,
+    explanation: "Blockchain is a distributed digital notebook of linked transaction blocks distributed across a computer network [cite: 5]."
+  },
+  {
+    id: 1409,
+    chapter: "Chapter 14: Developments in Technology",
+    question: "Why is a blockchain network extremely difficult to hack or alter illicitly?",
+    options: ["Because it is stored on a single offline computer.", "Because copies are distributed across a network of computers, and any change would need to be agreed upon by the entire network.", "Because encryption keys are managed exclusively by government tax authorities.", "Because transactions are processed manually by auditors."],
+    correctAnswer: 1,
+    explanation: "Copies are distributed across a network, requiring network-wide consensus to alter data [cite: 5]."
+  },
+  {
+    id: 1410,
+    chapter: "Chapter 14: Developments in Technology",
+    question: "How do retail companies utilize blockchain technology in commercial operations?",
+    options: ["To print physical paper receipts", "To track the movement of goods between suppliers and buyers securely", "To calculate corporate income tax returns", "To store employee payroll bank details locally"],
+    correctAnswer: 1,
+    explanation: "Retail companies use blockchain to track the movement of goods between suppliers and buyers [cite: 5]."
+  },
+  {
+    id: 1411,
+    chapter: "Chapter 14: Developments in Technology",
+    question: "How is 'Fintech' defined in modern business?",
+    options: ["Software and other modern technologies used by businesses to provide automated and improved financial services.", "Traditional manual bookkeeping performed by junior accountants.", "Government legislation regulating commercial banking interest rates.", "Physical currency printing presses."],
+    correctAnswer: 0,
+    explanation: "Fintech combines financial and technology to deliver automated and improved financial services [cite: 5]."
+  },
+  {
+    id: 1412,
+    chapter: "Chapter 14: Developments in Technology",
+    question: "What is a major structural difference between traditional currencies and cryptocurrencies?",
+    options: ["Cryptocurrencies are physically heavier than paper notes.", "Making payments using cryptocurrencies does not involve an intermediary third party (like a bank or PayPal), saving costs and enhancing privacy.", "Cryptocurrencies can only be used inside government buildings.", "Traditional currencies are fully decentralized."],
+    correctAnswer: 1,
+    explanation: "Cryptocurrencies allow peer-to-peer online trading without third-party intermediaries, saving costs and enhancing privacy [cite: 5]."
+  },
+  {
+    id: 1413,
+    chapter: "Chapter 14: Developments in Technology",
+    question: "What is the primary purpose of an 'expert system' in business?",
+    options: ["To replace all human employees with autonomous robots.", "To allow users to benefit from expert knowledge and information via a specialized database holding rules and interpretation logic.", "To process basic daily sales invoices and payroll.", "To physically secure office server rooms."],
+    correctAnswer: 1,
+    explanation: "Expert systems allow users to benefit from stored expert knowledge and rules in a database [cite: 5]."
+  },
+  {
+    id: 1414,
+    chapter: "Chapter 14: Developments in Technology",
+    question: "Under what conditions are expert systems MOST useful?",
+    options: ["When the problem is vague, unstructured, and has no defined rules.", "When the problem is well-defined, the expert defines solvable rules, and conventional transaction processing systems cannot solve it.", "When manual paper filing is required by law.", "When artistic creative writing is evaluated."],
+    correctAnswer: 1,
+    explanation: "Expert systems are most useful when problems are well-defined with expert rules beyond conventional TPS [cite: 5]."
+  },
+  {
+    id: 1415,
+    chapter: "Chapter 14: Developments in Technology",
+    question: "Which of the following is explicitly listed as an application of expert systems?",
+    options: ["Manual factory assembly line welding", "Diagnostic systems, surveillance, project management, forecasting, and legal/tax advice", "Physical coin sorting", "Corporate office catering management"],
+    correctAnswer: 1,
+    explanation: "Applications include diagnostic systems, surveillance, project management, forecasting, and legal/tax advice [cite: 5]."
+  },
+  {
+    id: 1416,
+    chapter: "Chapter 14: Developments in Technology",
+    question: "How is 'obsolescence risk' defined for a business?",
+    options: ["The risk that office furniture will break due to old age.", "The risk that a process or product used or produced by a company will become obsolete and no longer competitive in the marketplace.", "The risk of losing software passwords.", "The risk of employee resignation."],
+    correctAnswer: 1,
+    explanation: "Obsolescence risk is the risk that a company's process or product becomes obsolete and uncompetitive [cite: 5]."
+  },
+  {
+    id: 1417,
+    chapter: "Chapter 14: Developments in Technology",
+    question: "Why does Artificial Intelligence (AI) create heightened ethical risks regarding 'confidentiality'?",
+    options: ["AI systems are legally prohibited from storing data.", "AI often involves sharing information across systems, increasing the potential number of confidentiality breaches.", "AI systems automatically encrypt all company secrets.", "Confidentiality no longer applies to digital data."],
+    correctAnswer: 1,
+    explanation: "AI involves sharing information, which increases the potential for confidentiality breaches [cite: 5]."
+  },
+  {
+    id: 1418,
+    chapter: "Chapter 14: Developments in Technology",
+    question: "What is a key ethical dilemma regarding responsibility when an AI machine makes a critical mistake?",
+    options: ["The machine is legally prosecuted in court.", "It is unclear whether responsibility lies with the software developers or the person operating the machine.", "Responsibility rests solely on external auditors.", "No one is ever responsible for AI errors."],
+    correctAnswer: 1,
+    explanation: "A key ethical risk is determining whether developers or operators are responsible when machines make mistakes [cite: 5]."
+  },
+  {
+    id: 1419,
+    chapter: "Chapter 14: Developments in Technology",
+    question: "Why do machine learning AI systems face challenges when confronting novel ethical dilemmas?",
+    options: ["Because machines are faster than humans.", "Because machines learn from historic past data and cannot cope with new ethical dilemmas that did not occur in their test data.", "Because computers have excessive emotional empathy.", "Because legal statutes forbid AI from thinking."],
+    correctAnswer: 1,
+    explanation: "Machines learn from historic data and struggle to cope with new ethical dilemmas absent from test data [cite: 5]."
+  },
+  {
+    id: 1420,
+    chapter: "Chapter 14: Developments in Technology",
+    question: "How is 'cyber risk' defined?",
+    options: ["The risk of physical fire in a corporate warehouse.", "The risk of financial loss, disruption, or reputational damage from IT system failure due to accidents, security breaches, cyber-attacks, or poor systems integrity.", "The risk of currency exchange rate fluctuations.", "The risk of high employee turnover."],
+    correctAnswer: 1,
+    explanation: "Cyber risk is the risk of financial loss, disruption, or reputational damage from IT failure, security breaches, or cyber-attacks [cite: 5]."
+  },
+  {
+    id: 1421,
+    chapter: "Chapter 14: Developments in Technology",
+    question: "What is a 'cyber-attack'?",
+    options: ["A routine hardware maintenance upgrade.", "A deliberate action through the Internet against an organization with the intention of causing loss, damage, or disruption.", "An accidental software bug caused by developers.", "A scheduled network backup procedure."],
+    correctAnswer: 1,
+    explanation: "A cyber-attack is a deliberate internet action against an organization intended to cause loss, damage, or disruption [cite: 5]."
+  },
+  {
+    id: 1422,
+    chapter: "Chapter 14: Developments in Technology",
+    question: "Using specialist software and tools to gain unauthorized access to systems (especially social media and email accounts) is known as:",
+    options: ["Phishing", "Hacking", "Patch management", "Keylogging"],
+    correctAnswer: 1,
+    explanation: "Hacking uses specialist tools to gain unauthorized access to systems, social media, and email [cite: 5]."
+  },
+  {
+    id: 1423,
+    chapter: "Chapter 14: Developments in Technology",
+    question: "Sending bogus emails that trick users into revealing security information and personal details is called:",
+    options: ["Ransomware", "Phishing", "DDoS", "Firewall filtering"],
+    correctAnswer: 1,
+    explanation: "Phishing involves bogus emails asking users for security info and personal details [cite: 5]."
+  },
+  {
+    id: 1424,
+    chapter: "Chapter 14: Developments in Technology",
+    question: "Malicious software where criminals hijack a user's files and hold them hostage until a payment is made is known as:",
+    options: ["Firewall", "Ransomware / File hijacker", "Webcam manager", "Ad clicker"],
+    correctAnswer: 1,
+    explanation: "Ransomware/file hijackers are malicious software where criminals hijack user files and hold them to ransom [cite: 5]."
+  },
+  {
+    id: 1425,
+    chapter: "Chapter 14: Developments in Technology",
+    question: "What is the specific objective of a Distributed Denial of Service (DDoS) attack?",
+    options: ["To secretly steal confidential customer bank passwords.", "To overwhelm websites and online services with vast amounts of internet traffic to crash them or stop them from working.", "To record keystrokes on a user's keyboard.", "To take over a user's webcam."],
+    correctAnswer: 1,
+    explanation: "DDoS attacks overwhelm websites with vast traffic to crash them or stop them working [cite: 5]."
+  },
+  {
+    id: 1426,
+    chapter: "Chapter 14: Developments in Technology",
+    question: "Which of the following is classified as a LESS COMMON type of cyber-attack?",
+    options: ["Hacking", "Phishing", "Ransomware", "Webcam manager, keylogging, screenshot manager, and ad clicker"],
+    correctAnswer: 3,
+    explanation: "Webcam managers, keylogging, screenshot managers, and ad clickers are listed as less common cyber-attacks [cite: 5]."
+  },
+  {
+    id: 1427,
+    chapter: "Chapter 14: Developments in Technology",
+    question: "Where criminals record what a user types onto their keyboard using malicious software:",
+    options: ["Keylogging", "Screenshot manager", "Ad clicker", "Firewall"],
+    correctAnswer: 0,
+    explanation: "Keylogging records what a user types onto their keyboard [cite: 5]."
+  },
+  {
+    id: 1428,
+    chapter: "Chapter 14: Developments in Technology",
+    question: "Where screenshots are automatically taken of the user's computer screen by malware:",
+    options: ["Keylogging", "Screenshot manager", "Phishing", "DDoS"],
+    correctAnswer: 1,
+    explanation: "Screenshot managers take screenshots of the user's computer screen [cite: 5]."
+  },
+  {
+    id: 1429,
+    chapter: "Chapter 14: Developments in Technology",
+    question: "Where a user's computer is covertly directed to click a specific internet link:",
+    options: ["Ad clicker", "Firewall", "Patch management", "Ransomware"],
+    correctAnswer: 0,
+    explanation: "An ad clicker directs a user's computer to click a specific link [cite: 5]."
+  },
+  {
+    id: 1430,
+    chapter: "Chapter 14: Developments in Technology",
+    question: "How is 'cyber security' defined?",
+    options: ["Physical building security guards patrolling office doors.", "The protection of systems, networks, and data in cyberspace; the procedures used by a business to protect information systems from damage, disruption, theft, or loss.", "Insurance policies covering fire damage.", "Manual paper document archiving."],
+    correctAnswer: 1,
+    explanation: "Cyber security protects systems, networks, and data in cyberspace from damage, disruption, theft, or loss [cite: 5]."
+  },
+  {
+    id: 1431,
+    chapter: "Chapter 14: Developments in Technology",
+    question: "What are 'critical information assets'?",
+    options: ["Old broken office computers stored in a basement.", "Assets that are fundamental to an organization's core activities, performance, capability, and overall viability.", "Decorative office lobby paintings.", "Personal employee social media profiles."],
+    correctAnswer: 1,
+    explanation: "Critical information assets are fundamental to core activities, performance, capability, and viability [cite: 5]."
+  },
+  {
+    id: 1432,
+    chapter: "Chapter 14: Developments in Technology",
+    question: "Why is cyber security of vital importance to modern businesses?",
+    options: ["It is purely voluntary and has no legal implications.", "It is a legal obligation under data protection law, online data holds strategic/commercial value, and systems connectedness increases external attack risks.", "It reduces electricity bills.", "It replaces the need for financial audits."],
+    correctAnswer: 1,
+    explanation: "Cyber security is vital due to legal data protection obligations, strategic/commercial value of data, and high connectedness risks [cite: 5]."
+  },
+  {
+    id: 1433,
+    chapter: "Chapter 14: Developments in Technology",
+    question: "What is the primary function of 'Boundary firewalls and internet gateways'?",
+    options: ["To physically lock office doors.", "Software that intercepts network traffic in and out of a system to secure internet connections.", "To manage employee payroll deductions.", "To print physical audit reports."],
+    correctAnswer: 1,
+    explanation: "Boundary firewalls and gateways are software that intercepts network traffic in and out to secure connections [cite: 5]."
+  },
+  {
+    id: 1434,
+    chapter: "Chapter 14: Developments in Technology",
+    question: "Configuring devices and software with cyber security as a top priority is known as:",
+    options: ["Secure configuration", "Patch management", "Access control", "Malware protection"],
+    correctAnswer: 0,
+    explanation: "Secure configuration ensures systems are set up with cyber security as a priority [cite: 5]."
+  },
+  {
+    id: 1435,
+    chapter: "Chapter 14: Developments in Technology",
+    question: "What do 'Access control' procedures involve?",
+    options: ["Installing anti-virus software", "Physical and network procedures to control and restrict who has access to data and services", "Updating operating system patches", "Backing up files to remote servers"],
+    correctAnswer: 1,
+    explanation: "Access control involves physical and network procedures to restrict who has access to data and services [cite: 5]."
+  },
+  {
+    id: 1436,
+    chapter: "Chapter 14: Developments in Technology",
+    question: "Software designed to prevent and remove unwanted programs from a system, such as anti-virus software, is called:",
+    options: ["Malware protection", "Firewall gateway", "Patch management", "Encryption key"],
+    correctAnswer: 0,
+    explanation: "Malware protection software prevents and removes unwanted programs like anti-virus software [cite: 5]."
+  },
+  {
+    id: 1437,
+    chapter: "Chapter 14: Developments in Technology",
+    question: "Ensuring the latest software updates and security fixes are installed on devices is known as:",
+    options: ["Secure configuration", "Patch management", "Access control", "Phishing defense"],
+    correctAnswer: 1,
+    explanation: "Patch management ensures the latest updates and security patches to software are installed [cite: 5]."
+  },
+  {
+    id: 1438,
+    chapter: "Chapter 14: Developments in Technology",
+    question: "When an accounting firm uses a cloud-based audit platform accessible via a web browser, which core advantage of cloud computing is most directly demonstrated?",
+    options: ["Elimination of all accounting standards", "Scalability and real-time collaboration across remote audit teams", "Mandatory requirement for physical server rooms", "Immunity from cyber-attacks"],
+    correctAnswer: 1,
+    explanation: "Cloud accounting and platforms enable real-time collaboration and remote access from any internet-connected device [cite: 7]."
+  },
+  {
+    id: 1439,
+    chapter: "Chapter 14: Developments in Technology",
+    question: "If a business adopts IaaS (Infrastructure as a Service), who is typically responsible for installing and configuring the operating systems and application software?",
+    options: ["The cloud service provider exclusively", "The client business itself", "External statutory regulators", "Independent financial auditors"],
+    correctAnswer: 1,
+    explanation: "Under IaaS, the provider supplies virtual servers and storage, while the business retains control to configure OS and software."
+  },
+  {
+    id: 1440,
+    chapter: "Chapter 14: Developments in Technology",
+    question: "Which technology underlies the secure recording of Bitcoin and other cryptocurrencies using distributed ledgers?",
+    options: ["Relational database management systems", "Blockchain", "Expert diagnostic systems", "Manual paper-based cash books"],
+    correctAnswer: 1,
+    explanation: "The highest profile use of blockchain is recording transactions in Bitcoin and cryptocurrencies [cite: 5]."
+  },
+  {
+    id: 1441,
+    chapter: "Chapter 14: Developments in Technology",
+    question: "What type of asset is a Non-Fungible Token (NFT) classified as?",
+    options: ["Physical inventory", "Digital asset", "Fixed tangible plant asset", "Government bond"],
+    correctAnswer: 1,
+    explanation: "NFTs are specifically listed in the syllabus notes as examples of digital assets [cite: 5]."
+  },
+  {
+    id: 1442,
+    chapter: "Chapter 14: Developments in Technology",
+    question: "Fintech innovations in banking and investing primarily rely on what underlying driver?",
+    options: ["Manual paper processing", "Software and modern technologies delivering automated financial services", "Physical coin minting", "Face-to-face teller queues"],
+    correctAnswer: 1,
+    explanation: "Fintech describes software and modern technologies used to provide automated financial services [cite: 5]."
+  },
+  {
+    id: 1443,
+    chapter: "Chapter 14: Developments in Technology",
+    question: "An expert system used for legal and tax advice relies heavily upon:",
+    options: ["Random number generation", "A database holding specialized rules and how to interpret them in given circumstances", "Social media advertising algorithms", "Physical warehouse inventory logs"],
+    correctAnswer: 1,
+    explanation: "Expert systems consist of a database holding specialized rules and interpretation logic for given circumstances [cite: 5]."
+  },
+  {
+    id: 1444,
+    chapter: "Chapter 14: Developments in Technology",
+    question: "Why is 'obsolescence risk' a critical strategic concern for tech-driven companies?",
+    options: ["Because old equipment is too heavy to lift.", "Because rapid technological developments can render a company's products or processes uncompetitive overnight.", "Because tax authorities fine companies for holding old hardware.", "Because software never requires updates."],
+    correctAnswer: 1,
+    explanation: "Obsolescence risk threatens market competitiveness when company processes or products become obsolete [cite: 5]."
+  },
+  {
+    id: 1445,
+    chapter: "Chapter 14: Developments in Technology",
+    question: "Which ICAB fundamental ethical principle is most directly threatened when AI systems improperly share confidential client data across networks?",
+    options: ["Objectivity", "Confidentiality", "Professional competence", "Integrity"],
+    correctAnswer: 1,
+    explanation: "Confidentiality is a fundamental principle for ICAB members, and AI information sharing increases breach risks [cite: 5]."
+  },
+  {
+    id: 1446,
+    chapter: "Chapter 14: Developments in Technology",
+    question: "A malicious attack that floods a corporate server with internet traffic to bring down its e-commerce website is a:",
+    options: ["Phishing scam", "Distributed Denial of Service (DDoS) attack", "Keylogging attack", "Secure configuration update"],
+    correctAnswer: 1,
+    explanation: "DDoS attacks overwhelm online services with vast traffic to crash or stop systems from working [cite: 5]."
+  },
+  {
+    id: 1447,
+    chapter: "Chapter 14: Developments in Technology",
+    question: "Which cyber control acts as a software barrier intercepting network traffic entering and leaving an organization?",
+    options: ["Firewall and internet gateway", "Keylogger", "Ransomware", "Spreadsheet macro"],
+    correctAnswer: 0,
+    explanation: "Boundary firewalls and gateways intercept network traffic in and out of a system [cite: 5]."
+  },
+  {
+    id: 1448,
+    chapter: "Chapter 14: Developments in Technology",
+    question: "If an employee receives an email pretending to be the CEO asking for bank login details, this is an example of:",
+    options: ["Patch management", "Phishing", "Secure configuration", "Blockchain validation"],
+    correctAnswer: 1,
+    explanation: "Phishing involves bogus emails asking users for security info and personal details [cite: 5]."
+  },
+  {
+    id: 1449,
+    chapter: "Chapter 14: Developments in Technology",
+    question: "What is the primary function of 'patch management' in cyber security?",
+    options: ["Locking physical doors to server rooms", "Ensuring the latest updates and security fixes to software are installed", "Monitoring employee web browsing", "Backing up files to external flash drives"],
+    correctAnswer: 1,
+    explanation: "Patch management ensures latest updates to software are installed [cite: 5]."
+  },
+  {
+    id: 1450,
+    chapter: "Chapter 14: Developments in Technology",
+    question: "Which of the following is considered a 'critical information asset' for an e-commerce retail business?",
+    options: ["Office coffee mugs", "Customer database and transaction ledger systems", "Employee parking permits", "Reception area seating"],
+    correctAnswer: 1,
+    explanation: "Critical information assets are fundamental to an organization's core activities, performance, and overall viability [cite: 5]."
+  }
+];
+
 if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { btfQuestions, btfChapter1Questions, btfChapter2Questions, btfChapter4Questions, btfChapter6Questions, btfChapter7Questions, btfChapter8Questions, btfChapter9Questions, btfChapter10Questions, btfChapter11Questions, btfChapter13Questions };
+  module.exports = { btfQuestions, btfChapter1Questions, btfChapter2Questions, btfChapter4Questions, btfChapter6Questions, btfChapter7Questions, btfChapter8Questions, btfChapter9Questions, btfChapter10Questions, btfChapter11Questions, btfChapter13Questions, btfChapter14Questions };
 }
