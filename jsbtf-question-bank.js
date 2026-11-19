@@ -4465,6 +4465,409 @@ const btfChapter11Questions = [
   }
 ];
 
+const btfChapter13Questions = [
+  {
+    id: 1301,
+    chapter: "Chapter 13: Data Analysis",
+    question: "What is the fundamental difference between 'Data Analysis' and 'Data Analytics'?",
+    options: ["Data analysis focuses on predicting future outcomes using machine learning, while data analytics only summarizes past records", "Data analysis is primarily descriptive and explains what happened using historical/current data, whereas data analytics is predictive and prescriptive, forecasting trends and recommending future actions", "Data analysis can only be performed on qualitative data, while data analytics is restricted to financial statements", "There is no conceptual difference; both exclusively examine past events without forecasting"],
+    correctAnswer: 1,
+    explanation: "Data analysis examines historical and current data to explain what happened and uncover patterns, whereas data analytics spans past, present, and future data using predictive modelling and machine learning to forecast and prescribe actions."
+  },
+  {
+    id: 1302,
+    chapter: "Chapter 13: Data Analysis",
+    question: "Which of the following correctly distinguishes 'Discrete Data' from 'Continuous Data'?",
+    options: ["Discrete data is non-numerical text, whereas continuous data is always measured in percentages", "Discrete data can only take specific whole values that cannot be made more precise (e.g., number of students), whereas continuous data can take any value within a given range (e.g., height, weight, temperature)", "Discrete data comes only from external sources, whereas continuous data comes only from internal ERP systems", "Discrete data is uncountable, whereas continuous data is always counted in whole integers"],
+    correctAnswer: 1,
+    explanation: "Both are types of quantitative data: discrete data consists of distinct countable integers (such as cars in a parking lot), while continuous data can be measured to any degree of precision along a continuum."
+  },
+  {
+    id: 1303,
+    chapter: "Chapter 13: Data Analysis",
+    question: "Which of the four core types of data analytics answers the specific question: 'What should we do about it?'",
+    options: ["Descriptive analytics", "Diagnostic analytics", "Predictive analytics", "Prescriptive analytics"],
+    correctAnswer: 3,
+    explanation: "Descriptive asks 'What happened?', Diagnostic asks 'Why did it happen?', Predictive asks 'What might happen in the future?', and Prescriptive recommends optimal actions ('What should we do about it?')."
+  },
+  {
+    id: 1304,
+    chapter: "Chapter 13: Data Analysis",
+    question: "What is the difference between a 'Workbook' and a 'Worksheet' in spreadsheet software such as Microsoft Excel?",
+    options: ["A workbook is a single grid cell, whereas a worksheet is the entire saved computer file", "A workbook is the total spreadsheet file on which work is done, whereas a worksheet is an individual tabbed page or part within that workbook", "A workbook only stores text, whereas a worksheet only stores charts", "A workbook is used for accounting, whereas a worksheet is used only for word processing"],
+    correctAnswer: 1,
+    explanation: "In Excel and similar spreadsheet applications, the workbook represents the complete file (e.g., Book1.xlsx) containing one or more individual worksheets (e.g., Sheet1, Sheet2)."
+  },
+  {
+    id: 1305,
+    chapter: "Chapter 13: Data Analysis",
+    question: "Which statistical approach involves systematically exploring datasets to discover patterns and generate new hypotheses, as opposed to testing a predetermined hypothesis for statistical significance?",
+    options: ["Confirmatory Data Analysis (CDA)", "Exploratory Data Analysis (EDA)", "Systematic Interval Sampling", "Variance Budgeting"],
+    correctAnswer: 1,
+    explanation: "Exploratory Data Analysis (EDA) examines data characteristics to spot patterns and generate hypotheses, whereas Confirmatory Data Analysis (CDA) formally tests predetermined hypotheses using statistical significance tests."
+  },
+  {
+    id: 1306,
+    chapter: "Chapter 13: Data Analysis",
+    question: "In statistical hypothesis testing, when does a 'Type I Error' occur?",
+    options: ["When a researcher fails to reject a null hypothesis that is actually false", "When a researcher rejects a null hypothesis that is actually true", "When a spreadsheet formula contains a circular reference error", "When qualitative survey data is accidentally entered as a decimal number"],
+    correctAnswer: 1,
+    explanation: "A Type I error (false positive) occurs when a true null hypothesis is wrongly rejected, whereas a Type II error (false negative) occurs when a false null hypothesis is not rejected."
+  },
+  {
+    id: 1307,
+    chapter: "Chapter 13: Data Analysis",
+    question: "Which characteristic of Big Data refers specifically to the trustworthiness, authenticity, and quality/accuracy of the collected data?",
+    options: ["Volume", "Velocity", "Variety", "Veracity"],
+    correctAnswer: 3,
+    explanation: "Among the 5 V's of Big Data, Volume is scale, Velocity is speed, Variety is format diversity, Value is usefulness, and Veracity is the reliability and authenticity of the data."
+  },
+  {
+    id: 1308,
+    chapter: "Chapter 13: Data Analysis",
+    question: "What is the Internet of Things (IoT) in the context of business data sources?",
+    options: ["A manual paper filing archive maintained by government statistical offices", "A network of physical devices embedded with sensors, software, and connectivity (such as CCTV cameras, RFID tags, and smart factory machines) that collect and exchange data over the internet", "A specific accounting standard governing intangible software assets", "An internal payroll ledger maintained by a company's HR department"],
+    correctAnswer: 1,
+    explanation: "IoT comprises sensor-equipped physical devices across factories, shops, transport, and cities that continuously generate and transmit real-time operational data."
+  },
+  {
+    id: 1309,
+    chapter: "Chapter 13: Data Analysis",
+    question: "Which spreadsheet chart type is specifically designed to explore the relationship or correlation between two numerical variables by plotting pairs of values as individual points?",
+    options: ["Pie chart", "Scatter plot", "Box plot", "Histogram"],
+    correctAnswer: 1,
+    explanation: "Scatter plots display paired numerical values on horizontal and vertical axes to reveal correlations, trends, and outliers between two variables."
+  },
+  {
+    id: 1310,
+    chapter: "Chapter 13: Data Analysis",
+    question: "Which quality of good information requires that the financial benefit gained from using information must exceed the expense incurred to gather and process it?",
+    options: ["Timeliness", "Authoritativeness", "Cost-beneficial", "Completeness"],
+    correctAnswer: 2,
+    explanation: "Information is cost-beneficial when the value of better decisions derived from the information outweighs the cost of obtaining and analyzing it. Part B: Scenario-Based MCQs (Q11 – Q50)"
+  },
+  {
+    id: 1311,
+    chapter: "Chapter 13: Data Analysis",
+    question: "A national retail chain's analytics team produces four separate reports for the board:Report 1: Shows total revenue per store for Q3.Report 2: Investigates why Store #14 experienced a 22% drop in footfall during August.Report 3: Forecasts expected holiday season demand across all regions.Report 4: Recommends exact automated restocking quantities and promotional discounts to maximize Q4 profit.Which report represents 'Diagnostic Analytics' and which represents 'Prescriptive Analytics'?",
+    options: ["Report 1 is Diagnostic; Report 3 is Prescriptive", "Report 2 is Diagnostic; Report 4 is Prescriptive", "Report 2 is Predictive; Report 4 is Descriptive", "Report 3 is Diagnostic; Report 1 is Prescriptive"],
+    correctAnswer: 1,
+    explanation: "Diagnostic analytics determines the 'why' behind past performance (Report 2), while prescriptive analytics recommends specific actions to optimize future outcomes (Report 4)."
+  },
+  {
+    id: 1312,
+    chapter: "Chapter 13: Data Analysis",
+    question: "During an inventory and HR review, a manufacturing company records four attributes for each factory worker: (1) Employee Department (e.g., Assembly, Packaging), (2) Number of Safety Trainings Attended, (3) Exact Body Weight in kilograms for protective harness sizing, and (4) Years of Formal Education rounded to whole years. Which attribute is an example of 'Continuous Quantitative Data' and which is 'Qualitative (Categorical) Data'?",
+    options: ["Exact Body Weight is Continuous; Employee Department is Qualitative", "Number of Safety Trainings is Continuous; Exact Body Weight is Qualitative", "Employee Department is Continuous; Years of Education is Qualitative", "Exact Body Weight is Discrete; Number of Safety Trainings is Continuous"],
+    correctAnswer: 0,
+    explanation: "Exact body weight can take any decimal value within a range (continuous quantitative), whereas department names are descriptive categories that cannot be measured numerically (qualitative)."
+  },
+  {
+    id: 1313,
+    chapter: "Chapter 13: Data Analysis",
+    question: "A logistics firm wants to reduce delivery fuel costs. Following the 7-step data-driven decision-making framework, the management team first maps its delivery goals to the company's overall strategy and defines specific Key Performance Indicators (KPIs) such as 'fuel litres per 100 km' and 'on-time delivery rate'. After visualizing the performance data, what is the immediate next logical step before prioritizing and executing actions?",
+    options: ["Abandon KPIs and rely solely on manager intuition", "Formulate an Action Plan specifying concrete activities, rationale, and required budget", "Conduct a confirmatory normality test on historical tax filings", "Delete all lagging indicators from the dashboard"],
+    correctAnswer: 1,
+    explanation: "In the data-driven decision-making cycle, once context is understood, KPIs are defined, and data is visualized, management develops an Action Plan (activities + rationale + budget) before prioritizing and executing."
+  },
+  {
+    id: 1314,
+    chapter: "Chapter 13: Data Analysis",
+    question: "Apex Apparel Ltd is preparing its annual expansion strategy. Its analytics team pulls data from six sources: (1) Point-of-Sale customer purchase logs, (2) Employee attendance records, (3) Government census income statistics, (4) Industry market research reports, (5) RFID smart tags tracking garments on factory conveyor belts, and (6) GPS temperature sensors inside delivery trucks. How should sources (3) & (4) and sources (5) & (6) be classified respectively?",
+    options: ["(3) & (4) are Internal sources; (5) & (6) are External market research", "(3) & (4) are External sources; (5) & (6) are Internet of Things (IoT) sources", "(3) & (4) are IoT sources; (5) & (6) are Internal financial ledgers", "All six sources are purely internal accounting records"],
+    correctAnswer: 1,
+    explanation: "Government websites and market research are external data sources, whereas RFID tags and GPS sensors embedded in physical assets exchanging data over networks are IoT data sources."
+  },
+  {
+    id: 1315,
+    chapter: "Chapter 13: Data Analysis",
+    question: "The CFO of Zenith Manufacturing receives a monthly variance report that is 100% mathematically accurate, sourced from the official ERP system, and formatted clearly. However, the report for March is delivered on May 28—nearly two months late—after management has already finalized Q2 production budgets without it. Which quality of good information has failed in this scenario?",
+    options: ["Authoritativeness", "Consistency", "Timeliness", "Accuracy"],
+    correctAnswer: 2,
+    explanation: "Timeliness requires information to be communicated early enough for the recipient to act upon it; accurate data delivered too late loses its decision-making value."
+  },
+  {
+    id: 1316,
+    chapter: "Chapter 13: Data Analysis",
+    question: "In a multi-branch retail corporation, the Sales Department's CRM system reports Q4 regional revenue as $4.2 million, while the Finance Department's accounting ledger reports Q4 revenue for the exact same region as $3.9 million because returns were recorded differently across systems. Which quality of good information is lacking?",
+    options: ["Accessibility", "Consistency", "User-targeted presentation", "Cost-effectiveness"],
+    correctAnswer: 1,
+    explanation: "Consistency requires that data across all systems and departments in an organization be synchronized and reflect the exact same definitions and figures."
+  },
+  {
+    id: 1317,
+    chapter: "Chapter 13: Data Analysis",
+    question: "An investment analyst examines five years of stock price movements and trading volumes for listed banks without any preconceived theory, plotting histograms and scatter diagrams to spot unusual seasonal patterns. After noticing that bank stocks appear to rise every January, the analyst formulates a formal hypothesis and runs a statistical t-test at a 95% confidence level to verify whether the pattern is statistically significant. Which two analytical stages did the analyst perform in sequence?",
+    options: ["First Confirmatory Data Analysis (CDA), then Descriptive Summarization", "First Exploratory Data Analysis (EDA), then Confirmatory Data Analysis (CDA)", "First Prescriptive Analytics, then Qualitative Coding", "First Stratified Sampling, then Systematic Bias Testing"],
+    correctAnswer: 1,
+    explanation: "EDA is used first to inspect datasets, spot patterns, and generate hypotheses; CDA follows to test whether those observed patterns are statistically significant using formal confidence/hypothesis tests."
+  },
+  {
+    id: 1318,
+    chapter: "Chapter 13: Data Analysis",
+    question: "A university registrar has an alphabetical list of all 10,000 enrolled students numbered from 0001 to 10,000. To survey 500 students about campus library facilities, the registrar randomly picks starting number 7 and then selects every 20th student on the list (7, 27, 47, 67, and so on). Which sampling method is being used?",
+    options: ["Simple random sampling", "Systematic sampling", "Stratified sampling", "Convenience quota sampling"],
+    correctAnswer: 1,
+    explanation: "Systematic sampling lists the population in sequence and selects members at fixed, regular intervals (e.g., every 20th member) from a random starting point."
+  },
+  {
+    id: 1319,
+    chapter: "Chapter 13: Data Analysis",
+    question: "A multinational bank employs 20,000 staff globally: 60% are retail branch tellers, 25% are IT and operations specialists, 10% are corporate bankers, and 5% are senior executives. To ensure the employee engagement survey accurately reflects the views of every job tier in exact proportion to its workforce share, the HR analytics team divides the staff into these four job categories and takes a random sample from each group. Which sampling method is this?",
+    options: ["Systematic sampling", "Stratified sampling", "Cluster snowball sampling", "Unweighted random sampling"],
+    correctAnswer: 1,
+    explanation: "Stratified sampling divides the population into distinct homogeneous subgroups (strata) based on key characteristics (such as job role or income bracket) and samples proportionally from each stratum."
+  },
+  {
+    id: 1320,
+    chapter: "Chapter 13: Data Analysis",
+    question: "A marketing intern drafts a customer satisfaction questionnaire for a telecom operator and includes the following question:'Don't you agree that our ultra-fast 5G network is superior, and how satisfied are you with our call centre and monthly billing rates?'Identify the TWO major questionnaire design flaws committed in this single question.",
+    options: ["It uses a 1–5 Likert scale and avoids broad open-ended paragraphs", "It is both a leading question ('Don't you agree...') and a double-barreled question (asking about call centre and billing rates together)", "It uses qualitative open-ended wording and targets the wrong sampling frame", "It is too short and relies exclusively on secondary external data"],
+    correctAnswer: 1,
+    explanation: "Good survey questions must avoid leading phrasing that pushes respondents toward a desired answer and avoid double-barreled phrasing that combines two distinct questions into one."
+  },
+  {
+    id: 1321,
+    chapter: "Chapter 13: Data Analysis",
+    question: "A luxury fashion brand is about to launch a completely new category of smart biometric rings and wants to understand potential customers' emotional reactions, styling preferences, and unmet lifestyle needs before finalizing the design. According to survey design principles, what type of survey questions should the brand prioritize at this stage?",
+    options: ["Purely binary TRUE/FALSE error checks", "Qualitative questions suited to exploring attitudes toward a new product", "Double-barreled financial ratio questions", "Strictly historical payroll queries"],
+    correctAnswer: 1,
+    explanation: "Qualitative survey questions are particularly suitable when researching customer attitudes, perceptions, and preferences for a newly launched or conceptual product."
+  },
+  {
+    id: 1322,
+    chapter: "Chapter 13: Data Analysis",
+    question: "While building a financial model in Microsoft Excel, an accountant enters the formula '=B10>50000' into cell C10 to check whether regional sales exceeded the bonus threshold. Cell C10 displays 'TRUE'. Meanwhile, cell D10 displays '#DIV/0!' because total units sold in cell A10 is zero. How are the outputs in cells C10 and D10 classified among spreadsheet data types?",
+    options: ["C10 is String data; D10 is Numeric currency data", "C10 is Logical (Boolean) data; D10 is Error data", "C10 is Whole number data; D10 is Decimal data", "C10 is Error data; D10 is Logical data"],
+    correctAnswer: 1,
+    explanation: "Spreadsheet logical/Boolean values display TRUE or FALSE based on conditional evaluation, whereas Error values (such as #DIV/0! or #VALUE!) appear when Excel detects a calculation mistake or missing input."
+  },
+  {
+    id: 1323,
+    chapter: "Chapter 13: Data Analysis",
+    question: "A quality assurance engineer wants to visualize the distribution of daily shaft diameters produced by a CNC machine across 500 continuous interval measurements, and also compare the median, interquartile range (quartiles), and outliers across three different factory shifts. Which two chart types are most appropriate for these two tasks?",
+    options: ["Pie chart for interval distribution; Line chart for quartiles", "Histogram for interval spread; Box plot for quartile group comparison", "Scatter plot for single-variable intervals; Pie chart for outliers", "Text table for intervals; Map chart for machine quartiles"],
+    correctAnswer: 1,
+    explanation: "Histograms summarize the frequency spread of continuous numerical data measured on intervals, while box plots display groups of numerical data through quartiles and outliers."
+  },
+  {
+    id: 1324,
+    chapter: "Chapter 13: Data Analysis",
+    question: "A mid-sized construction company relies on a complex, 15-tab Excel workbook created five years ago by an analyst who has since left the company. There is no 'About/Welcome' tab explaining the model's logic, tax rates are hard-coded inside hundreds of individual formulas, and four project managers regularly edit the live file simultaneously without version backups. Which major spreadsheet risks and violations of good spreadsheet practice are occurring?",
+    options: ["Over-use of version control and excessive documentation", "Hidden formula errors, hard-coding constants inside formulas, lack of documentation, and failure to protect against unauthorized concurrent edits", "Using a standard spreadsheet tool and separating inputs from outputs", "Keeping formulas too short and performing each calculation only once"],
+    correctAnswer: 1,
+    explanation: "Good spreadsheet practice requires an About/Welcome tab, separating variable inputs from formulas (never embedding changeable numbers inside formulas), backup systems, and multi-user edit protection."
+  },
+  {
+    id: 1325,
+    chapter: "Chapter 13: Data Analysis",
+    question: "During a financial model audit of a 5-year cash flow forecast, a senior chartered accountant notices that the junior analyst wrote the corporate tax rate '0.25' directly inside 120 different formula cells (e.g., '=E15*0.25') instead of placing '25%' in a single dedicated Input cell and referencing it. When the government changes the tax rate to 27.5%, several cells are accidentally missed during manual updates. Which specific principle of good spreadsheet practice was violated?",
+    options: ["Principle 16: Avoid using advanced features if simple serves the purpose", "Principle 14: Never embed numbers within formulas that may change (hard-coding)", "Principle 6: Identify your audience", "Principle 2: Adopt a standard spreadsheet"],
+    correctAnswer: 1,
+    explanation: "Embedding changeable assumptions directly inside formulas creates high risk of inconsistent updates and hidden errors; variable inputs should be stored once in dedicated input cells."
+  },
+  {
+    id: 1326,
+    chapter: "Chapter 13: Data Analysis",
+    question: "A corporate finance team uses Excel to model how operating profit would change if raw material prices rise by 10%, 15%, or 20% while sales volume drops by 5%. Which specific financial use of spreadsheets does this represent?",
+    options: ["Statutory payroll disbursement", "What-if analysis and scenario analysis", "Fixed asset physical tagging", "External audit confirmation"],
+    correctAnswer: 1,
+    explanation: "Spreadsheets are widely used in finance for accounting records, budgeting, MIS reporting, and 'what-if' / scenario analysis to test sensitivity to changing assumptions."
+  },
+  {
+    id: 1327,
+    chapter: "Chapter 13: Data Analysis",
+    question: "A retail chain's marketing director presents a report claiming that '95% of shoppers prefer our brand over competitors.' Upon closer inspection, an internal auditor discovers that the survey was conducted exclusively among VIP loyalty-card holders inside the company's flagship store, and no external industry data was consulted. Which two potential data problems are illustrated here?",
+    options: ["Type I error and excessive sample size", "Data bias / lack of a representative sample and lack of professional skepticism (failure to verify against independent sources)", "Excessive comparability and over-reliance on IoT sensors", "Boolean logic error and continuous variable rounding"],
+    correctAnswer: 1,
+    explanation: "Surveying only loyal VIP customers introduces severe selection bias (unrepresentative sample), and accepting the claim without external cross-checking violates professional skepticism."
+  },
+  {
+    id: 1328,
+    chapter: "Chapter 13: Data Analysis",
+    question: "Company A recognizes revenue when goods are shipped to customers, whereas Company B (in the same industry) recognizes revenue only when customers pay cash 60 days later. A junior analyst directly compares Company A's Q1 revenue growth against Company B's Q1 revenue growth without adjustment. Which potential data problem undermines the analyst's conclusion?",
+    options: ["Type II statistical error", "Lack of comparability due to inconsistent accounting measurement bases", "Data velocity overload", "Stratified sampling bias"],
+    correctAnswer: 1,
+    explanation: "When datasets are compiled under different definitions, time periods, or accounting policies, direct comparison fails the comparability requirement."
+  },
+  {
+    id: 1329,
+    chapter: "Chapter 13: Data Analysis",
+    question: "A pharmaceutical firm tests a new blood-pressure drug against a placebo. The null hypothesis (H0) states that 'the new drug has no effect on blood pressure.' In reality, the new drug is completely ineffective (H0 is true). However, due to random sample fluctuation, the clinical trial's statistical test rejects H0 and concludes that the drug works, leading the firm to spend $50 million launching a useless drug. What statistical error did the firm commit?",
+    options: ["Type I Error (False Positive)", "Type II Error (False Negative)", "Sampling frame omission", "Prescriptive modelling bias"],
+    correctAnswer: 0,
+    explanation: "Rejecting a null hypothesis that is actually true is a Type I error—resulting in a false positive finding."
+  },
+  {
+    id: 1330,
+    chapter: "Chapter 13: Data Analysis",
+    question: "A bank's automated fraud-detection algorithm tests incoming credit card transactions against the null hypothesis (H0) that 'the transaction is legitimate.' A cybercriminal uses a stolen card to make an unauthorized $9,500 wire transfer (meaning H0 is actually false). However, the algorithm fails to reject H0 and approves the fraudulent transfer without flagging it. What statistical error occurred?",
+    options: ["Type I Error (False Positive)", "Type II Error (False Negative)", "Confirmatory significance error", "Data visualization distortion"],
+    correctAnswer: 1,
+    explanation: "Failing to reject a null hypothesis that is actually false is a Type II error—allowing a real anomaly or fraud to go undetected."
+  },
+  {
+    id: 1331,
+    chapter: "Chapter 13: Data Analysis",
+    question: "A data analyst is preparing a board presentation on quarterly profit margins. To ensure effective data visualization according to best-practice principles, the analyst removes 3D pie-chart distortions, uses a colorblind-safe palette, adds a detailed standalone caption, includes confidence-interval error bars to show uncertainty, and asks a colleague to review the chart before the meeting. Which principles of effective visualization are being applied?",
+    options: ["Hiding uncertainty metrics and prioritizing decorative 3D geometry", "Using correct geometry, an effective color scheme, standalone captions, relevant metrics of uncertainty, and an independent figure review", "Merging statistical models indistinguishably with raw data points", "Avoiding software tools in favor of hand-drawn sketches"],
+    correctAnswer: 1,
+    explanation: "Effective visualization requires proper geometry, accessible color schemes, standalone captions, displaying uncertainty metrics, distinguishing models from data, and independent review."
+  },
+  {
+    id: 1332,
+    chapter: "Chapter 13: Data Analysis",
+    question: "A global e-commerce marketplace processes 40 million customer clicks per hour, stores 12 petabytes of historical order archives, ingests live video product reviews, audio customer-support calls, and JSON server logs, and uses AI to generate real-time product recommendations that boost conversion rates by 18%. Which Big Data characteristics are directly demonstrated in this scenario?",
+    options: ["Only Veracity and Variability", "Volume (12 petabytes), Velocity (40 million clicks/hour), Variety (clicks, video, audio, JSON), and Value (+18% conversion)", "Exclusively structured relational tables and manual batch processing", "Small-sample descriptive statistics"],
+    correctAnswer: 1,
+    explanation: "Petabyte storage demonstrates Volume, real-time hourly click processing demonstrates Velocity, mixed multimedia/log formats demonstrate Variety, and measurable revenue uplift demonstrates Value."
+  },
+  {
+    id: 1333,
+    chapter: "Chapter 13: Data Analysis",
+    question: "A healthcare analytics startup collects millions of anonymized patient symptoms posted on public social media forums to track flu outbreaks. However, the team realizes that many posts contain jokes, exaggeration, or bot spam, making the raw feed unreliable unless heavily filtered. Which specific 'V' of Big Data represents this challenge?",
+    options: ["Volume", "Velocity", "Veracity", "Visualization"],
+    correctAnswer: 2,
+    explanation: "Veracity concerns the trustworthiness, authenticity, and accuracy of Big Data—especially critical when ingesting unverified social media or user-generated content."
+  },
+  {
+    id: 1334,
+    chapter: "Chapter 13: Data Analysis",
+    question: "A fintech lender builds a credit-scoring model by combining data from five sources: (1) core banking loan repayment tables, (2) mobile app screen-tap clickstream logs, (3) customer service call audio recordings, (4) publicly scraped business registry pages, and (5) cloud-hosted bureau APIs. How are sources (1) and (3) classified in terms of Big Data structure?",
+    options: ["(1) is Unstructured data; (3) is Structured data", "(1) is Structured data; (3) is Unstructured data", "Both (1) and (3) are Semi-structured XML files", "Neither source qualifies as Big Data"],
+    correctAnswer: 1,
+    explanation: "Relational database tables (such as loan repayment ledgers) are structured data, whereas raw audio recordings, videos, and free-form images are unstructured data."
+  },
+  {
+    id: 1335,
+    chapter: "Chapter 13: Data Analysis",
+    question: "A data science team is hired by a telecom company to reduce customer churn. Following the 7-stage Data Science Lifecycle, the team has just finished Stage 1 (Business Understanding: defining the churn problem) and Stage 2 (Data Mining: scraping call logs and billing records). Upon inspecting the mined dataset, they discover 15,000 missing age entries, duplicate account IDs, and inconsistent date formats. Which stage of the Data Science Lifecycle must they execute next before exploring patterns or training models?",
+    options: ["Stage 6: Predictive Modeling", "Stage 3: Data Cleaning", "Stage 7: Data Visualization", "Stage 5: Feature Engineering"],
+    correctAnswer: 1,
+    explanation: "In the Data Science Lifecycle (1. Business Understanding → 2. Data Mining → 3. Data Cleaning → 4. Data Exploration → 5. Feature Engineering → 6. Predictive Modeling → 7. Data Visualization), Data Cleaning immediately follows Data Mining to fix inconsistencies and missing values."
+  },
+  {
+    id: 1336,
+    chapter: "Chapter 13: Data Analysis",
+    question: "Continuing the telecom churn project in Q35, after cleaning the dataset and exploring initial patterns, the data scientists combine 'total monthly call minutes' and 'monthly bill amount' to create a new derived variable called 'effective cost per minute', which turns out to be the strongest predictor of customer cancellation. Which stage of the Data Science Lifecycle does creating this derived variable represent?",
+    options: ["Data Mining", "Feature Engineering", "Business Understanding", "Data Archiving"],
+    correctAnswer: 1,
+    explanation: "Feature engineering is the process of selecting important attributes and constructing more meaningful variables (features) from raw data to improve predictive model accuracy."
+  },
+  {
+    id: 1337,
+    chapter: "Chapter 13: Data Analysis",
+    question: "A regional supermarket chain collects daily point-of-sale data on bread, milk, and eggs. Management wants a simple visual chart showing how total monthly sales have trended continuously upward over the past 24 months, alongside a second chart showing the percentage breakdown of Q4 revenue across its four product departments (Grocery, Fresh Produce, Bakery, Household). Which two basic presentation charts are best suited for these two visuals?",
+    options: ["Line chart for the 24-month sales trend; Pie chart (or bar chart) for the 4-department percentage share", "Scatter plot for the 4-department percentage share; Box plot for the 24-month trend", "Pie chart for the 24-month continuous trend; Histogram for department names", "Boolean truth table for both visuals"],
+    correctAnswer: 0,
+    explanation: "Line charts excel at displaying continuous time-series trends over months/years, while pie or bar charts clearly show categorical proportions across a small number of departments."
+  },
+  {
+    id: 1338,
+    chapter: "Chapter 13: Data Analysis",
+    question: "An internal audit team uses inferential statistics to test compliance across 50,000 purchase invoices issued during the financial year. Instead of checking all 50,000 invoices, the auditors select a representative random sample of 400 invoices, find a 1.5% error rate, and infer the likely error rate across the entire population of 50,000 invoices. What is the core purpose of inferential statistics in this context?",
+    options: ["To describe only the 400 sampled invoices without drawing any conclusion about the remaining 49,600 invoices", "To use data from a representative sample to draw conclusions, estimates, or generalizations about a larger population", "To eliminate the need for any sampling frame", "To convert qualitative supplier names into continuous variables"],
+    correctAnswer: 1,
+    explanation: "Inferential statistics uses probability and sample observations to make valid inferences about the characteristics of the total population."
+  },
+  {
+    id: 1339,
+    chapter: "Chapter 13: Data Analysis",
+    question: "A smart manufacturing plant installs IoT vibration and thermal sensors on 200 robotic assembly arms. Whenever a sensor detects abnormal heat and vibration patterns, predictive analytics software forecasts that a bearing will fail within 72 hours, and prescriptive maintenance software automatically schedules a technician repair during the night shift before a breakdown occurs. Which data sources and analytics types are working together here?",
+    options: ["External government census data and descriptive analytics only", "Internet of Things (IoT) sensor data combined with predictive and prescriptive analytics", "Manual paper surveys combined with confirmatory hypothesis rejection", "Qualitative customer interviews combined with historical balance sheets"],
+    correctAnswer: 1,
+    explanation: "IoT sensors stream real-time machine telemetry, predictive analytics forecasts impending failure ('what will happen'), and prescriptive analytics schedules optimal preventive action ('what to do')."
+  },
+  {
+    id: 1340,
+    chapter: "Chapter 13: Data Analysis",
+    question: "A finance manager creates a monthly department expense tracker in Excel. To make the workbook easy for non-technical department heads to use and maintain over the next five years, the manager separates all input cells (shaded blue) from calculation cells (shaded black), keeps formulas short and simple, adds an instructions tab, and locks formula cells with a password so users cannot accidentally overwrite formulas. Which category of spreadsheet guidelines is the manager following?",
+    options: ["Principles of good spreadsheet practice (audience targeting, documentation, separating inputs/outputs, simple formulas, and protection)", "Deliberate obfuscation to hide calculation errors", "Big Data unstructured streaming protocols", "Systematic sampling interval rules"],
+    correctAnswer: 0,
+    explanation: "These actions directly implement the core principles of good spreadsheet practice: identifying the audience, including welcome/about guidance, clearly separating inputs and outputs, keeping formulas simple, and protecting cells from accidental changes."
+  },
+  {
+    id: 1341,
+    chapter: "Chapter 13: Data Analysis",
+    question: "A junior data analyst at a retail bank is asked to calculate the 'average customer account balance' to support a new wealth-management product launch. The dataset contains 9,990 regular customers with balances around $2,000 and 10 billionaire clients with balances over $500 million. Using the arithmetic mean alone produces an 'average' balance of $502,000, misleading the marketing team into targeting mass-market customers as ultra-wealthy. Which data quality and analytical issue does this illustrate?",
+    options: ["Extreme outliers skewing summary descriptive statistics, requiring careful visualization/quartile analysis (such as box plots) and professional skepticism", "A Type II error in confirmatory hypothesis testing", "Lack of IoT real-time velocity", "Excessive use of discrete categorical text"],
+    correctAnswer: 0,
+    explanation: "Descriptive statistics like the arithmetic mean can be heavily distorted by extreme outliers; box plots (showing medians and quartiles) and professional skepticism prevent flawed business decisions."
+  },
+  {
+    id: 1342,
+    chapter: "Chapter 13: Data Analysis",
+    question: "A market research agency needs to recruit 1,000 nationwide respondents for a consumer banking habits survey within 10 days. Before selecting respondents through channels like email lists, social media, or purchased panels, what are the three foundational steps the agency must complete in proper order?",
+    options: ["(1) Print questionnaires → (2) Publish results → (3) Define population", "(1) Define the target population → (2) Identify the list source (sampling frame) → (3) Choose a sampling method", "(1) Run predictive ML models → (2) Clean missing data → (3) Choose a sampling method", "(1) Conduct in-person interviews → (2) Eliminate strata → (3) Ignore target population"],
+    correctAnswer: 1,
+    explanation: "Selecting survey respondents follows three structured steps: defining the target population, identifying the list source/sampling frame, and selecting an appropriate sampling method (random, systematic, or stratified)."
+  },
+  {
+    id: 1343,
+    chapter: "Chapter 13: Data Analysis",
+    question: "A multinational consumer goods company tracks social media mentions during a live global product launch. Within 10 minutes of the keynote speech, 2.5 million tweets, Instagram reels, and YouTube comments pour in, shifting rapidly from positive excitement to technical complaints about app login crashes. Which two Big Data characteristics explain why traditional nightly batch database reports would fail to help management respond in time?",
+    options: ["Low Volume and static structure", "High Velocity (real-time streaming speed) and Variability/Variety (rapidly shifting unstructured sentiment across social platforms)", "Purely numerical discrete integers and offline storage", "High cost-effectiveness and internal ERP consistency"],
+    correctAnswer: 1,
+    explanation: "High Velocity (millions of real-time messages per minute) and Variety/Variability (unstructured multimedia and rapidly changing sentiment) require real-time Big Data analytics rather than slow batch reports."
+  },
+  {
+    id: 1344,
+    chapter: "Chapter 13: Data Analysis",
+    question: "An audit senior is reviewing a client's inventory valuation spreadsheet. The sheet contains 45,000 rows of stock items, and a single hidden circular reference in row 31,400 causes total inventory to be overstated by $1.8 million, yet Excel shows no obvious error banner on the summary tab. Which inherent risk of spreadsheets does this highlight?",
+    options: ["Spreadsheets cannot perform multiplication", "Errors in large spreadsheets may remain hidden and undetected unless rigorously tested with built-in checks, controls, and alerts", "Spreadsheets automatically reject all quantitative data", "Worksheets cannot be saved inside a workbook"],
+    correctAnswer: 1,
+    explanation: "A primary risk of spreadsheets is that logic or formula errors can remain hidden inside complex sheets; good practice requires rigorous testing and automated check/alert controls."
+  },
+  {
+    id: 1345,
+    chapter: "Chapter 13: Data Analysis",
+    question: "A city transport authority wants to optimize bus routes. It collects: (a) GPS location pings every 5 seconds from 1,200 buses, (b) contactless smart-card tap-in/tap-out passenger counts, (c) weather forecast feeds from the national meteorological website, and (d) annual financial maintenance budgets from the authority's accounting system. Which classification correctly maps these four data sources?",
+    options: ["(a) & (b) are IoT data sources; (c) is an External source; (d) is an Internal source", "(a) & (b) are External market research; (c) is an Internal source; (d) is an IoT source", "All four are External social media sources", "(a) & (d) are Qualitative surveys; (b) & (c) are Internal HR records"],
+    correctAnswer: 0,
+    explanation: "GPS transmitters and smart-card readers on buses are connected IoT devices; public meteorological feeds are external data; internal accounting budgets are internal data."
+  },
+  {
+    id: 1346,
+    chapter: "Chapter 13: Data Analysis",
+    question: "During the 'Learning Loop' (final step) of the 7-step Data-Driven Decision-Making cycle, management reviews the outcomes of a newly launched customer retention campaign that failed to meet its KPI target. What should management do in this final stage?",
+    options: ["Ignore the failure and stop collecting future KPI data", "Analyze the deep root causes of failure or success and improve internal communications, data infrastructure, and organizational mechanics for future cycles", "Immediately falsify the lagging indicators to match the original budget", "Replace all quantitative KPIs with unverified rumors"],
+    correctAnswer: 1,
+    explanation: "After executing and analyzing results against KPIs, the Learning Loop feeds insights back into improving communications, infrastructure, and internal processes."
+  },
+  {
+    id: 1347,
+    chapter: "Chapter 13: Data Analysis",
+    question: "A data analyst uses DAX (Data Analysis Expressions) inside Power BI and Excel Power Pivot to clean customer profile fields. One field stores customer postal codes and alphanumeric membership IDs such as 'BD-1207-VIP' (containing letters, numbers, hyphens, and spaces). Which specific data type is used in DAX to store this sequence of characters?",
+    options: ["Boolean", "String", "Decimal number", "Logical error"],
+    correctAnswer: 1,
+    explanation: "In DAX and data modeling, a 'String' data type represents a sequence of characters that can include letters, numbers, symbols, and spaces."
+  },
+  {
+    id: 1348,
+    chapter: "Chapter 13: Data Analysis",
+    question: "A retail company's CEO demands a single weekly report containing every raw transaction row from 300 stores—totaling 18,000 pages of unformatted numbers—because 'more data is always better.' As a result, regional directors cannot identify which stores are underperforming. Which two qualities of good information does this 18,000-page report fail to satisfy?",
+    options: ["Completeness and Authoritativeness", "User-targeted and Easy to use (understandable)", "Accuracy and Timeliness", "Consistency and Data volume"],
+    correctAnswer: 1,
+    explanation: "Good information must be user-targeted (tailored in style, format, and complexity to the recipient's decision needs) and easy to use/understand rather than overwhelming users with raw data dumps."
+  },
+  {
+    id: 1349,
+    chapter: "Chapter 13: Data Analysis",
+    question: "A manufacturing firm notices that energy consumption per unit produced has risen by 14% over six months. An analyst builds a statistical regression model comparing factory ambient temperature, machine operating speed, and raw material moisture levels against electricity usage to determine the exact statistical cause of the spike. Which combination of analytics category and data type is primarily being applied?",
+    options: ["Prescriptive analytics using purely qualitative survey text", "Diagnostic analytics using continuous quantitative measurement data", "Descriptive analytics using discrete binary error flags", "Exploratory visualization using pie charts only"],
+    correctAnswer: 1,
+    explanation: "Investigating why energy consumption rose is Diagnostic analytics ('why did it happen?'), and temperature, speed, moisture, and electricity usage are continuous quantitative variables."
+  },
+  {
+    id: 1350,
+    chapter: "Chapter 13: Data Analysis",
+    question: "A junior auditor is evaluating whether to purchase an expensive third-party consumer sentiment dataset costing $45,000 to assist in auditing a small retail client whose entire annual net profit is $30,000 and whose inventory balance is straightforward to verify using existing internal records. Based on the qualities of good information and professional judgment, why should the auditor decline purchasing this dataset?",
+    options: ["Because external datasets are always inaccurate", "Because the information fails the 'Cost-beneficial' criterion (its $45,000 cost outweighs the audit benefit) and lacks 'Relevance' to verifying straightforward physical inventory", "Because third-party data violates Boolean spreadsheet rules", "Because stratified sampling prohibits external information"],
+    correctAnswer: 1,
+    explanation: "Information must be relevant to the specific issue at hand and cost-beneficial (its value must exceed the cost of obtaining it)."
+  }
+];
+
 if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { btfQuestions, btfChapter1Questions, btfChapter2Questions, btfChapter4Questions, btfChapter6Questions, btfChapter7Questions, btfChapter8Questions, btfChapter9Questions, btfChapter10Questions, btfChapter11Questions };
+  module.exports = { btfQuestions, btfChapter1Questions, btfChapter2Questions, btfChapter4Questions, btfChapter6Questions, btfChapter7Questions, btfChapter8Questions, btfChapter9Questions, btfChapter10Questions, btfChapter11Questions, btfChapter13Questions };
 }

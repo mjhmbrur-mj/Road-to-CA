@@ -75,7 +75,8 @@
             8: btfChapter8Questions,
             9: btfChapter9Questions,
             10: btfChapter10Questions,
-            11: btfChapter11Questions
+            11: btfChapter11Questions,
+            13: btfChapter13Questions
         };
         const chapterQuestionSet = key === 'btf' ? btfChapterQuestionSets[chapter] || null : null;
         const hasChapterQuestionSet = Boolean(chapterQuestionSet);
@@ -207,8 +208,8 @@
             for (let index = 1; index <= chapterCount; index += 1) {
                 const card = document.createElement('article'); card.className = 'chapter-card';
                 const chapterName = Array.isArray(course.chapters) ? course.chapters[index - 1] : `${course.title} fundamentals`;
-                const chapterQuery = key === 'btf' && [1, 2, 4, 6, 7, 8, 9, 10, 11].includes(index) ? `&chapter=${index}` : '';
-                const hasBtfChapterQuestions = key === 'btf' && [1, 2, 4, 6, 7, 8, 9, 10, 11].includes(index);
+                const chapterQuery = key === 'btf' && [1, 2, 4, 6, 7, 8, 9, 10, 11, 13].includes(index) ? `&chapter=${index}` : '';
+                const hasBtfChapterQuestions = key === 'btf' && [1, 2, 4, 6, 7, 8, 9, 10, 11, 13].includes(index);
                 const learnAction = hasBtfChapterQuestions
                     ? `<a class="btn btn-outline" href="course-chapters.html?course=btf&chapter=${index}&mode=learn">Learn First</a>`
                     : '<span class="btn btn-outline" aria-disabled="true">Learn is Upcoming</span>';
