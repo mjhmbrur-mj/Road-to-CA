@@ -141,6 +141,7 @@ const currentFile = window.location.pathname.split('/').pop() || 'index.html';
 const pageAliases = {
     'index.html': 'home',
     'assurance.html': 'courses',
+    'assurance-mock-test.html': 'mock-test',
     'syllabus.html': 'courses',
     'mock-exams.html': 'mock-test'
 };

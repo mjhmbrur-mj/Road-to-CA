@@ -66,11 +66,18 @@
         const grid = document.getElementById('chapterGrid');
         const mode = new URLSearchParams(window.location.search).get('mode');
         const chapter = new URLSearchParams(window.location.search).get('chapter');
-        const chapterQuestionSet = key === 'btf' && chapter === '4'
-            ? btfChapter4Questions
-            : (key === 'btf' && chapter === '6'
-                ? btfChapter6Questions
-                : (key === 'btf' && chapter === '10' ? btfChapter10Questions : null));
+        const btfChapterQuestionSets = {
+            1: btfChapter1Questions,
+            2: btfChapter2Questions,
+            4: btfChapter4Questions,
+            6: btfChapter6Questions,
+            7: btfChapter7Questions,
+            8: btfChapter8Questions,
+            9: btfChapter9Questions,
+            10: btfChapter10Questions,
+            11: btfChapter11Questions
+        };
+        const chapterQuestionSet = key === 'btf' ? btfChapterQuestionSets[chapter] || null : null;
         const hasChapterQuestionSet = Boolean(chapterQuestionSet);
         const examSettings = hasChapterQuestionSet
             ? { durationSeconds: 90 * 60, marksPerQuestion: 2 }
@@ -200,8 +207,8 @@
             for (let index = 1; index <= chapterCount; index += 1) {
                 const card = document.createElement('article'); card.className = 'chapter-card';
                 const chapterName = Array.isArray(course.chapters) ? course.chapters[index - 1] : `${course.title} fundamentals`;
-                const chapterQuery = key === 'btf' && [4, 6, 10].includes(index) ? `&chapter=${index}` : '';
-                const hasBtfChapterQuestions = key === 'btf' && [4, 6, 10].includes(index);
+                const chapterQuery = key === 'btf' && [1, 2, 4, 6, 7, 8, 9, 10, 11].includes(index) ? `&chapter=${index}` : '';
+                const hasBtfChapterQuestions = key === 'btf' && [1, 2, 4, 6, 7, 8, 9, 10, 11].includes(index);
                 const learnAction = hasBtfChapterQuestions
                     ? `<a class="btn btn-outline" href="course-chapters.html?course=btf&chapter=${index}&mode=learn">Learn First</a>`
                     : '<span class="btn btn-outline" aria-disabled="true">Learn is Upcoming</span>';

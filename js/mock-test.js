@@ -3,11 +3,11 @@ const mockTestData = [
         subjectId: 'assurance',
         subjectName: 'Assurance',
         tests: [
-            { id: 'ass-1', title: 'Mock Test 1', questions: 50, duration: '50 mins', status: 'Coming Soon' },
-            { id: 'ass-2', title: 'Mock Test 2', questions: 50, duration: '50 mins', status: 'Coming Soon' },
-            { id: 'ass-3', title: 'Mock Test 3', questions: 50, duration: '50 mins', status: 'Coming Soon' },
-            { id: 'ass-4', title: 'Mock Test 4', questions: 50, duration: '50 mins', status: 'Coming Soon' },
-            { id: 'ass-5', title: 'Mock Test 5', questions: 50, duration: '50 mins', status: 'Coming Soon' }
+            { id: 'ass-1', title: 'Mock Test 1', questions: 50, duration: '90 mins', marksPerQuestion: 2, status: 'Ready', link: 'assurance-mock-test.html?test=1' },
+            { id: 'ass-2', title: 'Mock Test 2', questions: 50, duration: '90 mins', marksPerQuestion: 2, status: 'Ready', link: 'assurance-mock-test.html?test=2' },
+            { id: 'ass-3', title: 'Mock Test 3', questions: 50, duration: '90 mins', marksPerQuestion: 2, status: 'Ready', link: 'assurance-mock-test.html?test=3' },
+            { id: 'ass-4', title: 'Mock Test 4', questions: 50, duration: '90 mins', marksPerQuestion: 2, status: 'Ready', link: 'assurance-mock-test.html?test=4' },
+            { id: 'ass-5', title: 'Mock Test 5', questions: 50, duration: '90 mins', marksPerQuestion: 2, status: 'Ready', link: 'assurance-mock-test.html?test=5' }
         ]
     },
     {
@@ -99,7 +99,19 @@ function createTestCard(subject, test) {
 
     const details = document.createElement('div');
     details.className = 'test-details';
-    details.innerHTML = `<span><i class="fa-regular fa-circle-question" aria-hidden="true"></i>${test.questions} MCQs</span><span><i class="fa-regular fa-clock" aria-hidden="true"></i>${test.duration}</span>`;
+    const questionCount = document.createElement('span');
+    questionCount.innerHTML = '<i class="fa-regular fa-circle-question" aria-hidden="true"></i>';
+    questionCount.append(`${test.questions} MCQs`);
+    const duration = document.createElement('span');
+    duration.innerHTML = '<i class="fa-regular fa-clock" aria-hidden="true"></i>';
+    duration.append(test.duration);
+    details.append(questionCount, duration);
+    if (Number.isInteger(test.marksPerQuestion)) {
+        const marks = document.createElement('span');
+        marks.innerHTML = '<i class="fa-solid fa-award" aria-hidden="true"></i>';
+        marks.append(`${test.questions * test.marksPerQuestion} marks · ${test.marksPerQuestion} each`);
+        details.append(marks);
+    }
 
     article.append(badge, title, details);
     if (isReady && test.link) {

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="apple-touch-icon" href="./icons/road-to-ca-180.png">
+    <link rel="manifest" href="./manifest.webmanifest">
+    <meta name="theme-color" content="#6B0518">
+    <meta name="description" content="Full-length ICAB Assurance mock examination with 50 MCQs and a 90-minute time limit.">
+    <title>Assurance Mock Test | Road to CA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="nav.css">
+    <style>
+        :root { --primary-maroon:#6B0518; --deep-maroon:#4A000E; --pure-white:#FFF; --off-white:#F8F9FA; --text-dark:#1F1F1F; --text-muted:#6C757D; --border-color:#E0E0E0; --pill-bg:rgba(107,5,24,.08); }
+        * { box-sizing:border-box; }
+        body { margin:0; background:var(--pure-white); color:var(--text-dark); font-family:'Inter',sans-serif; line-height:1.6; }
+        header { position:sticky; top:0; z-index:1000; background:var(--pure-white); border-bottom:1px solid var(--border-color); }
+        .nav-container { max-width:1200px; margin:auto; padding:1rem 2rem; display:flex; align-items:center; gap:1rem; }
+        .brand-logo img { width:125px; height:43px; object-fit:contain; }
+        .site-search { display:flex; margin-left:auto; }
+        .site-search input { min-width:0; padding:.55rem .7rem; border:1px solid var(--border-color); border-radius:6px 0 0 6px; }
+        .site-search button { border:0; border-radius:0 6px 6px 0; padding:.55rem .8rem; background:var(--primary-maroon); color:var(--pure-white); }
+        .profile-link { color:var(--deep-maroon); text-decoration:none; }
+        .profile-link span { margin-left:.4rem; }
+        .hero { padding:2.5rem 1.5rem; background:var(--off-white); border-bottom:1px solid var(--border-color); }
+        .hero-inner,.exam-container { width:min(1000px,100%); margin:auto; }
+        .eyebrow { color:var(--primary-maroon); font-size:.8rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; }
+        .hero h1 { margin:.5rem 0; color:var(--deep-maroon); font:800 clamp(1.7rem,4vw,2.5rem)/1.2 'Montserrat',sans-serif; }
+        .hero p { margin:0; color:var(--text-muted); }
+        .exam-container { padding:2rem 1.25rem 5rem; }
+        .panel { padding:1.25rem; border:1px solid var(--border-color); border-radius:10px; background:var(--pure-white); }
+        .exam-details { display:flex; flex-wrap:wrap; gap:.6rem 1.4rem; margin:0 0 1rem; color:var(--text-muted); }
+        .exam-details strong { color:var(--deep-maroon); }
+        .btn { display:inline-flex; align-items:center; justify-content:center; gap:.5rem; min-height:2.7rem; padding:.65rem 1rem; border:1px solid var(--primary-maroon); border-radius:6px; font:600 .92rem 'Inter',sans-serif; text-decoration:none; cursor:pointer; }
+        .btn-solid { background:var(--primary-maroon); color:var(--pure-white); }
+        .btn-outline { background:transparent; color:var(--primary-maroon); }
+        .btn:disabled { opacity:.65; cursor:not-allowed; }
+        .exam-toolbar { position:sticky; top:78px; z-index:10; display:flex; align-items:center; justify-content:space-between; gap:1rem; margin-bottom:1rem; padding:.85rem 1rem; border:1px solid var(--primary-maroon); border-radius:8px; background:var(--pill-bg); color:var(--deep-maroon); font-weight:700; }
+        .timer { padding:.35rem .7rem; border-radius:5px; background:var(--primary-maroon); color:var(--pure-white); font-variant-numeric:tabular-nums; }
+        .question-list { display:grid; gap:1rem; }
+        .question-card { padding:1.15rem; border:1px solid var(--border-color); border-left:5px solid var(--primary-maroon); border-radius:8px; background:var(--pure-white); }
+        .question-card.question-correct { border-left-color:#1B5E20; }
+        .question-card.question-incorrect { border-left-color:#B91C1C; }
+        .question-card h2 { margin:0; color:var(--deep-maroon); font:700 1rem/1.5 'Montserrat',sans-serif; white-space:pre-line; }
+        .options { display:grid; gap:.5rem; margin-top:.85rem; }
+        .option { display:flex; align-items:flex-start; gap:.65rem; padding:.7rem; border:1px solid var(--border-color); border-radius:6px; cursor:pointer; }
+        .option input { margin-top:.35rem; accent-color:var(--primary-maroon); }
+        .option-letter { color:var(--primary-maroon); font-weight:700; }
+        .question-feedback { margin-top:.8rem; padding:.75rem; border-radius:6px; background:var(--pill-bg); color:var(--deep-maroon); white-space:pre-line; }
+        .question-feedback[hidden], [hidden] { display:none !important; }
+        .exam-actions { display:flex; flex-wrap:wrap; gap:.75rem; margin-top:1.25rem; }
+        .result { margin-top:1rem; padding:1rem; border:1px solid var(--primary-maroon); border-radius:8px; background:var(--pill-bg); color:var(--deep-maroon); }
+        .result h2 { margin:0 0 .25rem; font:700 1.3rem 'Montserrat',sans-serif; }
+        .result p { margin:.25rem 0; }
+        .error { padding:1rem; border-left:4px solid #B91C1C; background:#FEF2F2; color:#7F1D1D; }
+        @media (max-width:768px) { .nav-container { padding:.75rem 1rem; gap:.5rem; }.brand-logo img { width:105px; height:38px; }.site-search { flex-basis:140px; }.site-search input { width:100%; }.profile-link span { display:none; }.exam-container { padding:1.2rem .8rem 4rem; }.exam-toolbar { top:70px; } }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="nav-container">
+            <button class="menu-toggle" type="button" aria-label="Open menu" aria-controls="site-drawer" aria-expanded="false"><span></span></button>
+            <a href="index.html" class="brand-logo"><img src="logo.png" alt="Road to CA"></a>
+            <form class="site-search" role="search">
+                <input type="search" name="search" placeholder="Search courses &amp; resources..." aria-label="Search courses and resources">
+                <button type="submit" aria-label="Submit search"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i></button>
+            </form>
+            <a class="profile-link" href="profile.html" aria-label="Open your profile"><i class="fa-solid fa-user" aria-hidden="true"></i><span>Profile</span></a>
+        </div>
+    </header>
+    <section class="announcement-ticker" aria-label="Latest">
+        <strong class="ticker-label">LATEST</strong>
+        <div class="ticker-viewport"><div class="ticker-track" id="announcementTrack"></div></div>
+    </section>
+    <div class="drawer-overlay" data-drawer-close></div>
+    <aside class="site-drawer" id="site-drawer" aria-hidden="true">
+        <div class="drawer-heading"><h2>Menu</h2><button class="drawer-close" type="button" aria-label="Close menu">&times;</button></div>
+        <nav class="drawer-links" aria-label="Main menu">
+            <a href="index.html" data-page="home"><i class="fa-solid fa-house" aria-hidden="true"></i>Home</a>
+            <a href="courses.html" data-page="courses"><i class="fa-solid fa-book-open" aria-hidden="true"></i>Courses</a>
+            <a href="resources.html" data-page="resources"><i class="fa-solid fa-folder-open" aria-hidden="true"></i>Resources</a>
+            <a href="mock-test.html" data-page="mock-test"><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i>Mock Test</a>
+            <a href="profile.html" data-page="profile"><i class="fa-solid fa-user" aria-hidden="true"></i>Profile</a>
+        </nav>
+    </aside>
+    <nav class="bottom-nav" aria-label="Mobile navigation">
+        <a href="index.html" data-page="home"><i class="fa-solid fa-house" aria-hidden="true"></i><span>Home</span></a>
+        <a href="courses.html" data-page="courses"><i class="fa-solid fa-book-open" aria-hidden="true"></i><span>Courses</span></a>
+        <a href="resources.html" data-page="resources"><i class="fa-solid fa-folder-open" aria-hidden="true"></i><span>Resources</span></a>
+        <a href="mock-test.html" data-page="mock-test"><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i><span>Mock Test</span></a>
+        <a href="profile.html" data-page="profile"><i class="fa-solid fa-user" aria-hidden="true"></i><span>Profile</span></a>
+    </nav>
+    <section class="hero">
+        <div class="hero-inner">
+            <span class="eyebrow">Assurance Mock Examination</span>
+            <h1 id="testTitle">Loading mock test...</h1>
+            <p id="testDescription">Full-length timed practice for the ICAB Certificate Level Assurance exam.</p>
+        </div>
+    </section>
+    <main class="exam-container">
+        <p class="error" id="loadError" role="alert" hidden></p>
+        <section class="panel" id="startPanel" hidden>
+            <div class="exam-details">
+                <span><strong>Questions:</strong> 50 MCQs</span>
+                <span><strong>Time:</strong> 90 minutes</span>
+                <span><strong>Marks:</strong> 2 each (100 total)</span>
+            </div>
+            <p>Each question has one correct answer. Unanswered questions receive no marks. The timer begins when you start and submits your answers automatically when time expires.</p>
+            <div class="exam-actions">
+                <button class="btn btn-solid" id="beginTest" type="button">Start Test</button>
+                <a class="btn btn-outline" href="mock-test.html">Back to mock tests</a>
+            </div>
+        </section>
+        <section id="examPanel" hidden>
+            <div class="exam-toolbar">
+                <span>50 questions &middot; 2 marks each &middot; 100 marks total</span>
+                <span class="timer" id="timerDisplay" role="timer" aria-live="off">90:00</span>
+            </div>
+            <div class="question-list" id="questionList"></div>
+            <div class="exam-actions">
+                <button class="btn btn-solid" id="submitTest" type="button">Submit Test</button>
+                <a class="btn btn-outline" href="mock-test.html">Exit to mock tests</a>
+            </div>
+            <section class="result" id="examResult" aria-live="polite" hidden></section>
+        </section>
+    </main>
+    <script src="js/assurance-mock-tests.js"></script>
+    <script src="js/assurance-mock-test.js"></script>
+    <script src="nav.js"></script>
+    <script src="js/pwa-install.js"></script>
+</body>
+</html>

@@ -1,7 +1,8 @@
-const CACHE_NAME = 'road-to-ca-site-shell-v3';
+const CACHE_NAME = 'road-to-ca-site-shell-v4';
 const APP_SHELL = [
     'index.html',
     'assurance.html',
+    'assurance-mock-test.html',
     'course-chapters.html',
     'courses.html',
     'mock-test.html',
@@ -12,6 +13,9 @@ const APP_SHELL = [
     'nav.css',
     'nav.js',
     'js/pwa-install.js',
+    'js/mock-test.js',
+    'js/assurance-mock-tests.js',
+    'js/assurance-mock-test.js',
     'js/profile.js',
     'js/topic-analysis.js',
     'js/activity-tracker.js',
