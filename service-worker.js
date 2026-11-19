@@ -1,4 +1,4 @@
-const CACHE_NAME = 'road-to-ca-site-shell-v4';
+const CACHE_NAME = 'road-to-ca-site-shell-v5';
 const APP_SHELL = [
     'index.html',
     'assurance.html',

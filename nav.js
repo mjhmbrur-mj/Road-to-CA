@@ -80,6 +80,38 @@ function renderAnnouncements() {
 
 renderAnnouncements();
 
+function addMobileAppQuickLinks() {
+    document.querySelectorAll('.footer-links').forEach((list) => {
+        const heading = list.parentElement?.querySelector('.footer-title');
+        if (!heading || !/quick links/i.test(heading.textContent)) return;
+        if (list.querySelector('[data-mobile-app]')) return;
+
+        const item = document.createElement('li');
+        const link = document.createElement('a');
+        link.href = '#mobile-app';
+        link.dataset.mobileApp = '';
+        link.textContent = 'Get Mobile App';
+        item.appendChild(link);
+        list.appendChild(item);
+    });
+}
+
+addMobileAppQuickLinks();
+
+document.addEventListener('click', (event) => {
+    const mobileAppLink = event.target.closest('[data-mobile-app]');
+    if (!mobileAppLink) return;
+    event.preventDefault();
+    if (typeof showInstallDialog === 'function') showInstallDialog();
+});
+
+function removeLegacyInstallLauncher() {
+    document.querySelectorAll('.pwa-install-launcher').forEach((launcher) => launcher.remove());
+}
+
+removeLegacyInstallLauncher();
+new MutationObserver(removeLegacyInstallLauncher).observe(document.body, { childList: true });
+
 import('./js/feedback.js').catch((error) => {
     console.error('Unable to load the feedback form.', error);
     const unavailableNotice = document.createElement('div');

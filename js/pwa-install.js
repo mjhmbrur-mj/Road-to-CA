@@ -9,7 +9,6 @@ let deferredInstallPrompt = null;
 let visitCount = 0;
 let installDialog;
 let installButton;
-let installLauncher;
 let isIosInstallGuide = false;
 
 function isMobileDevice() {
@@ -188,15 +187,13 @@ function showInstallDialog() {
     }
 }
 
-function createInstallLauncher() {
-    installLauncher = document.createElement('button');
-    installLauncher.className = 'pwa-install-launcher';
-    installLauncher.type = 'button';
-    installLauncher.textContent = 'Install mobile app';
-    installLauncher.setAttribute('aria-label', 'Install Road to CA mobile app');
-    installLauncher.addEventListener('click', showInstallDialog);
-    installLauncher.hidden = isAppInstalled();
-    document.body.appendChild(installLauncher);
+function bindMobileAppLinks() {
+    document.querySelectorAll('[data-mobile-app]').forEach((link) => {
+        link.addEventListener('click', (event) => {
+            event.preventDefault();
+            showInstallDialog();
+        });
+    });
 }
 
 function dismissDialog() {
@@ -217,7 +214,6 @@ async function handleInstallAction() {
         if (outcome === 'accepted') {
             writeStorage(INSTALLED_KEY, 'true');
             installDialog.close();
-            installLauncher.hidden = true;
         } else {
             dismissDialog();
         }
@@ -264,7 +260,7 @@ if ('serviceWorker' in navigator) {
         });
 }
 
-createInstallLauncher();
+bindMobileAppLinks();
 
 if (isMobileDevice()) {
     isIosInstallGuide = isIosDevice();
@@ -283,7 +279,6 @@ if (isMobileDevice()) {
     window.addEventListener('appinstalled', () => {
         writeStorage(INSTALLED_KEY, 'true');
         deferredInstallPrompt = null;
-        if (installLauncher) installLauncher.hidden = true;
         if (installDialog?.open) installDialog.close();
     });
 
