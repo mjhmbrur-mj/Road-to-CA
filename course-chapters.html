@@ -33,6 +33,9 @@
     <section class="hero"><div class="hero-inner"><span class="eyebrow">CERTIFICATE LEVEL</span><h1 id="courseTitle">Course Chapters</h1><p>Review every chapter, then choose Learn First for guided study or Test You for timed practice.</p></div></section>
     <main class="chapter-container"><div class="chapter-heading"><h2>All Chapters</h2><p id="chapterIntro">Select a mode for any chapter.</p></div><div class="chapter-grid" id="chapterGrid"></div></main>
     <script src="jsbtf-question-bank.js"></script>
+    <script src="js/btf-chapter3-question-bank.js"></script>
+    <script src="js/btf-chapter5-question-bank.js"></script>
+    <script src="js/btf-chapter12-question-bank.js"></script>
     <script>
         const courses = {
             accounting: { title:'Accounting', chapters:15 },
@@ -69,13 +72,16 @@
         const btfChapterQuestionSets = {
             1: btfChapter1Questions,
             2: btfChapter2Questions,
+            3: btfChapter3Questions,
             4: btfChapter4Questions,
+            5: btfChapter5Questions,
             6: btfChapter6Questions,
             7: btfChapter7Questions,
             8: btfChapter8Questions,
             9: btfChapter9Questions,
             10: btfChapter10Questions,
             11: btfChapter11Questions,
+            12: btfChapter12Questions,
             13: btfChapter13Questions,
             14: btfChapter14Questions
         };
@@ -111,6 +117,7 @@
             if (isTest) {
                 const initialMinutes = String(Math.floor(examSettings.durationSeconds / 60)).padStart(2, '0');
                 const timer = document.createElement('div'); timer.className = 'timer-box'; timer.innerHTML = `<span><i class="fa-solid fa-stopwatch"></i> Exam Timer</span><span class="timer-badge" id="timerDisplay">${initialMinutes}:00</span>`; quiz.appendChild(timer);
+                const exitDuringTest = document.createElement('a'); exitDuringTest.className = 'btn btn-outline quiz-exit'; exitDuringTest.href = 'course-chapters.html?course=btf'; exitDuringTest.textContent = 'Exit Test'; quiz.appendChild(exitDuringTest);
             }
             questions.forEach((question, index) => {
                 const card = document.createElement('article'); card.className = 'quiz-card';
@@ -144,6 +151,7 @@
                     const totalMarks = questions.length * examSettings.marksPerQuestion;
                     result.textContent = `Your score: ${score} / ${totalMarks} marks (${Math.round(score / totalMarks * 100)}%).`;
                     result.hidden = false;
+                    const exitAfterTest = document.createElement('a'); exitAfterTest.className = 'btn btn-outline quiz-exit'; exitAfterTest.href = 'course-chapters.html?course=btf'; exitAfterTest.textContent = 'Exit Test'; result.appendChild(exitAfterTest);
                     submit.disabled = true;
                     clearInterval(timerInterval);
                     const saveStatus = document.createElement('p');
@@ -209,8 +217,8 @@
             for (let index = 1; index <= chapterCount; index += 1) {
                 const card = document.createElement('article'); card.className = 'chapter-card';
                 const chapterName = Array.isArray(course.chapters) ? course.chapters[index - 1] : `${course.title} fundamentals`;
-                const chapterQuery = key === 'btf' && [1, 2, 4, 6, 7, 8, 9, 10, 11, 13, 14].includes(index) ? `&chapter=${index}` : '';
-                const hasBtfChapterQuestions = key === 'btf' && [1, 2, 4, 6, 7, 8, 9, 10, 11, 13, 14].includes(index);
+                const chapterQuery = key === 'btf' && [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14].includes(index) ? `&chapter=${index}` : '';
+                const hasBtfChapterQuestions = key === 'btf' && [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14].includes(index);
                 const learnAction = hasBtfChapterQuestions
                     ? `<a class="btn btn-outline" href="course-chapters.html?course=btf&chapter=${index}&mode=learn">Learn First</a>`
                     : '<span class="btn btn-outline" aria-disabled="true">Learn is Upcoming</span>';

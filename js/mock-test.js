@@ -14,11 +14,11 @@ const mockTestData = [
         subjectId: 'btf',
         subjectName: 'Business, Technology and Finance (BTF)',
         tests: [
-            { id: 'btf-1', title: 'Mock Test 1', questions: 50, duration: '50 mins', status: 'Coming Soon' },
-            { id: 'btf-2', title: 'Mock Test 2', questions: 50, duration: '50 mins', status: 'Coming Soon' },
-            { id: 'btf-3', title: 'Mock Test 3', questions: 50, duration: '50 mins', status: 'Coming Soon' },
-            { id: 'btf-4', title: 'Mock Test 4', questions: 50, duration: '50 mins', status: 'Coming Soon' },
-            { id: 'btf-5', title: 'Mock Test 5', questions: 50, duration: '50 mins', status: 'Coming Soon' }
+            { id: 'btf-1', title: 'Mock Test 1', questions: 50, duration: '90 mins', marksPerQuestion: 2, status: 'Ready', link: 'assurance-mock-test.html?subject=btf&test=1' },
+            { id: 'btf-2', title: 'Mock Test 2', questions: 50, duration: '90 mins', marksPerQuestion: 2, status: 'Ready', link: 'assurance-mock-test.html?subject=btf&test=2' },
+            { id: 'btf-3', title: 'Mock Test 3', questions: 50, duration: '90 mins', marksPerQuestion: 2, status: 'Ready', link: 'assurance-mock-test.html?subject=btf&test=3' },
+            { id: 'btf-4', title: 'Mock Test 4', questions: 50, duration: '90 mins', marksPerQuestion: 2, status: 'Ready', link: 'assurance-mock-test.html?subject=btf&test=4' },
+            { id: 'btf-5', title: 'Mock Test 5', questions: 50, duration: '90 mins', marksPerQuestion: 2, status: 'Ready', link: 'assurance-mock-test.html?subject=btf&test=5' }
         ]
     },
     {

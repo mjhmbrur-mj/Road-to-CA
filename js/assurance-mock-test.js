@@ -1,5 +1,8 @@
 const testNumber = Number(new URLSearchParams(window.location.search).get('test'));
-const test = window.assuranceMockTests?.find((mock) => mock.id === testNumber);
+const isBtf = new URLSearchParams(window.location.search).get('subject') === 'btf';
+const subjectName = isBtf ? 'Business, Technology and Finance (BTF)' : 'Assurance';
+const mockTests = isBtf ? window.btfMockTests : window.assuranceMockTests;
+const test = mockTests?.find((mock) => mock.id === testNumber);
 const title = document.getElementById('testTitle');
 const description = document.getElementById('testDescription');
 const loadError = document.getElementById('loadError');
@@ -9,6 +12,7 @@ const questionList = document.getElementById('questionList');
 const timerDisplay = document.getElementById('timerDisplay');
 const submitButton = document.getElementById('submitTest');
 const result = document.getElementById('examResult');
+document.getElementById('testEyebrow').textContent = `${subjectName} Mock Examination`;
 let timerInterval = null;
 let remainingSeconds = 90 * 60;
 let submitted = false;
@@ -23,7 +27,7 @@ function showLoadError(message) {
 if (!test) {
     title.textContent = 'Mock test not found';
     description.textContent = '';
-    showLoadError('Choose one of the five Assurance mock tests from the mock-test hub.');
+    showLoadError(`Choose one of the five ${subjectName} mock tests from the mock-test hub.`);
 } else if (test.questions.length !== 50 || test.questions.some((question) =>
     !Array.isArray(question.options)
     || question.options.length !== 4
@@ -38,8 +42,8 @@ if (!test) {
     showLoadError('This mock test could not be loaded because its question data is incomplete.');
     console.error(`Assurance ${test.title} has invalid question data.`);
 } else {
-    title.textContent = `Assurance ${test.title}`;
-    description.textContent = 'Full-length ICAB Certificate Level practice paper.';
+    title.textContent = `${subjectName} ${test.title}`;
+    description.textContent = 'Full-length ICAB Certificate Level practice paper: 50 MCQs, 100 marks, 90 minutes.';
     startPanel.hidden = false;
 
     document.getElementById('beginTest').addEventListener('click', () => {
@@ -116,13 +120,18 @@ if (!test) {
             saveStatus.setAttribute('role', 'status');
             saveStatus.textContent = 'Saving your result...';
             result.replaceChildren(heading, scoreDetails, passDetails, saveStatus);
+            const exitAfterTest = document.createElement('a');
+            exitAfterTest.className = 'btn btn-outline';
+            exitAfterTest.href = 'mock-test.html';
+            exitAfterTest.textContent = 'Exit to mock tests';
+            result.appendChild(exitAfterTest);
             result.hidden = false;
 
             try {
                 const { saveQuizActivity } = await import('./activity-tracker.js');
                 const saved = await saveQuizActivity({
-                    subjectId: 'assurance',
-                    activityName: `Assurance ${test.title}`,
+                    subjectId: isBtf ? 'btf' : 'assurance',
+                    activityName: `${subjectName} ${test.title}`,
                     score,
                     totalQuestions: totalMarks
                 });
