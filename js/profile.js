@@ -13,7 +13,13 @@ const dashboardStatus = document.getElementById('dashboard-status');
 const activityList = document.getElementById('activity-list');
 const accountAvatar = document.getElementById('account-avatar');
 const accountAvatarFallback = document.getElementById('account-avatar-fallback');
+const dashboardFirstName = document.getElementById('dashboard-first-name');
+const progressRing = document.getElementById('progress-ring');
+const progressValue = document.getElementById('progress-value');
+const progressMessage = document.getElementById('progress-message');
+const historyFilter = document.getElementById('history-filter');
 let authChangeVersion = 0;
+let renderedActivities = [];
 
 function setStatus(message = '', isError = false) {
     dashboardStatus.textContent = message;
@@ -132,6 +138,7 @@ function writeCachedActivities(uid, activities) {
 function renderAccount(user) {
     document.getElementById('account-name').textContent = user.displayName || 'Student';
     document.getElementById('account-email').textContent = user.email || '';
+    if (dashboardFirstName) dashboardFirstName.textContent = (user.displayName || 'student').trim().split(/\s+/)[0];
     if (user.photoURL) {
         accountAvatar.src = user.photoURL;
         accountAvatar.hidden = false;
@@ -144,6 +151,7 @@ function renderAccount(user) {
 }
 
 function renderActivities(activities) {
+    renderedActivities = activities;
     activityList.replaceChildren();
     document.getElementById('stat-attempts').textContent = String(activities.length);
     document.getElementById('stat-subjects').textContent = '7';
@@ -157,7 +165,11 @@ function renderActivities(activities) {
     }
 
     const percentages = activities.map(({ data }) => (data.score / data.totalQuestions) * 100);
-    document.getElementById('stat-average').textContent = `${Math.round(percentages.reduce((total, percentage) => total + percentage, 0) / percentages.length)}%`;
+    const average = Math.round(percentages.reduce((total, percentage) => total + percentage, 0) / percentages.length);
+    document.getElementById('stat-average').textContent = `${average}%`;
+    progressRing?.style.setProperty('--progress', `${average}%`);
+    if (progressValue) progressValue.textContent = `${average}%`;
+    if (progressMessage) progressMessage.textContent = average >= 70 ? 'You are building strong exam momentum.' : 'Keep practising to reach the 70% pass target.';
 
     activities.forEach(({ data }) => {
         const item = document.createElement('article');
@@ -209,6 +221,15 @@ function renderActivities(activities) {
         activityList.appendChild(item);
     });
 }
+
+function filterActivities(subject) {
+    activityList.querySelectorAll('.activity-item').forEach((item, index) => {
+        const matches = subject === 'all' || renderedActivities[index]?.data?.subjectName === subject;
+        item.classList.toggle('is-hidden', !matches);
+    });
+}
+
+historyFilter?.addEventListener('change', (event) => filterActivities(event.target.value));
 
 function updateUserProfile(user) {
     return setDoc(doc(db, 'users', user.uid), {

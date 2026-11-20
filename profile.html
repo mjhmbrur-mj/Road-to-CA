@@ -40,6 +40,26 @@
         .premium-dashboard-badge { display:inline-flex; flex:0 0 auto; align-items:center; gap:.45rem; padding:.55rem .8rem; border:1px solid #E8D6AE; border-radius:999px; background:#F8F1DF; color:#4A000E; font-size:.75rem; font-weight:800; letter-spacing:.05em; text-transform:uppercase; }
         .dashboard-content.is-premium > div[aria-label="Student statistics"] article { border-color:#D6BD88; box-shadow:0 5px 16px rgba(74,0,14,.06); }
         .dashboard-content.is-premium > section { border-color:#D6BD88; }
+        .dashboard-hero { display:grid; grid-template-columns:minmax(0,1.35fr) minmax(15rem,.65fr); gap:1.25rem; margin-bottom:1.5rem; padding:1.6rem; border:1px solid #E8D6AE; border-radius:1.25rem; background:linear-gradient(135deg,#FFFDF8 0%,#FFF7E7 56%,#F7E9E9 100%); box-shadow:0 12px 30px rgba(74,0,14,.08); }
+        .dashboard-kicker { margin:0; color:var(--primary-maroon); font-size:.72rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; }
+        .dashboard-hero h1 { margin:.35rem 0 .45rem; color:var(--deep-maroon); font-family:'Montserrat',sans-serif; font-size:clamp(1.55rem,3vw,2.15rem); font-weight:800; line-height:1.15; }
+        .dashboard-hero-copy { max-width:38rem; color:var(--text-muted); font-size:.92rem; }
+        .dashboard-actions { display:flex; flex-wrap:wrap; gap:.65rem; margin-top:1.25rem; }
+        .dashboard-action { display:inline-flex; align-items:center; gap:.5rem; min-height:2.75rem; padding:.7rem .9rem; border:1px solid var(--primary-maroon); border-radius:.65rem; color:var(--primary-maroon); font-size:.82rem; font-weight:700; text-decoration:none; transition:transform .2s ease,background-color .2s ease,color .2s ease; }
+        .dashboard-action.primary { background:var(--primary-maroon); color:#FFF; }
+        .dashboard-action:hover { transform:translateY(-2px); background:var(--deep-maroon); color:#FFF; }
+        .progress-snapshot { display:flex; flex-direction:column; justify-content:center; align-items:center; min-height:13rem; padding:1.1rem; border:1px solid rgba(107,5,24,.12); border-radius:1rem; background:rgba(255,255,255,.68); text-align:center; }
+        .progress-ring { display:grid; width:7.5rem; height:7.5rem; place-items:center; border-radius:50%; background:conic-gradient(var(--primary-maroon) var(--progress,0%),#F1D9D8 0); position:relative; }
+        .progress-ring::before { width:5.75rem; height:5.75rem; border-radius:50%; background:#FFFDF8; content:""; position:absolute; }
+        .progress-ring strong,.progress-ring span { position:relative; z-index:1; }
+        .progress-ring strong { color:var(--deep-maroon); font:800 1.55rem/1 'Montserrat',sans-serif; }
+        .progress-ring span { margin-top:2.15rem; color:var(--text-muted); font-size:.65rem; position:absolute; }
+        .progress-snapshot p { margin:.7rem 0 0; color:var(--deep-maroon); font-size:.78rem; font-weight:700; }
+        .stat-card { position:relative; overflow:hidden; }
+        .stat-caption { display:block; margin-top:.25rem; color:var(--text-muted); font-size:.72rem; }
+        .history-header { display:flex; align-items:flex-end; justify-content:space-between; gap:1rem; }
+        .history-filter { min-height:2.35rem; padding:.45rem .65rem; border:1px solid var(--border-color); border-radius:.55rem; background:#FFF; color:var(--deep-maroon); font-size:.78rem; font-weight:600; }
+        .activity-item.is-hidden { display:none; }
         .dashboard-status.is-error { border-color:#FECACA; background:#FEF2F2; color:#991B1B; }
         .activity-item { display:flex; align-items:center; gap:1rem; padding:.9rem 1rem; border:1px solid #E2E8F0; border-radius:.75rem; }
         .activity-icon { display:grid; place-items:center; width:2.75rem; height:2.75rem; flex:0 0 2.75rem; border-radius:50%; background:#FFF1F2; color:#881337; }
@@ -59,6 +79,10 @@
             .activity-item { align-items:flex-start; flex-wrap:wrap; gap:.65rem; padding:.75rem; }
             .activity-score { align-self:center; font-size:.72rem; }
             .activity-report-download { width:100%; }
+            .dashboard-hero { grid-template-columns:1fr; padding:1.15rem; }
+            .progress-snapshot { min-height:10rem; }
+            .history-header { align-items:flex-start; flex-direction:column; }
+            .history-filter { width:100%; }
         }
     </style>
 </head>
@@ -113,6 +137,21 @@
                 </div>
                 <span class="premium-dashboard-badge"><i class="fa-solid fa-crown" aria-hidden="true"></i> Premium</span>
             </section>
+            <section class="dashboard-hero" aria-label="Study overview">
+                <div>
+                    <p class="dashboard-kicker">Your study command centre</p>
+                    <h1>Ready to make progress, <span id="dashboard-first-name">student</span>?</h1>
+                    <p class="dashboard-hero-copy">Pick up where you left off, practise a mock test, or review your latest performance. Small, consistent sessions build exam confidence.</p>
+                    <div class="dashboard-actions">
+                        <a class="dashboard-action primary" href="mock-test.html"><i class="fa-solid fa-bolt" aria-hidden="true"></i> Start a mock test</a>
+                        <a class="dashboard-action" href="courses.html"><i class="fa-solid fa-book-open" aria-hidden="true"></i> Explore courses</a>
+                    </div>
+                </div>
+                <div class="progress-snapshot" aria-label="Average score progress">
+                    <div class="progress-ring" id="progress-ring" style="--progress:0%"><strong id="progress-value">0%</strong><span>average</span></div>
+                    <p id="progress-message">Complete your first test to start tracking.</p>
+                </div>
+            </section>
             <div class="mb-6 flex flex-wrap items-center gap-4 rounded-xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
                 <img class="account-avatar h-14 w-14 rounded-full object-cover" id="account-avatar" alt="" hidden>
                 <div class="account-avatar-fallback grid h-14 w-14 place-items-center rounded-full bg-rose-50 text-xl text-rose-900" id="account-avatar-fallback" aria-hidden="true"><i class="fa-solid fa-user"></i></div>
@@ -125,7 +164,7 @@
                 <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm"><span class="flex items-center gap-2 text-sm font-semibold text-slate-600"><i class="fa-solid fa-book-open text-rose-800" aria-hidden="true"></i> Active Subjects</span><strong class="mt-2 block font-['Montserrat'] text-3xl font-extrabold text-slate-900" id="stat-subjects">7</strong><span class="text-xs text-slate-500">ICAB subjects</span></article>
             </div>
             <section class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
-                <div class="mb-4"><h2 class="font-['Montserrat'] text-xl font-bold text-slate-900">Recent Test History</h2><p class="mt-1 text-sm text-slate-500">Completed tests, dates, and scores. Chapter-test SWOT reports can be downloaded from each result.</p></div>
+                <div class="history-header mb-4"><div><h2 class="font-['Montserrat'] text-xl font-bold text-slate-900">Recent Test History</h2><p class="mt-1 text-sm text-slate-500">Review your scores and identify what to practise next.</p></div><select class="history-filter" id="history-filter" aria-label="Filter test history"><option value="all">All subjects</option><option value="Assurance">Assurance</option><option value="Business, Technology and Finance">Business, Technology and Finance</option></select></div>
                 <div class="activity-list space-y-3" id="activity-list"></div>
             </section>
         </section>
